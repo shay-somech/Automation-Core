@@ -1,8 +1,8 @@
 package core.configurationPopUp;
 
 import core.managers.MyLogger;
-import core.managers.drivers.AndroidDriverManager;
-import core.managers.drivers.IOSDriverManager;
+import core.managers.baseclasses.DeviceManager;
+import core.managers.baseclasses.DeviceManager.Platform;
 import core.utils.ADBHelper;
 import core.utils.IOSHelper;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -45,11 +45,11 @@ public class DropDownExecutioner {
     static void setPlatform(ChoiceBox<String> choiceBox) {
         switch (choiceBox.getValue()) {
             case Android:
-                AndroidDriverManager.getInstance().startDriver();
+                DeviceManager.setPlatform(Platform.Android);
                 break;
 
             case iOS:
-                IOSDriverManager.getInstance().startDriver();
+                DeviceManager.setPlatform(Platform.Apple);
                 break;
         }
     }
