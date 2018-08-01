@@ -7,7 +7,7 @@ public class DeviceManager {
 
     public enum Platform {
         Android,
-        Apple,
+        iOS,
     }
 
     public static void setPlatform(Platform platform) {
@@ -16,7 +16,7 @@ public class DeviceManager {
                 AndroidDriverManager.getInstance().startDriver();
                 break;
 
-            case Apple:
+            case iOS:
                 IOSDriverManager.getInstance().startDriver();
                 break;
         }

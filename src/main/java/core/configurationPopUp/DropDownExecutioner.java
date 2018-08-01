@@ -49,7 +49,7 @@ public class DropDownExecutioner {
                 break;
 
             case iOS:
-                DeviceManager.setPlatform(Platform.Apple);
+                DeviceManager.setPlatform(Platform.iOS);
                 break;
         }
     }
