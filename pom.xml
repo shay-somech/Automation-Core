@@ -6,7 +6,31 @@
 
     <groupId>groupId</groupId>
     <artifactId>Automation-Framework</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <build>
+        <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>lib/</classpathPrefix>
+                        <mainClass></mainClass>
+                    </manifest>
+                    <manifestEntries>
+                        <Class-Path>.</Class-Path>
+                    </manifestEntries>
+                </archive>
+
+                <finalName>Automation_Framework</finalName>
+            </configuration>
+        </plugin>
+
+        </plugins>
+    </build>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

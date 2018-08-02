@@ -1,12 +1,12 @@
 package core.managers.tests;
 
 import core.managers.MyLogger;
-import core.managers.baseclasses.MainBase;
+import core.managers.baseclasses.Runner;
 import core.utils.ActionHelper;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-public class AndroidTestManager extends MainBase {
+public class AndroidTestManager extends Runner {
 
     public ActionHelper actionHelper;
 

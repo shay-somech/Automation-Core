@@ -20,7 +20,7 @@ public class SwipeHelper {
 
     private TouchAction action;
 
-    private SwipeHelper() {
+    SwipeHelper() {
         action = new TouchAction(DriverManager.getDriver());
 
         deviceWidth = DisplayManager.getInstance().getDeviceWidth();
@@ -31,10 +31,6 @@ public class SwipeHelper {
         if (instance == null)
             instance = new SwipeHelper();
         return instance;
-    }
-
-    public static void quit() {
-        instance = null;
     }
 
     /**

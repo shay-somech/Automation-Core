@@ -1,7 +1,7 @@
 package core.managers.tests;
 
 import core.managers.MyLogger;
-import core.managers.baseclasses.MainBase;
+import core.managers.baseclasses.Runner;
 import core.managers.drivers.DriverManager;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-public class iOSTestManager extends MainBase {
+public class iOSTestManager extends Runner {
 
     @BeforeMethod
     public void preTest() {

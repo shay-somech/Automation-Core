@@ -4,6 +4,7 @@ import core.configurationPopUp.DropDownExecutioner;
 import core.managers.MyLogger;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -31,7 +32,7 @@ public class IOSDriverManager {
         if (dc == null) {
             dc = new DesiredCapabilities();
         }
-
+        dc.setCapability("instrumentApp", true);
         dc.setCapability("reportDirectory", "reports");
         dc.setCapability("reportFormat", "xml");
         dc.setCapability("testName", "Gini-Apps Automation");

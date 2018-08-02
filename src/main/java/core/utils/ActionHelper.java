@@ -30,11 +30,11 @@ public class ActionHelper {
 
         currentSessionId = DriverManager.getDriver().getSessionId().toString();
 
-        this.swipeHelper = SwipeHelper.getInstance();
-        this.functionHelper = FunctionHelper.getInstance();
-        this.webviewHelper = WebviewHelper.getInstance();
-        this.androidHelper = AndroidHelper.getInstance();
-        this.iosHelper = IOSHelper.getInstance();
+        this.swipeHelper = new SwipeHelper();
+        this.functionHelper = new FunctionHelper();
+        this.webviewHelper = new WebviewHelper();
+        this.androidHelper = new AndroidHelper();
+        this.iosHelper = new IOSHelper();
         this.externalCapabilities = ExternalCapabilities.getInstance();
     }
 
@@ -43,6 +43,10 @@ public class ActionHelper {
             instance = new ActionHelper();
         }
         return instance;
+    }
+
+    public static void quit() {
+        instance = null;
     }
 
     public void swipeDownUntilElementFound(ElementWrapper elementWrapper) {
