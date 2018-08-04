@@ -1,8 +1,8 @@
-package core.configurationPopUp;
+package core.UI;
 
+import core.constants.PlatformType;
 import core.managers.MyLogger;
 import core.managers.baseclasses.DeviceManager;
-import core.managers.baseclasses.DeviceManager.Platform;
 import core.utils.ADBHelper;
 import core.utils.IOSHelper;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -45,16 +45,16 @@ public class DropDownExecutioner {
     static void setPlatform(ChoiceBox<String> choiceBox) {
         switch (choiceBox.getValue()) {
             case Android:
-                DeviceManager.setPlatform(Platform.Android);
+                DeviceManager.setPlatform(PlatformType.Android);
                 break;
 
             case iOS:
-                DeviceManager.setPlatform(Platform.iOS);
+                DeviceManager.setPlatform(PlatformType.iOS);
                 break;
         }
     }
 
-    static ArrayList getAvailableAndroidDevices() {
+    static ArrayList<String> getAvailableAndroidDevices() {
         ArrayList<String> availableDevices = new ArrayList<>();
 
         MyLogger.logSys("Checking for available Android devices");
@@ -69,7 +69,7 @@ public class DropDownExecutioner {
         return availableDevices;
     }
 
-    static ArrayList getAvailableIOSDevices() {
+    static ArrayList<String> getAvailableIOSDevices() {
         ArrayList<String> availableDevices = new ArrayList<>();
 
         MyLogger.logSys("Checking for available iOS devices");

@@ -1,4 +1,4 @@
-package core.configurationPopUp;
+package core.UI;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-import static core.configurationPopUp.DropDownExecutioner.*;
+import static core.UI.DropDownExecutioner.*;
 
 public class MainRunner extends Application {
 
@@ -169,7 +169,7 @@ public class MainRunner extends Application {
     }
 
     private void closeProgram() {
-        boolean answer = core.configurationPopUp.QuitDialogBox.display("Quiting Automation", "This will terminate the Test Session\n\n Are you sure you want to quit? ");
+        boolean answer = core.UI.QuitDialogBox.display("Quiting Automation", "This will terminate the Test Session\n\n Are you sure you want to quit? ");
         if (answer)
             window.close();
     }
