@@ -10,8 +10,12 @@ import org.testng.annotations.BeforeSuite;
 
 public class Runner {
 
-    @BeforeSuite
     public static void main(String[] args) {
+        start();
+    }
+
+    @BeforeSuite
+    public static void start() {
         MyLogger.logSysInfo("Initializing Automation");
         AutomationLauncher.start();
     }

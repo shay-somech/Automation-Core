@@ -38,9 +38,13 @@ public class DriverServiceBuilder {
     }
 
     private static AppiumDriverLocalService createAppiumService() {
+        int port = 4723;
+        String ipAddress = "127.0.0.1";
 
         if (service == null) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                    .usingPort(port)
+                    .withIPAddress(ipAddress)
                     .withArgument(GeneralServerFlag.LOG_LEVEL, "warn")
                     .withArgument(GeneralServerFlag.TEMP_DIRECTORY, null));
         }
