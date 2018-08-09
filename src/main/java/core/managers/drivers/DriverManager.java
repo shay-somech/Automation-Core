@@ -13,9 +13,8 @@ public class DriverManager {
     private DriverManager() {
         MyLogger.logSys("DriverManager initialized");
 
-        DriverServiceBuilder.createDriver();
+        currentSessionId = getCurrentSessionId();
 
-        currentSessionId = driver.getSessionId().toString();
     }
 
     public static AppiumDriver getDriver() {
@@ -25,11 +24,15 @@ public class DriverManager {
         return driver;
     }
 
+    private static String getCurrentSessionId() {
+        return driver.getSessionId().toString();
+    }
+
     static void setDriver(AppiumDriver driver) {
         DriverManager.driver = driver;
     }
 
-    public static boolean isDriverExpired() {
+    private static boolean isDriverExpired() {
         return isDriverExpired(currentSessionId);
     }
 

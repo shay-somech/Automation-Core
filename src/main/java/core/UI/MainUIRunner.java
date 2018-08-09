@@ -12,9 +12,10 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-import static core.UI.DropDownExecutioner.*;
+import static core.UI.UIExecutioner.*;
+import static core.configurationPopUp.AlertBox.display;
 
-public class MainRunner extends Application {
+public class MainUIRunner extends Application {
 
     private Stage window;
     private static final String Android = "Android";
@@ -22,16 +23,16 @@ public class MainRunner extends Application {
 
     private Label selectPlatformLabel;
     private Label selectDeviceLabel;
-    private Label instrumentAppLabel;
+    private Label autoInstrumentLabel;
     private Label noResetLabel;
     private Label testRunTypeLabel;
     private Label selectTestListLabel;
-    private ChoiceBox<String> selectPlatformChoiceBox;
-    private ChoiceBox<String> selectDeviceChoiceBox;
-    private ChoiceBox<String> instrumentAppChoiceBox;
-    private ChoiceBox<String> noResetChoiceBox;
     private ChoiceBox<String> testRunTypeChoiceBox;
     private ChoiceBox<String> selectTestToRunChoiceBox;
+    public static ChoiceBox<String> selectDeviceChoiceBox;
+    public static ChoiceBox<String> autoInstrumentChoiceBox;
+    public static ChoiceBox<String> noResetChoiceBox;
+    public static ChoiceBox<String> selectPlatformChoiceBox;
 
     public static void main(String[] args) {
         launch(args);
@@ -58,19 +59,19 @@ public class MainRunner extends Application {
         grid.setHgap(10);
 
         // Labels
-        setLabels();
+        initLabels();
 
         //ChoiceBoxes
-        setChoiceBoxes();
+        initChoiceBoxes();
 
         //getItems returns the ObservableList object which you can add items to
         selectPlatformChoiceBox.getItems().addAll(iOS, Android);
-        instrumentAppChoiceBox.getItems().addAll("true", "false");
+        autoInstrumentChoiceBox.getItems().addAll("true", "false");
         noResetChoiceBox.getItems().addAll("true", "false");
         testRunTypeChoiceBox.getItems().addAll("Single Run", "Suite");
 
         //Set a default value
-        instrumentAppChoiceBox.setValue("true");
+        autoInstrumentChoiceBox.setValue("true");
         noResetChoiceBox.setValue("false");
 
         //Listen for selection changes in Platform Selection
@@ -95,7 +96,7 @@ public class MainRunner extends Application {
             if (testRunType.equals("Single Run")) {
                 selectTestToRunChoiceBox.getItems().clear();
 
-                ArrayList classNames = getJavaClassNameByFolderPath("/Users/automationstation/Evrit/src/test/java");
+                ArrayList classNames = getJavaClassNameByFolderPath("/Users/automationstation/Automation-Framework/src/test/java");
                 for (Object className : classNames) {
                     String name = className.toString();
                     selectTestToRunChoiceBox.getItems().add(name.substring(name.indexOf("java/"), name.indexOf(".java")).replace("java/", "").replace("/", "."));
@@ -104,7 +105,7 @@ public class MainRunner extends Application {
             } else if (testRunType.equals("Suite")) {
                 selectTestToRunChoiceBox.getItems().clear();
 
-                ArrayList xmlsNames = getXMLClassNameByFolderPath("/Users/automationstation/Evrit/src/test/java");
+                ArrayList xmlsNames = getXMLClassNameByFolderPath("/Users/automationstation/Automation-Framework/src/test/java");
                 for (Object xmlName : xmlsNames) {
                     selectTestToRunChoiceBox.getItems().add(xmlName.toString());
                 }
@@ -114,32 +115,27 @@ public class MainRunner extends Application {
         button.setOnAction(event ->
         {
             if (!isRequiredFieldsEmpty()) {
-                instrumentApp(instrumentAppChoiceBox);
-                noReset(noResetChoiceBox);
-                selectDevice(selectDeviceChoiceBox);
-                setPlatform(selectPlatformChoiceBox);
-//                runTestNGSuite(selectTestToRunChoiceBox.getSelectionModel().getSelectedItem());
-                runTestNGSuite("test.java.libraryTests.PositiveLoginTest.java");
                 window.close();
             }
         });
 
-        layout.getChildren().addAll(testRunTypeLabel, testRunTypeChoiceBox, selectTestListLabel, selectTestToRunChoiceBox, selectPlatformLabel, selectPlatformChoiceBox, selectDeviceLabel, selectDeviceChoiceBox, instrumentAppLabel, instrumentAppChoiceBox, noResetLabel, noResetChoiceBox, button);
+        layout.getChildren().addAll(testRunTypeLabel, testRunTypeChoiceBox, selectTestListLabel, selectTestToRunChoiceBox, selectPlatformLabel, selectPlatformChoiceBox, selectDeviceLabel, selectDeviceChoiceBox, autoInstrumentLabel, autoInstrumentChoiceBox, noResetLabel, noResetChoiceBox, button);
 
         Scene scene = new Scene(layout, 350, 450);
         window.setScene(scene);
         window.show();
     }
 
-    private void setLabels() {
+    private void initLabels() {
+
         selectPlatformLabel = new Label("Select Platform:");
         GridPane.setConstraints(selectPlatformLabel, 0, 0);
 
         selectDeviceLabel = new Label("Select Device:");
         GridPane.setConstraints(selectDeviceLabel, 0, 0);
 
-        instrumentAppLabel = new Label("Instrument App:");
-        GridPane.setConstraints(instrumentAppLabel, 0, 0);
+        autoInstrumentLabel = new Label("Instrument App:");
+        GridPane.setConstraints(autoInstrumentLabel, 0, 0);
 
         noResetLabel = new Label("Reset App:");
         GridPane.setConstraints(noResetLabel, 0, 0);
@@ -151,10 +147,10 @@ public class MainRunner extends Application {
         GridPane.setConstraints(selectTestListLabel, 0, 0);
     }
 
-    private void setChoiceBoxes() {
+    private void initChoiceBoxes() {
         selectPlatformChoiceBox = new ChoiceBox<>();
         selectDeviceChoiceBox = new ChoiceBox<>();
-        instrumentAppChoiceBox = new ChoiceBox<>();
+        autoInstrumentChoiceBox = new ChoiceBox<>();
         noResetChoiceBox = new ChoiceBox<>();
         testRunTypeChoiceBox = new ChoiceBox<>();
         selectTestToRunChoiceBox = new ChoiceBox<>();
@@ -162,14 +158,14 @@ public class MainRunner extends Application {
 
     private boolean isRequiredFieldsEmpty() {
         if (selectDeviceChoiceBox.getItems().isEmpty() || selectPlatformChoiceBox.getItems().isEmpty() || selectTestToRunChoiceBox.getItems().isEmpty() || testRunTypeChoiceBox.getItems().isEmpty()) {
-            AlertBox.display("Configurations Not Set", "Please set all required configurations");
+            display("Configurations Not Set", "Please set all required configurations");
             return true;
         }
         return false;
     }
 
     private void closeProgram() {
-        boolean answer = core.UI.QuitDialogBox.display("Quiting Automation", "This will terminate the Test Session\n\n Are you sure you want to quit? ");
+        boolean answer = QuitDialogBox.display("Quiting Automation", "This will terminate the Test Session\n\n Are you sure you want to quit? ");
         if (answer)
             window.close();
     }

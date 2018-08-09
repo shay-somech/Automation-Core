@@ -20,8 +20,8 @@ public class IOSHelper {
         return instance;
     }
 
-    public static ArrayList getConnectedDevices() {
-        ArrayList devices = new ArrayList();
+    public static ArrayList<String> getIOSDevices() {
+        ArrayList<String> devices = new ArrayList<>();
         try {
             String line;
             Process getConnectedDevices = Runtime.getRuntime().exec("idevice_id -l");

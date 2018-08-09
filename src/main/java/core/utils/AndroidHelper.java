@@ -4,6 +4,8 @@ import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.android.Activity;
 
+import java.util.ArrayList;
+
 import static core.constants.ZoneType.NATIVE;
 import static core.managers.baseclasses.ElementFinder.getElementByPartialText;
 
@@ -15,6 +17,18 @@ public class AndroidHelper {
         if (instance == null)
             instance = new AndroidHelper();
         return instance;
+    }
+
+    public static ArrayList<String> getAndroidDevices() {
+        MyLogger.logSys("Checking for available devices");
+        ArrayList<String> availableDevices = new ArrayList<>();
+        ArrayList connectedDevices = ADBHelper.getConnectedDevices();
+        for (Object connectedDevice : connectedDevices) {
+            availableDevices.add(connectedDevice.toString());
+        }
+        if (availableDevices.size() == 0)
+            throw new RuntimeException("Not a single device is available for testing at this time");
+        return availableDevices;
     }
 
     String getAndroidCurrentActivity() {

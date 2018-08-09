@@ -1,24 +1,23 @@
 package core.managers.drivers;
 
-import core.configurationPopUp.DropDownExecutioner;
+import core.UI.UIExecutioner;
 import core.managers.MyLogger;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import static core.UI.MainUIRunner.autoInstrumentChoiceBox;
+import static core.UI.MainUIRunner.noResetChoiceBox;
 import static core.constants.AppInfo.iOSBundleId;
+import static core.managers.drivers.DriverServiceBuilder.getDeviceID;
 
 public class IOSDriverManager {
 
     public static boolean isIOS = false;
     private static IOSDriverManager instance;
-
-    private static final String url = "http://localhost:4723/wd/hub";
 
     public static IOSDriverManager getInstance() {
         if (instance == null)
@@ -27,29 +26,31 @@ public class IOSDriverManager {
     }
 
     private DesiredCapabilities setCapabilities() {
-        DesiredCapabilities dc = DropDownExecutioner.dc;
-
+        DesiredCapabilities dc = UIExecutioner.dc;
         if (dc == null) {
             dc = new DesiredCapabilities();
         }
+
         dc.setCapability("instrumentApp", true);
         dc.setCapability("reportDirectory", "reports");
         dc.setCapability("reportFormat", "xml");
-        dc.setCapability("testName", "Gini-Apps Automation");
+        dc.setCapability("autoInstrument", Boolean.parseBoolean(autoInstrumentChoiceBox.getValue()));
+        dc.setCapability("noReset", Boolean.parseBoolean(noResetChoiceBox.getValue()));
+        dc.setCapability("deviceName", getDeviceID());
+        dc.setCapability(MobileCapabilityType.UDID, getDeviceID());
         dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iOSBundleId);
         return dc;
     }
 
-    public void startDriver() {
+    void startDriver(AppiumDriverLocalService service) {
         try {
-            DriverManager.setDriver(new IOSDriver<>(new URL(url), setCapabilities()));
+            MyLogger.logSys("Starting iOS driver");
+            DriverManager.setDriver(new IOSDriver<>(service, setCapabilities()));
             isIOS = true;
 
         } catch (SessionNotCreatedException e) {
-            MyLogger.logSys("iOS device status :: NOT READY");
+            MyLogger.logSys("Failed to start iOS driver");
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         }
     }
 }

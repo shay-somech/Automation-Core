@@ -1,22 +1,23 @@
 package core.managers.drivers;
 
-import core.configurationPopUp.DropDownExecutioner;
+import core.UI.UIExecutioner;
 import core.managers.MyLogger;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import static core.UI.MainUIRunner.autoInstrumentChoiceBox;
+import static core.UI.MainUIRunner.noResetChoiceBox;
 import static core.constants.AppInfo.androidAppMainActivity;
 import static core.constants.AppInfo.androidAppPackage;
+import static core.managers.drivers.DriverServiceBuilder.getDeviceID;
 
 public class AndroidDriverManager {
 
     public static boolean isAndroid = false;
-    static final String url = "http://localhost:4723/wd/hub";
     private static AndroidDriverManager instance;
 
     public static AndroidDriverManager getInstance() {
@@ -26,33 +27,30 @@ public class AndroidDriverManager {
     }
 
     private DesiredCapabilities setCapabilities() {
-        DesiredCapabilities dc = DropDownExecutioner.dc;
+        DesiredCapabilities dc = UIExecutioner.dc;
 
         if (dc == null) {
             dc = new DesiredCapabilities();
         }
 
-        dc.setCapability("reportDirectory", "reports");
-        dc.setCapability("reportFormat", "xml");
-        dc.setCapability("testName", "Gini-Apps Automation");
-        dc.setCapability("automationName", "UiAutomator2");
         dc.setCapability("platformName", "Android");
+        dc.setCapability("deviceName", getDeviceID());
+        dc.setCapability("autoInstrument", Boolean.parseBoolean(autoInstrumentChoiceBox.getValue()));
+        dc.setCapability("noReset", Boolean.parseBoolean(noResetChoiceBox.getValue()));
+        dc.setCapability(MobileCapabilityType.UDID, getDeviceID());
         dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, androidAppPackage);
         dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, androidAppMainActivity);
         return dc;
     }
 
-
-    public void startDriver() {
+    void startDriver(AppiumDriverLocalService service) {
         try {
-            DriverManager.setDriver(new AndroidDriver<>(new URL(url), setCapabilities()));
+            MyLogger.logSys("Starting Android driver");
+            DriverManager.setDriver(new AndroidDriver<>(service, setCapabilities()));
             isAndroid = true;
 
         } catch (SessionNotCreatedException e) {
-            MyLogger.logSys("Android device status :: NOT READY");
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            MyLogger.logSys("Failed to start Android driver");
         }
     }
 }

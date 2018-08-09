@@ -13,7 +13,7 @@ public class iOSTestManager extends Runner {
 
     @BeforeMethod
     public void preTest() {
-        MyLogger.logger.info("Preparing Test execution");
+        MyLogger.logSysInfo("Preparing Test execution");
         List iOSDoc = DriverManager.getIosDriver().findElements(By.xpath("//*[@value='Dock']"));
 
         if (iOSDoc.size() > 0) {

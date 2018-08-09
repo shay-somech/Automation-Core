@@ -12,7 +12,7 @@ public class AndroidTestManager extends Runner {
 
     @BeforeTest
     public void preTest() {
-        MyLogger.logger.info("Preparing Test execution");
+        MyLogger.logSysInfo("Preparing Test execution");
         System.out.println("App Current Activity = " + actionHelper.getAndroidCurrentActivity());
 
         if (!actionHelper.getAndroidCurrentActivity().contains("android.app.Dialog") && !actionHelper.getAndroidCurrentActivity().contains(".ui.activities.SplashActivity") &&

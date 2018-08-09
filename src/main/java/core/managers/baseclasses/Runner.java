@@ -1,24 +1,24 @@
 package core.managers.baseclasses;
 
+import core.managers.AutomationLauncher;
 import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 public class Runner {
 
-    @BeforeTest
-    public void setUp() {
-        MyLogger.logSys("Setting Up Automation \n");
-        DriverManager.getDriver();
-        ActionHelper.getInstance();
+    @BeforeSuite
+    public static void main(String[] args) {
+        MyLogger.logSysInfo("Initializing Automation");
+        AutomationLauncher.start();
     }
 
-    @AfterTest(alwaysRun = true)
+    @AfterSuite(alwaysRun = true)
     public void tearDown() {
-        MyLogger.logSys("Quiting Automation");
+        MyLogger.logSysInfo("Quiting Automation");
         DriverManager.getDriver().quit();
         ActionHelper.quit();
         DriverServiceBuilder.killDriver();

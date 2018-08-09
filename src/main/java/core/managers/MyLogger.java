@@ -1,9 +1,5 @@
 package core.managers;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-
-
 public class MyLogger {
 
     private static final String ANSI_RESET = "\u001B[0m";
@@ -16,25 +12,15 @@ public class MyLogger {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
-
-    public static Logger logger = Logger.getLogger("WhereDoYouSeeMe?");
-    private static Logger myLogger;
-
-
-    public static Logger getLogger() {
-        if (myLogger == null) {
-            myLogger = Logger.getLogger("WhereDoYouSeeMe?-2");
-            myLogger.setLevel(Level.DEBUG);
-
-        }
-        return logger;
-    }
-
     public static void logSys(String message) {
         System.out.println(message);
     }
 
     public static void logSysInfo(String message) {
         System.out.println(ANSI_PURPLE + "\n" + message + ANSI_RESET);
+    }
+
+    public static void logSysError(String message) {
+        System.out.println(ANSI_RED + "\n" + message + ANSI_RESET);
     }
 }

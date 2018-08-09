@@ -1,4 +1,4 @@
-package core.configurationPopUp;
+package core.UI;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
