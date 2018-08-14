@@ -28,7 +28,7 @@ public class MainUIRunner extends Application {
     private Label testRunTypeLabel;
     private Label selectTestListLabel;
     private ChoiceBox<String> testRunTypeChoiceBox;
-    private ChoiceBox<String> selectTestToRunChoiceBox;
+    public static ChoiceBox<String> selectTestToRunChoiceBox;
     public static ChoiceBox<String> selectDeviceChoiceBox;
     public static ChoiceBox<String> autoInstrumentChoiceBox;
     public static ChoiceBox<String> noResetChoiceBox;
@@ -96,7 +96,7 @@ public class MainUIRunner extends Application {
             if (testRunType.equals("Single Run")) {
                 selectTestToRunChoiceBox.getItems().clear();
 
-                ArrayList classNames = getJavaClassNameByFolderPath("/Users/automationstation/Automation-Framework/src/test/java");
+                ArrayList classNames = getJavaClassNameByFolderPath(System.getProperty("user.dir") + "/src/test/java/Tests/");
                 for (Object className : classNames) {
                     String name = className.toString();
                     selectTestToRunChoiceBox.getItems().add(name.substring(name.indexOf("java/"), name.indexOf(".java")).replace("java/", "").replace("/", "."));
@@ -105,7 +105,7 @@ public class MainUIRunner extends Application {
             } else if (testRunType.equals("Suite")) {
                 selectTestToRunChoiceBox.getItems().clear();
 
-                ArrayList xmlsNames = getXMLClassNameByFolderPath("/Users/automationstation/Automation-Framework/src/test/java");
+                ArrayList xmlsNames = getXMLClassNameByFolderPath(System.getProperty("user.dir") + "/src/test/java/Tests/");
                 for (Object xmlName : xmlsNames) {
                     selectTestToRunChoiceBox.getItems().add(xmlName.toString());
                 }
@@ -158,7 +158,7 @@ public class MainUIRunner extends Application {
 
     private boolean isRequiredFieldsEmpty() {
         if (selectDeviceChoiceBox.getItems().isEmpty() || selectPlatformChoiceBox.getItems().isEmpty() || selectTestToRunChoiceBox.getItems().isEmpty() || testRunTypeChoiceBox.getItems().isEmpty()) {
-            display("Configurations Not Set", "Please set all required configurations");
+            display("Configurations Not Set Properly", "Please set all required configurations");
             return true;
         }
         return false;
