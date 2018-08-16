@@ -13,15 +13,8 @@ import static core.utils.TestNGHelper.runTestNGSuite;
 public class AutomationLauncher {
 
     public static boolean isBuildingFromJenkins() {
-        String jenkinsPlatformProperty = System.getProperty("Platform", "");
-        switch (jenkinsPlatformProperty) {
-            case "Android":
-                return true;
-            case "iOS":
-                return true;
-            default:
-                return false;
-        }
+        String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
+        return jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
     }
 
     private static void startAutomationState(String states) {

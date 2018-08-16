@@ -58,7 +58,7 @@ public class DriverServiceBuilder {
         if (isBuildingFromJenkins()) {
 
             /** Build with Jenkins parameterized */
-            String jenkinsPlatformProperty = System.getProperty("Platform", "Android");
+            String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
             if (jenkinsPlatformProperty.equals("Android")) {
                 AndroidDriverManager.getInstance().startDriver(service);
             } else {

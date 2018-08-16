@@ -124,7 +124,7 @@ public class MainUIRunner extends Application {
             if (testRunType.equals("Single Run")) {
                 selectTestToRunChoiceBox.getItems().clear();
 
-                ArrayList classNames = getJavaClassNameByFolderPath(System.getProperty("user.dir") + "/src/test/java/Tests/");
+                ArrayList classNames = getJavaClassNameByFolderPath(System.getProperty("user.dir") + "/src/test/java/");
                 for (Object className : classNames) {
                     String name = className.toString();
                     selectTestToRunChoiceBox.getItems().add(name.substring(name.indexOf("java/"), name.indexOf(".java")).replace("java/", "").replace("/", "."));
@@ -133,7 +133,7 @@ public class MainUIRunner extends Application {
             } else if (testRunType.equals("Suite")) {
                 selectTestToRunChoiceBox.getItems().clear();
 
-                ArrayList xmlsNames = getXMLClassNameByFolderPath(System.getProperty("user.dir") + "/src/test/java/Tests/");
+                ArrayList xmlsNames = getXMLClassNameByFolderPath(System.getProperty("user.dir") + "/src/test/java/");
                 for (Object xmlName : xmlsNames) {
                     selectTestToRunChoiceBox.getItems().add(xmlName.toString());
                 }
