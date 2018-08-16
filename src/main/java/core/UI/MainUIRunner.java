@@ -6,8 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,14 +33,18 @@ public class MainUIRunner extends Application {
     private Label noResetLabel = new Label();
     private Label testRunTypeLabel = new Label();
     private Label selectTestListLabel = new Label();
-    private ChoiceBox<String> testRunTypeChoiceBox = new ChoiceBox<>();
-    private ChoiceBox<String> shouldInstallAppChoiceBox = new ChoiceBox<>();
-    public static ChoiceBox<String> selectAppToInstallChoiceBox = new ChoiceBox<>();
-    public static ChoiceBox<String> selectTestToRunChoiceBox = new ChoiceBox<>();
-    public static ChoiceBox<String> selectDeviceChoiceBox = new ChoiceBox<>();
-    public static ChoiceBox<String> autoInstrumentChoiceBox = new ChoiceBox<>();
-    public static ChoiceBox<String> noResetChoiceBox = new ChoiceBox<>();
-    public static ChoiceBox<String> selectPlatformChoiceBox = new ChoiceBox<>();
+    private ChoiceBox<String> testRunTypeChoiceBox;
+    public static ChoiceBox<String> selectTestToRunChoiceBox;
+    public static ChoiceBox<String> selectDeviceChoiceBox;
+    public static ChoiceBox<String> autoInstrumentChoiceBox;
+    public static ChoiceBox<String> noResetChoiceBox;
+    public static ChoiceBox<String> selectPlatformChoiceBox;
+    public static ChoiceBox<String> shouldInstallAppChoiceBox;
+    public static ChoiceBox<String> selectAppToInstallChoiceBox;
+
+    public MainUIRunner() {
+        initChoiceBoxes();
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -175,6 +181,17 @@ public class MainUIRunner extends Application {
         Scene scene = new Scene(layout, 450, 700);
         window.setScene(scene);
         window.show();
+    }
+
+    private void initChoiceBoxes() {
+        testRunTypeChoiceBox = new ChoiceBox<>();
+        selectTestToRunChoiceBox = new ChoiceBox<>();
+        selectDeviceChoiceBox = new ChoiceBox<>();
+        autoInstrumentChoiceBox = new ChoiceBox<>();
+        noResetChoiceBox = new ChoiceBox<>();
+        selectPlatformChoiceBox = new ChoiceBox<>();
+        shouldInstallAppChoiceBox = new ChoiceBox<>();
+        selectAppToInstallChoiceBox = new ChoiceBox<>();
     }
 
     private void createNewLabel(Label labelName, String text, Color labelColor, String font, int fontSize) {

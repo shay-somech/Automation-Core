@@ -9,10 +9,8 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static core.UI.MainUIRunner.autoInstrumentChoiceBox;
-import static core.UI.MainUIRunner.noResetChoiceBox;
-import static core.constants.AppInfo.androidAppMainActivity;
-import static core.constants.AppInfo.androidAppPackage;
+import static core.UI.MainUIRunner.*;
+import static core.constants.AppInfo.*;
 import static core.managers.drivers.DriverServiceBuilder.getDeviceID;
 
 public class AndroidDriverManager {
@@ -40,6 +38,10 @@ public class AndroidDriverManager {
         dc.setCapability(MobileCapabilityType.UDID, getDeviceID());
         dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, androidAppPackage);
         dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, androidAppMainActivity);
+
+        if (Boolean.parseBoolean(shouldInstallAppChoiceBox.getValue())) {
+            dc.setCapability(MobileCapabilityType.APP, androidAppInstallationPath);
+        }
         return dc;
     }
 

@@ -9,8 +9,8 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static core.UI.MainUIRunner.autoInstrumentChoiceBox;
-import static core.UI.MainUIRunner.noResetChoiceBox;
+import static core.UI.MainUIRunner.*;
+import static core.constants.AppInfo.iOSAppInstallationPath;
 import static core.constants.AppInfo.iOSBundleId;
 import static core.managers.drivers.DriverServiceBuilder.getDeviceID;
 
@@ -39,6 +39,10 @@ public class IOSDriverManager {
         dc.setCapability("deviceName", getDeviceID());
         dc.setCapability(MobileCapabilityType.UDID, getDeviceID());
         dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iOSBundleId);
+
+        if (Boolean.parseBoolean(shouldInstallAppChoiceBox.getValue())) {
+            dc.setCapability(MobileCapabilityType.APP, iOSAppInstallationPath);
+        }
         return dc;
     }
 
