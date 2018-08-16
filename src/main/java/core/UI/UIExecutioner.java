@@ -49,6 +49,42 @@ public class UIExecutioner {
         return availableDevices;
     }
 
+    static ArrayList<File> getAvailableAPKs() {
+        String directoryPath = System.getProperty("user.dir") + "/src/main/resources/";
+        File directory = new File(directoryPath);
+        ArrayList<File> fileList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File object : files) {
+                if (object.isFile() && object.getAbsolutePath().contains(".apk")) {
+                    fileList.add(object);
+                }
+            }
+        }
+        return fileList;
+    }
+
+    static ArrayList<File> getAvailableIPAs() {
+        String directoryPath = System.getProperty("user.dir") + "/src/main/resources/";
+        File directory = new File(directoryPath);
+        ArrayList<File> fileList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File object : files) {
+                if (object.isFile() && object.getAbsolutePath().contains(".ipa")) {
+                    fileList.add(object);
+                }
+            }
+        }
+        return fileList;
+    }
+
     static ArrayList getJavaClassNameByFolderPath(String directoryName) {
         File directory = new File(directoryName);
         ArrayList objectList = new ArrayList<>();

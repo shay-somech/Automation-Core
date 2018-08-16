@@ -6,8 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -21,18 +23,22 @@ public class MainUIRunner extends Application {
     private static final String Android = "Android";
     private static final String iOS = "iOS";
 
-    private Label selectPlatformLabel;
-    private Label selectDeviceLabel;
-    private Label autoInstrumentLabel;
-    private Label noResetLabel;
-    private Label testRunTypeLabel;
-    private Label selectTestListLabel;
-    private ChoiceBox<String> testRunTypeChoiceBox;
-    public static ChoiceBox<String> selectTestToRunChoiceBox;
-    public static ChoiceBox<String> selectDeviceChoiceBox;
-    public static ChoiceBox<String> autoInstrumentChoiceBox;
-    public static ChoiceBox<String> noResetChoiceBox;
-    public static ChoiceBox<String> selectPlatformChoiceBox;
+    private Label selectPlatformLabel = new Label();
+    private Label selectDeviceLabel = new Label();
+    private Label shouldInstallAppLabel = new Label();
+    private Label selectAppToInstallLabel = new Label();
+    private Label autoInstrumentLabel = new Label();
+    private Label noResetLabel = new Label();
+    private Label testRunTypeLabel = new Label();
+    private Label selectTestListLabel = new Label();
+    private ChoiceBox<String> testRunTypeChoiceBox = new ChoiceBox<>();
+    private ChoiceBox<String> shouldInstallAppChoiceBox = new ChoiceBox<>();
+    public static ChoiceBox<String> selectAppToInstallChoiceBox = new ChoiceBox<>();
+    public static ChoiceBox<String> selectTestToRunChoiceBox = new ChoiceBox<>();
+    public static ChoiceBox<String> selectDeviceChoiceBox = new ChoiceBox<>();
+    public static ChoiceBox<String> autoInstrumentChoiceBox = new ChoiceBox<>();
+    public static ChoiceBox<String> noResetChoiceBox = new ChoiceBox<>();
+    public static ChoiceBox<String> selectPlatformChoiceBox = new ChoiceBox<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -42,7 +48,10 @@ public class MainUIRunner extends Application {
     public void start(Stage primaryStage) {
         window = primaryStage;
         window.setTitle("Please select Test Configuration");
-        Button button = new Button("Run");
+
+        Button button = new Button();
+        button.setText("Run");
+        button.setFont(new Font("Times New Roman", 24));
 
         //Handles the close button events
         window.setOnCloseRequest(e -> {
@@ -52,27 +61,27 @@ public class MainUIRunner extends Application {
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20, 20, 20, 20));
+        layout.setBackground(new Background(new BackgroundFill(Color.MINTCREAM, null, null)));
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
 
-        // Labels
-        initLabels();
-
-        //ChoiceBoxes
-        initChoiceBoxes();
+        // Set Labels values
+        setLabels();
 
         //getItems returns the ObservableList object which you can add items to
         selectPlatformChoiceBox.getItems().addAll(iOS, Android);
         autoInstrumentChoiceBox.getItems().addAll("true", "false");
         noResetChoiceBox.getItems().addAll("true", "false");
         testRunTypeChoiceBox.getItems().addAll("Single Run", "Suite");
+        shouldInstallAppChoiceBox.getItems().addAll("true", "false");
 
         //Set a default value
         autoInstrumentChoiceBox.setValue("true");
         noResetChoiceBox.setValue("false");
+        shouldInstallAppChoiceBox.setValue("false");
 
         //Listen for selection changes in Platform Selection
         selectPlatformChoiceBox.setOnAction(event -> {
@@ -82,9 +91,22 @@ public class MainUIRunner extends Application {
             if (platform.equals(Android)) {
                 selectDeviceChoiceBox.getItems().clear();
                 selectDeviceChoiceBox.getItems().addAll(getAvailableAndroidDevices());
+
+                selectAppToInstallChoiceBox.getItems().clear();
+                ArrayList apkList = getAvailableAPKs();
+                for (Object apk : apkList) {
+                    selectAppToInstallChoiceBox.getItems().add(apk.toString());
+                }
+
             } else {
                 selectDeviceChoiceBox.getItems().clear();
                 selectDeviceChoiceBox.getItems().addAll(getAvailableIOSDevices());
+
+                selectAppToInstallChoiceBox.getItems().clear();
+                ArrayList ipaList = getAvailableIPAs();
+                for (Object ipa : ipaList) {
+                    selectAppToInstallChoiceBox.getItems().add(ipa.toString());
+                }
             }
         });
 
@@ -119,41 +141,63 @@ public class MainUIRunner extends Application {
             }
         });
 
-        layout.getChildren().addAll(testRunTypeLabel, testRunTypeChoiceBox, selectTestListLabel, selectTestToRunChoiceBox, selectPlatformLabel, selectPlatformChoiceBox, selectDeviceLabel, selectDeviceChoiceBox, autoInstrumentLabel, autoInstrumentChoiceBox, noResetLabel, noResetChoiceBox, button);
+        //Build layout
+        layout.getChildren().add(testRunTypeLabel);
+        layout.getChildren().add(testRunTypeChoiceBox);
+        layout.getChildren().add(selectTestListLabel);
+        layout.getChildren().add(selectTestToRunChoiceBox);
+        layout.getChildren().add(selectPlatformLabel);
+        layout.getChildren().add(selectPlatformChoiceBox);
+        layout.getChildren().add(selectDeviceLabel);
+        layout.getChildren().add(selectDeviceChoiceBox);
+        layout.getChildren().add(shouldInstallAppLabel);
+        layout.getChildren().add(shouldInstallAppChoiceBox);
 
-        Scene scene = new Scene(layout, 350, 450);
+        //Listen to shouldInstallApp choice box then Add\Remove App path accordingly (Based also on Platform type)
+        shouldInstallAppChoiceBox.setOnAction(event -> {
+            shouldInstallAppChoiceBox.getSelectionModel().selectedItemProperty().addListener((currentValue, oldValue, newValue) -> shouldInstallAppChoiceBox.getValue());
+            String shouldInstallApp = shouldInstallAppChoiceBox.getValue();
+            if (shouldInstallApp.equals("true")) {
+                layout.getChildren().add(selectAppToInstallLabel);
+                layout.getChildren().add(selectAppToInstallChoiceBox);
+            } else {
+                layout.getChildren().remove(selectAppToInstallLabel);
+                layout.getChildren().remove(selectAppToInstallChoiceBox);
+            }
+        });
+
+        layout.getChildren().add(autoInstrumentLabel);
+        layout.getChildren().add(autoInstrumentChoiceBox);
+        layout.getChildren().add(noResetLabel);
+        layout.getChildren().add(noResetChoiceBox);
+        layout.getChildren().add(button);
+
+        Scene scene = new Scene(layout, 450, 700);
         window.setScene(scene);
         window.show();
     }
 
-    private void initLabels() {
-
-        selectPlatformLabel = new Label("Select Platform:");
-        GridPane.setConstraints(selectPlatformLabel, 0, 0);
-
-        selectDeviceLabel = new Label("Select Device:");
-        GridPane.setConstraints(selectDeviceLabel, 0, 0);
-
-        autoInstrumentLabel = new Label("Instrument App:");
-        GridPane.setConstraints(autoInstrumentLabel, 0, 0);
-
-        noResetLabel = new Label("Reset App:");
-        GridPane.setConstraints(noResetLabel, 0, 0);
-
-        testRunTypeLabel = new Label("Select Test Run Type:");
-        GridPane.setConstraints(testRunTypeLabel, 0, 0);
-
-        selectTestListLabel = new Label("Select Test to Run:");
-        GridPane.setConstraints(selectTestListLabel, 0, 0);
+    private void createNewLabel(Label labelName, String text, Color labelColor, String font, int fontSize) {
+        labelName.setText(text);
+        labelName.setTextFill(labelColor);
+        labelName.setFont(new Font(font, fontSize));
+        GridPane.setConstraints(labelName, 0, 0);
     }
 
-    private void initChoiceBoxes() {
-        selectPlatformChoiceBox = new ChoiceBox<>();
-        selectDeviceChoiceBox = new ChoiceBox<>();
-        autoInstrumentChoiceBox = new ChoiceBox<>();
-        noResetChoiceBox = new ChoiceBox<>();
-        testRunTypeChoiceBox = new ChoiceBox<>();
-        selectTestToRunChoiceBox = new ChoiceBox<>();
+    private void setLabels() {
+        Color labelColor = Color.BLACK;
+        String font = "Times new roman";
+        int fontSize = 20;
+
+        createNewLabel(selectPlatformLabel, "Select Platform:", labelColor, font, fontSize);
+        createNewLabel(selectDeviceLabel, "Select Device:", labelColor, font, fontSize);
+        createNewLabel(autoInstrumentLabel, "Instrument App:", labelColor, font, fontSize);
+        createNewLabel(noResetLabel, "Reset App:", labelColor, font, fontSize);
+        createNewLabel(testRunTypeLabel, "Select Test Run Type:", labelColor, font, fontSize);
+        createNewLabel(selectDeviceLabel, "Select Device:", labelColor, font, fontSize);
+        createNewLabel(selectTestListLabel, "Select Test to Run:", labelColor, font, fontSize);
+        createNewLabel(shouldInstallAppLabel, "Install Application ?", labelColor, font, fontSize);
+        createNewLabel(selectAppToInstallLabel, "Select Application to install:", labelColor, font, fontSize);
     }
 
     private boolean isRequiredFieldsEmpty() {
