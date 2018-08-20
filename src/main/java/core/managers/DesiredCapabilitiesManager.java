@@ -7,7 +7,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static core.UI.MainUIRunner.*;
 import static core.constants.AppInfo.*;
-import static core.managers.JenkinsManager.isBuildingFromJenkins;
 import static core.managers.drivers.AndroidDriverManager.isAndroid;
 import static core.managers.drivers.DriverServiceBuilder.getDeviceID;
 import static core.managers.drivers.IOSDriverManager.isIOS;
@@ -30,7 +29,7 @@ public class DesiredCapabilitiesManager {
             dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, androidAppPackage);
         dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, androidAppMainActivity);
 
-        if (isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             if (isAndroid) {
                 dc.setCapability(MobileCapabilityType.APP, androidApp);
             } else {

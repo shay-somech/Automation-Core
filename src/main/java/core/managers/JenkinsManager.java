@@ -5,19 +5,30 @@ import static core.utils.IOSHelper.getIOSDevices;
 
 public class JenkinsManager {
 
-    private static String jenkinsPlatformProperty;
-    private static boolean isJenkinsAndroidPlatform;
-    private static boolean isJenkinsIOSPlatform;
-    public static boolean isBuildingFromJenkins = isBuildingFromJenkins();
+    private static JenkinsManager instance;
+    private String jenkinsPlatformProperty;
+    private boolean isJenkinsAndroidPlatform;
+    private boolean isJenkinsIOSPlatform;
+    private Boolean isBuildingFromJenkins = null;
 
     private JenkinsManager() {
         getJenkinsSelectedPlatform();
         getJenkinsDeviceId();
     }
 
-    private static boolean isBuildingFromJenkins() {
-        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
-        return isBuildingFromJenkins = jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
+    public static JenkinsManager getInstance() {
+        if (instance == null) {
+            instance = new JenkinsManager();
+        }
+        return instance;
+    }
+
+    public boolean isBuildingFromJenkins() {
+        if (isBuildingFromJenkins == null) {
+            jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
+            isBuildingFromJenkins = jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
+        }
+        return isBuildingFromJenkins;
     }
 
     private void getJenkinsSelectedPlatform() {
@@ -39,7 +50,7 @@ public class JenkinsManager {
         }
     }
 
-    public static String getJenkinsDeviceId() {
+    public String getJenkinsDeviceId() {
         if (isJenkinsAndroidPlatform) {
             getAndroidDevices();
 

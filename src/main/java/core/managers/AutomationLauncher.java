@@ -8,7 +8,6 @@ import static core.UI.MainUIRunner.selectPlatformChoiceBox;
 import static core.UI.MainUIRunner.selectTestToRunChoiceBox;
 import static core.constants.AutomationStatesValues.JENKINS_PARAMETERIZED;
 import static core.constants.AutomationStatesValues.MANUAL;
-import static core.managers.JenkinsManager.isBuildingFromJenkins;
 import static core.utils.TestNGHelper.runTestNGSuite;
 
 public class AutomationLauncher {
@@ -30,7 +29,7 @@ public class AutomationLauncher {
     }
 
     public static void start() {
-        if (isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             MyLogger.logSys("Starting Automation From Jenkins");
             startAutomationState(JENKINS_PARAMETERIZED);
         } else {

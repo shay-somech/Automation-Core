@@ -1,5 +1,6 @@
 package core.managers.drivers;
 
+import core.managers.JenkinsManager;
 import core.managers.MyLogger;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -7,8 +8,6 @@ import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import javafx.scene.control.ChoiceBox;
 
 import static core.UI.MainUIRunner.selectDeviceChoiceBox;
-import static core.managers.JenkinsManager.getJenkinsDeviceId;
-import static core.managers.JenkinsManager.isBuildingFromJenkins;
 
 public class DriverServiceBuilder {
 
@@ -33,8 +32,8 @@ public class DriverServiceBuilder {
 
     public static String getDeviceID() {
         if (deviceID == null) {
-            if (isBuildingFromJenkins) {
-                deviceID = getJenkinsDeviceId();
+            if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+                deviceID = JenkinsManager.getInstance().getJenkinsDeviceId();
             } else {
                 deviceID = selectDeviceChoiceBox.getValue().substring(selectDeviceChoiceBox.getValue().indexOf("|| ") + 3);
             }
@@ -60,7 +59,7 @@ public class DriverServiceBuilder {
     public static void createJenkinsDriver() {
         createAppiumService().start();
 
-        if (isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
 
             /** Build with Jenkins params */
             String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");

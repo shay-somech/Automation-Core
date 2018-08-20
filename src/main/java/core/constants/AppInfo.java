@@ -1,9 +1,10 @@
 package core.constants;
 
+import core.managers.JenkinsManager;
+
 import java.io.File;
 
 import static core.UI.MainUIRunner.selectAppToInstallChoiceBox;
-import static core.managers.JenkinsManager.isBuildingFromJenkins;
 import static core.utils.AndroidHelper.getAvailableAPKs;
 import static core.utils.IOSHelper.getAvailableIPAs;
 
@@ -21,7 +22,7 @@ public class AppInfo {
     private static String setAndroidAppInstallationPath() {
         String apkAbsolutePath = null;
 
-        if (isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             for (File apk : getAvailableAPKs("/src/main/resources/")) {
                 apkAbsolutePath = apk.getAbsolutePath();
             }
@@ -34,7 +35,7 @@ public class AppInfo {
     private static String setIOSAppInstallationPath() {
         String ipaAbsolutePath = null;
 
-        if (isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }
