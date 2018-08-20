@@ -32,7 +32,7 @@ public class DriverServiceBuilder {
 
     public static String getDeviceID() {
         if (deviceID == null) {
-            if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+            if (JenkinsManager.getInstance().isBuildingFromJenkins) {
                 deviceID = JenkinsManager.getInstance().getJenkinsDeviceId();
             } else {
                 deviceID = selectDeviceChoiceBox.getValue().substring(selectDeviceChoiceBox.getValue().indexOf("|| ") + 3);
@@ -59,7 +59,7 @@ public class DriverServiceBuilder {
     public static void createJenkinsDriver() {
         createAppiumService().start();
 
-        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins) {
 
             /** Build with Jenkins params */
             String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");

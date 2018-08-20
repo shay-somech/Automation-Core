@@ -9,11 +9,12 @@ public class JenkinsManager {
     private String jenkinsPlatformProperty;
     private boolean isJenkinsAndroidPlatform;
     private boolean isJenkinsIOSPlatform;
-    private Boolean isBuildingFromJenkins = null;
+    public boolean isBuildingFromJenkins;
 
     private JenkinsManager() {
         getJenkinsSelectedPlatform();
         getJenkinsDeviceId();
+        isBuildingFromJenkins = isBuildingFromJenkins();
     }
 
     public static JenkinsManager getInstance() {
@@ -23,12 +24,9 @@ public class JenkinsManager {
         return instance;
     }
 
-    public boolean isBuildingFromJenkins() {
-        if (isBuildingFromJenkins == null) {
-            jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
-            isBuildingFromJenkins = jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
-        }
-        return isBuildingFromJenkins;
+    private boolean isBuildingFromJenkins() {
+        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
+        return jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
     }
 
     private void getJenkinsSelectedPlatform() {
