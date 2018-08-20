@@ -17,7 +17,6 @@ public class DesiredCapabilitiesManager {
         DesiredCapabilities dc = new DesiredCapabilities();
 
         dc.setCapability("deviceName", getDeviceID());
-        dc.setCapability("deviceName", getDeviceID());
 //        dc.setCapability("instrumentApp", Boolean.parseBoolean(instrumentAppChoiceBox.getValue()));
 //        dc.setCapability("noReset", Boolean.parseBoolean(noResetChoiceBox.getValue()));
         dc.setCapability(MobileCapabilityType.UDID, getDeviceID());
