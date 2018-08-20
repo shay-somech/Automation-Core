@@ -4,11 +4,12 @@ import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static core.managers.baseclasses.ElementFinder.getElementByAccessibilityLabel;
+import static core.baseclasses.ElementFinder.getElementByAccessibilityLabel;
 
 public class IOSHelper {
 
@@ -52,6 +53,24 @@ public class IOSHelper {
             e.printStackTrace();
         }
         throw new RuntimeException("Can't get Device Name");
+    }
+
+    public static ArrayList<File> getAvailableIPAs(String fileDirectoryPath) {
+        String directoryPath = System.getProperty("user.dir") + fileDirectoryPath;
+        File directory = new File(directoryPath);
+        ArrayList<File> fileList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File object : files) {
+                if (object.isFile() && object.getAbsolutePath().contains(".ipa")) {
+                    fileList.add(object);
+                }
+            }
+        }
+        return fileList;
     }
 
     void closeIOSKeyboard() {

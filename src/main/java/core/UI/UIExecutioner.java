@@ -14,7 +14,6 @@ import static core.utils.IOSHelper.getDeviceName;
 
 public class UIExecutioner {
 
-    public static DesiredCapabilities dc = new DesiredCapabilities();
     private static ArrayList androidDevices = AndroidHelper.getAndroidDevices();
     private static ArrayList iOSDevices = IOSHelper.getIOSDevices();
 
@@ -47,42 +46,6 @@ public class UIExecutioner {
             MyLogger.logSys("Not a single iOS device is available for testing at this time");
 
         return availableDevices;
-    }
-
-    static ArrayList<File> getAvailableAPKs() {
-        String directoryPath = System.getProperty("user.dir") + "/src/main/resources/";
-        File directory = new File(directoryPath);
-        ArrayList<File> fileList = new ArrayList<>();
-
-        // get all the files from a directory
-        File[] files = directory.listFiles();
-
-        if (files != null) {
-            for (File object : files) {
-                if (object.isFile() && object.getAbsolutePath().contains(".apk")) {
-                    fileList.add(object);
-                }
-            }
-        }
-        return fileList;
-    }
-
-    static ArrayList<File> getAvailableIPAs() {
-        String directoryPath = System.getProperty("user.dir") + "/src/main/resources/";
-        File directory = new File(directoryPath);
-        ArrayList<File> fileList = new ArrayList<>();
-
-        // get all the files from a directory
-        File[] files = directory.listFiles();
-
-        if (files != null) {
-            for (File object : files) {
-                if (object.isFile() && object.getAbsolutePath().contains(".ipa")) {
-                    fileList.add(object);
-                }
-            }
-        }
-        return fileList;
     }
 
     static ArrayList getJavaClassNameByFolderPath(String directoryName) {

@@ -31,7 +31,7 @@ public class DriverServiceBuilder {
         return getOS().startsWith("Mac");
     }
 
-    static String getDeviceID() {
+    public static String getDeviceID() {
         if (deviceID == null) {
             if (isBuildingFromJenkins) {
                 deviceID = getJenkinsDeviceId();

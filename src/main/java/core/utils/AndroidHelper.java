@@ -4,10 +4,11 @@ import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.android.Activity;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import static core.baseclasses.ElementFinder.getElementByPartialText;
 import static core.constants.ZoneType.NATIVE;
-import static core.managers.baseclasses.ElementFinder.getElementByPartialText;
 
 public class AndroidHelper {
 
@@ -80,15 +81,33 @@ public class AndroidHelper {
         DriverManager.getAndroidDriver().startActivity(new Activity("com.android.settings", ".Settings"));
     }
 
-    public static void completeActionWithIntent(String appName) {
+    public void completeActionWithIntent(String appName) {
         MyLogger.logSys("Selecting to complete action with " + appName);
         if (completeActionWithIntentDisplayed()) {
             getElementByPartialText(appName).findAndClick();
         }
     }
 
-    private static boolean completeActionWithIntentDisplayed() {
+    private boolean completeActionWithIntentDisplayed() {
         ActionHelper.getInstance().setAppContext(NATIVE);
         return getElementByPartialText("פתח באמצעות").findAndReturn().isExistAndDisplayed() || getElementByPartialText("Open with").findAndReturn().isExistAndDisplayed();
+    }
+
+    public static ArrayList<File> getAvailableAPKs(String fileDirectoryPath) {
+        String directoryPath = System.getProperty("user.dir") + fileDirectoryPath;
+        File directory = new File(directoryPath);
+        ArrayList<File> fileList = new ArrayList<>();
+
+        // get all the files from a directory
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File object : files) {
+                if (object.isFile() && object.getAbsolutePath().contains(".apk")) {
+                    fileList.add(object);
+                }
+            }
+        }
+        return fileList;
     }
 }

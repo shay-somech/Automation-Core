@@ -4,7 +4,7 @@ import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import core.utils.ActionHelper;
 
-import static core.managers.baseclasses.ElementFinder.getElementByXpath;
+import static core.baseclasses.ElementFinder.getElementByXpath;
 
 public class ChromeAction extends ChromeConstants {
 

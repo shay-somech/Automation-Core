@@ -1,6 +1,6 @@
 package core.utils;
 
-import core.managers.baseclasses.BaseScreen;
+import core.baseclasses.BaseScreen;
 import core.managers.drivers.AndroidDriverManager;
 
 public class WebviewHelper extends BaseScreen {

@@ -6,9 +6,9 @@ import static core.utils.IOSHelper.getIOSDevices;
 public class JenkinsManager {
 
     private static String jenkinsPlatformProperty;
-    public static boolean isBuildingFromJenkins = isBuildingFromJenkins();
     private static boolean isJenkinsAndroidPlatform;
     private static boolean isJenkinsIOSPlatform;
+    public static boolean isBuildingFromJenkins = isBuildingFromJenkins();
 
     private JenkinsManager() {
         getJenkinsSelectedPlatform();

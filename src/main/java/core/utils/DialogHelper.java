@@ -1,6 +1,6 @@
 package core.utils;
 
-import core.managers.baseclasses.BaseScreen;
+import core.baseclasses.BaseScreen;
 
 public class DialogHelper extends BaseScreen {
 

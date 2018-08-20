@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 import static core.UI.UIExecutioner.*;
 import static core.configurationPopUp.AlertBox.display;
+import static core.utils.AndroidHelper.getAvailableAPKs;
+import static core.utils.IOSHelper.getAvailableIPAs;
 
 public class MainUIRunner extends Application {
 
@@ -36,7 +38,7 @@ public class MainUIRunner extends Application {
     private ChoiceBox<String> testRunTypeChoiceBox;
     public static ChoiceBox<String> selectTestToRunChoiceBox;
     public static ChoiceBox<String> selectDeviceChoiceBox;
-    public static ChoiceBox<String> autoInstrumentChoiceBox;
+    public static ChoiceBox<String> instrumentAppChoiceBox;
     public static ChoiceBox<String> noResetChoiceBox;
     public static ChoiceBox<String> selectPlatformChoiceBox;
     public static ChoiceBox<String> shouldInstallAppChoiceBox;
@@ -79,13 +81,13 @@ public class MainUIRunner extends Application {
 
         //getItems returns the ObservableList object which you can add items to
         selectPlatformChoiceBox.getItems().addAll(iOS, Android);
-        autoInstrumentChoiceBox.getItems().addAll("true", "false");
+        instrumentAppChoiceBox.getItems().addAll("true", "false");
         noResetChoiceBox.getItems().addAll("true", "false");
         testRunTypeChoiceBox.getItems().addAll("Single Run", "Suite");
         shouldInstallAppChoiceBox.getItems().addAll("true", "false");
 
         //Set a default value
-        autoInstrumentChoiceBox.setValue("true");
+        instrumentAppChoiceBox.setValue("true");
         noResetChoiceBox.setValue("false");
         shouldInstallAppChoiceBox.setValue("false");
 
@@ -99,7 +101,7 @@ public class MainUIRunner extends Application {
                 selectDeviceChoiceBox.getItems().addAll(getAvailableAndroidDevices());
 
                 selectAppToInstallChoiceBox.getItems().clear();
-                ArrayList apkList = getAvailableAPKs();
+                ArrayList apkList = getAvailableAPKs("/src/main/resources/");
                 for (Object apk : apkList) {
                     selectAppToInstallChoiceBox.getItems().add(apk.toString());
                 }
@@ -109,7 +111,7 @@ public class MainUIRunner extends Application {
                 selectDeviceChoiceBox.getItems().addAll(getAvailableIOSDevices());
 
                 selectAppToInstallChoiceBox.getItems().clear();
-                ArrayList ipaList = getAvailableIPAs();
+                ArrayList ipaList = getAvailableIPAs("/src/main/resources/");
                 for (Object ipa : ipaList) {
                     selectAppToInstallChoiceBox.getItems().add(ipa.toString());
                 }
@@ -173,7 +175,7 @@ public class MainUIRunner extends Application {
         });
 
         layout.getChildren().add(autoInstrumentLabel);
-        layout.getChildren().add(autoInstrumentChoiceBox);
+        layout.getChildren().add(instrumentAppChoiceBox);
         layout.getChildren().add(noResetLabel);
         layout.getChildren().add(noResetChoiceBox);
         layout.getChildren().add(button);
@@ -187,7 +189,7 @@ public class MainUIRunner extends Application {
         testRunTypeChoiceBox = new ChoiceBox<>();
         selectTestToRunChoiceBox = new ChoiceBox<>();
         selectDeviceChoiceBox = new ChoiceBox<>();
-        autoInstrumentChoiceBox = new ChoiceBox<>();
+        instrumentAppChoiceBox = new ChoiceBox<>();
         noResetChoiceBox = new ChoiceBox<>();
         selectPlatformChoiceBox = new ChoiceBox<>();
         shouldInstallAppChoiceBox = new ChoiceBox<>();

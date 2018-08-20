@@ -1,4 +1,4 @@
-package core.managers.baseclasses;
+package core.baseclasses;
 
 import core.managers.AutomationLauncher;
 import core.managers.MyLogger;

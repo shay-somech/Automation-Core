@@ -1,6 +1,6 @@
 package core.externalScreens;
 
-import core.managers.baseclasses.BaseScreen;
+import core.baseclasses.BaseScreen;
 
 public class FacebookConstants extends BaseScreen {
 

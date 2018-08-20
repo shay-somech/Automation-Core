@@ -1,10 +1,10 @@
-package core.managers.baseclasses;
+package core.baseclasses;
 
 import core.managers.drivers.AndroidDriverManager;
 import core.utils.ElementWrapper;
 import core.utils.XpathGenerator;
 
-public class BaseScreen {
+public class ElementFinder {
 
     /**
      * provide element created from xPath generated from provided id or label depends on platform
@@ -12,7 +12,7 @@ public class BaseScreen {
      * @param id id of element want to be found
      * @return element found by provided id
      */
-    public ElementWrapper getElementByPlatformId(String id) {
+    public static ElementWrapper getElementByPlatformId(String id) {
         if (AndroidDriverManager.isAndroid) {
             return getElementById(id);
         } else {
@@ -27,19 +27,27 @@ public class BaseScreen {
      * @return element found by provided id
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByLabel(String label) {
+    public static ElementWrapper getElementByLabel(String label) {
         return new ElementWrapper(XpathGenerator.getXpathByLabel(label));
     }
 
-    public ElementWrapper getElementByAccessibilityLabel(String label) {
+    public static ElementWrapper getElementByAccessibilityLabel(String label) {
         return new ElementWrapper(XpathGenerator.getXpathByAccessibilityLabel(label));
     }
 
-    public ElementWrapper getElementByAccessibilityIdentifier(String label) {
+    public static ElementWrapper getElementByAccessibilityLabelAndText(String label, String text) {
+        return new ElementWrapper(XpathGenerator.getXpathByAccessibilityLabelAndText(label, text));
+    }
+
+    public static ElementWrapper getElementByAccessibilityIdentifier(String label) {
         return new ElementWrapper(XpathGenerator.getXpathByAccessibilityIdentifier(label));
     }
 
-    public ElementWrapper getElementByLabel(String label, boolean onScreen) {
+    public static ElementWrapper getElementByAccessibilityIdentifierAndText(String label, String text) {
+        return new ElementWrapper(XpathGenerator.getXpathByAccessibilityIdentifierAndText(label, text));
+    }
+
+    public static ElementWrapper getElementByLabel(String label, boolean onScreen) {
         return new ElementWrapper(XpathGenerator.getXpathByLabel(label), onScreen);
     }
 
@@ -51,11 +59,11 @@ public class BaseScreen {
      * @return element found by provided id
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementById(String id) {
+    public static ElementWrapper getElementById(String id) {
         return new ElementWrapper(XpathGenerator.getXpathById(id));
     }
 
-    public ElementWrapper getElementById(String id, boolean onScreen) {
+    public static ElementWrapper getElementById(String id, boolean onScreen) {
         return new ElementWrapper(XpathGenerator.getXpathById(id), onScreen);
     }
 
@@ -67,11 +75,11 @@ public class BaseScreen {
      * @return element found by provided description
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByContentDescription(String description) {
+    public static ElementWrapper getElementByContentDescription(String description) {
         return new ElementWrapper(XpathGenerator.getXpathByDescription(description));
     }
 
-    public ElementWrapper getElementByContentDescription(String description, boolean onScreen) {
+    public static ElementWrapper getElementByContentDescription(String description, boolean onScreen) {
         return new ElementWrapper(XpathGenerator.getXpathByDescription(description), onScreen);
     }
 
@@ -84,11 +92,19 @@ public class BaseScreen {
      * @return element found by provided id and text
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByIdAndText(String id, String text) {
+    public static ElementWrapper getElementByIdAndText(String id, String text) {
         return new ElementWrapper(XpathGenerator.getXpathByIdAndText(id, text));
     }
 
-    public ElementWrapper getElementByIdAndText(String id, String text, boolean onScreen) {
+    public static ElementWrapper getElementByPlatformIdAndText(String id, String text) {
+        if (AndroidDriverManager.isAndroid) {
+            return new ElementWrapper(XpathGenerator.getXpathByIdAndText(id, text));
+        } else {
+            return new ElementWrapper(XpathGenerator.getXpathByAccessibilityIdentifierAndText(id, text));
+        }
+    }
+
+    public static ElementWrapper getElementByIdAndText(String id, String text, boolean onScreen) {
         return new ElementWrapper(XpathGenerator.getXpathByIdAndText(id, text), onScreen);
     }
 
@@ -99,11 +115,11 @@ public class BaseScreen {
      * @return element found by provided text
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByText(String text) {
+    public static ElementWrapper getElementByText(String text) {
         return new ElementWrapper(XpathGenerator.getXpathByText(text));
     }
 
-    public ElementWrapper getElementByText(String text, boolean onScreen) {
+    public static ElementWrapper getElementByText(String text, boolean onScreen) {
         return new ElementWrapper(XpathGenerator.getXpathByText(text), onScreen);
     }
 
@@ -115,7 +131,7 @@ public class BaseScreen {
      * @return element found by provided text
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByPartialText(String text) {
+    public static ElementWrapper getElementByPartialText(String text) {
         return new ElementWrapper(XpathGenerator.getXpathByPartialText(text));
     }
 
@@ -127,11 +143,15 @@ public class BaseScreen {
      * @return element found by provided text
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByIdAndPartialText(String id, String text) {
+    public static ElementWrapper getElementByIdAndPartialText(String id, String text) {
         return new ElementWrapper(XpathGenerator.getXpathByIdAndPartialText(id, text));
     }
 
-    public ElementWrapper getElementByIdAndPartialText(String id, String text, boolean onScreen) {
+    public static ElementWrapper getElementByAccessibilityIdentifierAndPartialText(String id, String text) {
+        return new ElementWrapper(XpathGenerator.getXpathByAccessibilityIdAndPartialText(id, text));
+    }
+
+    public static ElementWrapper getElementByIdAndPartialText(String id, String text, boolean onScreen) {
         return new ElementWrapper(XpathGenerator.getXpathByIdAndPartialText(id, text), onScreen);
     }
 
@@ -140,11 +160,24 @@ public class BaseScreen {
      * @return element found by provided xPath
      * @boolean onScreen determines if we want to search for element on screen
      */
-    public ElementWrapper getElementByXpath(String xPath) {
+    public static ElementWrapper getElementByXpath(String xPath) {
         return new ElementWrapper(xPath);
     }
 
-    public ElementWrapper getElementByXpath(String xPath, boolean onScreen) {
+    public static ElementWrapper getElementByXpath(String xPath, boolean onScreen) {
+        return new ElementWrapper(xPath, onScreen);
+    }
+
+    /**
+     * @param className of element want to be found
+     * @return element found by provided className
+     * @boolean onScreen determines if we want to search for element on screen
+     */
+    public static ElementWrapper getElementByClass(String className) {
+        return new ElementWrapper(XpathGenerator.getXpathByClassName(className));
+    }
+
+    public static ElementWrapper getElementByClass(String xPath, boolean onScreen) {
         return new ElementWrapper(xPath, onScreen);
     }
 
@@ -154,7 +187,7 @@ public class BaseScreen {
      *
      * @param id id of element we want to be verified
      */
-    public void verifyExistById(String id) {
+    public static void verifyExistById(String id) {
         if (!getElementById(id).isExistAndDisplayed())
             throw new AssertionError("Can't verify (" + id + "), element absent or blocked");
     }
@@ -165,9 +198,11 @@ public class BaseScreen {
      *
      * @param elementWrapper ElementWrapper object we want to be verified
      */
-    public void verifyExistByElement(ElementWrapper elementWrapper) {
+    public static void verifyExistByElement(ElementWrapper elementWrapper) {
         if (elementWrapper.isExistAndDisplayed())
             throw new AssertionError("Can't verify (" + elementWrapper.getXpath() + "), element absent or blocked");
     }
 }
 
+// TODO: Element by id should be generic for both platforms
+// Elements by id & text should inherit from (element by id) + text

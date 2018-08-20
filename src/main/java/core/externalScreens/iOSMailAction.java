@@ -6,8 +6,8 @@ import core.utils.ActionHelper;
 
 import static core.constants.ZoneType.INSTRUMENTED_APP;
 import static core.constants.ZoneType.NATIVE;
-import static core.managers.baseclasses.ElementFinder.getElementByAccessibilityLabel;
-import static core.managers.baseclasses.ElementFinder.getElementByText;
+import static core.baseclasses.ElementFinder.getElementByAccessibilityLabel;
+import static core.baseclasses.ElementFinder.getElementByText;
 
 public class iOSMailAction {
 
