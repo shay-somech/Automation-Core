@@ -23,9 +23,10 @@ public class AndroidHelper {
     public static ArrayList<String> getAndroidDevices() {
         MyLogger.logSys("Checking for available devices");
         ArrayList<String> availableDevices = new ArrayList<>();
-        ArrayList connectedDevices = ADBHelper.getConnectedDevices();
-        for (Object connectedDevice : connectedDevices) {
+        ArrayList ADBConnectedDevices = ADBHelper.getConnectedDevices();
+        for (Object connectedDevice : ADBConnectedDevices) {
             availableDevices.add(connectedDevice.toString());
+            MyLogger.logSys("Device found :: " + connectedDevice);
         }
         if (availableDevices.size() == 0)
             throw new RuntimeException("Not a single device is available for testing at this time");

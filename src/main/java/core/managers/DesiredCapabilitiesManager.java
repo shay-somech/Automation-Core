@@ -1,14 +1,14 @@
 package core.managers;
 
+import core.managers.drivers.DriverServiceBuilder;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static core.UI.MainUIRunner.*;
+import static core.UI.MainUIRunner.shouldInstallAppChoiceBox;
 import static core.constants.AppInfo.*;
 import static core.managers.drivers.AndroidDriverManager.isAndroid;
-import static core.managers.drivers.DriverServiceBuilder.getDeviceID;
 import static core.managers.drivers.IOSDriverManager.isIOS;
 
 public class DesiredCapabilitiesManager {
@@ -16,10 +16,10 @@ public class DesiredCapabilitiesManager {
     public static DesiredCapabilities setCapabilities() {
         DesiredCapabilities dc = new DesiredCapabilities();
 
-        dc.setCapability("deviceName", getDeviceID());
+        dc.setCapability("deviceName", DriverServiceBuilder.getDeviceID());
 //        dc.setCapability("instrumentApp", Boolean.parseBoolean(instrumentAppChoiceBox.getValue()));
 //        dc.setCapability("noReset", Boolean.parseBoolean(noResetChoiceBox.getValue()));
-        dc.setCapability(MobileCapabilityType.UDID, getDeviceID());
+        dc.setCapability(MobileCapabilityType.UDID, DriverServiceBuilder.getDeviceID());
 
         if (isIOS)
             dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iOSBundleId);
