@@ -7,7 +7,8 @@ import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import javafx.scene.control.ChoiceBox;
 
 import static core.UI.MainUIRunner.selectDeviceChoiceBox;
-import static core.managers.AutomationLauncher.isBuildingFromJenkins;
+import static core.managers.JenkinsManager.getJenkinsDeviceId;
+import static core.managers.JenkinsManager.isBuildingFromJenkins;
 
 public class DriverServiceBuilder {
 
@@ -32,7 +33,11 @@ public class DriverServiceBuilder {
 
     static String getDeviceID() {
         if (deviceID == null) {
-            deviceID = selectDeviceChoiceBox.getValue().substring(selectDeviceChoiceBox.getValue().indexOf("|| ") + 3);
+            if (isBuildingFromJenkins) {
+                deviceID = getJenkinsDeviceId();
+            } else {
+                deviceID = selectDeviceChoiceBox.getValue().substring(selectDeviceChoiceBox.getValue().indexOf("|| ") + 3);
+            }
         }
         return deviceID;
     }
@@ -52,27 +57,31 @@ public class DriverServiceBuilder {
         return service;
     }
 
-    public static void createDriver(ChoiceBox<String> platform) {
+    public static void createJenkinsDriver() {
         createAppiumService().start();
 
-        if (isBuildingFromJenkins()) {
+        if (isBuildingFromJenkins) {
 
-            /** Build with Jenkins parameterized */
+            /** Build with Jenkins params */
             String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
             if (jenkinsPlatformProperty.equals("Android")) {
                 AndroidDriverManager.getInstance().startDriver(service);
             } else {
                 IOSDriverManager.getInstance().startDriver(service);
             }
-
         } else {
+            throw new RuntimeException("Cannot build from Jenkins, please make sure that the Running service is indeed from Jenkins");
+        }
+    }
 
-            /** Build manually with UI Configurations */
-            if (platform.getValue().equals("Android")) {
-                AndroidDriverManager.getInstance().startDriver(service);
-            } else if (platform.getValue().equals("iOS")) {
-                IOSDriverManager.getInstance().startDriver(service);
-            }
+    public static void createDriver(ChoiceBox<String> platform) {
+        createAppiumService().start();
+
+        /** Build manually with UI Configurations */
+        if (platform.getValue().equals("Android")) {
+            AndroidDriverManager.getInstance().startDriver(service);
+        } else if (platform.getValue().equals("iOS")) {
+            IOSDriverManager.getInstance().startDriver(service);
         }
     }
 

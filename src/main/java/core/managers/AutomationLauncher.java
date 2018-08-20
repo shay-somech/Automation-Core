@@ -8,14 +8,10 @@ import static core.UI.MainUIRunner.selectPlatformChoiceBox;
 import static core.UI.MainUIRunner.selectTestToRunChoiceBox;
 import static core.constants.AutomationStatesValues.JENKINS_PARAMETERIZED;
 import static core.constants.AutomationStatesValues.MANUAL;
+import static core.managers.JenkinsManager.isBuildingFromJenkins;
 import static core.utils.TestNGHelper.runTestNGSuite;
 
 public class AutomationLauncher {
-
-    public static boolean isBuildingFromJenkins() {
-        String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
-        return jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
-    }
 
     private static void startAutomationState(String states) {
         switch (states) {
@@ -27,14 +23,14 @@ public class AutomationLauncher {
                 break;
 
             case JENKINS_PARAMETERIZED:
-                DriverServiceBuilder.createDriver(selectPlatformChoiceBox);
+                DriverServiceBuilder.createJenkinsDriver();
                 ActionHelper.getInstance();
                 break;
         }
     }
 
     public static void start() {
-        if (isBuildingFromJenkins()) {
+        if (isBuildingFromJenkins) {
             MyLogger.logSys("Starting Automation From Jenkins");
             startAutomationState(JENKINS_PARAMETERIZED);
         } else {
