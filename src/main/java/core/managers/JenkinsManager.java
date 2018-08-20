@@ -12,7 +12,6 @@ public class JenkinsManager {
 
     private JenkinsManager() {
         getJenkinsSelectedPlatform();
-        getJenkinsDeviceId();
     }
 
     public static JenkinsManager getInstance() {
