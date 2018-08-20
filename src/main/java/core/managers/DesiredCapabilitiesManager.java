@@ -29,7 +29,7 @@ public class DesiredCapabilitiesManager {
             dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, androidAppPackage);
         dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, androidAppMainActivity);
 
-        if (JenkinsManager.getInstance().isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             if (isAndroid) {
                 dc.setCapability(MobileCapabilityType.APP, androidApp);
             } else {

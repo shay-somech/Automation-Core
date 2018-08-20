@@ -22,7 +22,7 @@ public class AppInfo {
     private static String setAndroidAppInstallationPath() {
         String apkAbsolutePath = null;
 
-        if (JenkinsManager.getInstance().isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             for (File apk : getAvailableAPKs("/src/main/resources/")) {
                 apkAbsolutePath = apk.getAbsolutePath();
             }
@@ -35,7 +35,7 @@ public class AppInfo {
     private static String setIOSAppInstallationPath() {
         String ipaAbsolutePath = null;
 
-        if (JenkinsManager.getInstance().isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }

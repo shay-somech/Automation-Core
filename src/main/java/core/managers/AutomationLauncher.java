@@ -29,7 +29,7 @@ public class AutomationLauncher {
     }
 
     public static void start() {
-        if (JenkinsManager.getInstance().isBuildingFromJenkins) {
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             MyLogger.logSys("Starting Automation From Jenkins");
             startAutomationState(JENKINS_PARAMETERIZED);
         } else {
