@@ -5,10 +5,8 @@ import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
 
 import static core.UI.MainUIRunner.selectPlatformChoiceBox;
-import static core.UI.MainUIRunner.selectTestToRunChoiceBox;
 import static core.constants.AutomationStatesValues.JENKINS_PARAMETERIZED;
 import static core.constants.AutomationStatesValues.MANUAL;
-import static core.utils.TestNGHelper.runTestNGSuite;
 
 public class AutomationLauncher {
 
@@ -18,7 +16,7 @@ public class AutomationLauncher {
                 MainUIRunner.main(null);
                 DriverServiceBuilder.createDriver(selectPlatformChoiceBox);
                 ActionHelper.getInstance();
-                runTestNGSuite(selectTestToRunChoiceBox.getSelectionModel().getSelectedItem());
+//                runTestNGSuiteByClass(selectTestToRunChoiceBox.getSelectionModel().getSelectedItem());
                 break;
 
             case JENKINS_PARAMETERIZED:

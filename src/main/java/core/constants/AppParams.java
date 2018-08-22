@@ -8,7 +8,7 @@ import static core.UI.MainUIRunner.selectAppToInstallChoiceBox;
 import static core.utils.AndroidHelper.getAvailableAPKs;
 import static core.utils.IOSHelper.getAvailableIPAs;
 
-public class AppInfo {
+public class AppParams {
 
     public static final String androidAppPackage = "com.yit.evritViewer";
     public static final String androidAppMainActivity = "com.yit.evrit.viewer.SplashActivity";

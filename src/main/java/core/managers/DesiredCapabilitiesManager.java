@@ -7,7 +7,7 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static core.UI.MainUIRunner.shouldInstallAppChoiceBox;
-import static core.constants.AppInfo.*;
+import static core.constants.AppParams.*;
 import static core.managers.drivers.AndroidDriverManager.isAndroid;
 import static core.managers.drivers.IOSDriverManager.isIOS;
 
@@ -16,17 +16,11 @@ public class DesiredCapabilitiesManager {
     public static DesiredCapabilities setCapabilities() {
         DesiredCapabilities dc = new DesiredCapabilities();
 
-        dc.setCapability("deviceName", DriverServiceBuilder.getDeviceID());
+        dc.setCapability("deviceName", "DEVICE");
+        dc.setCapability("instrumentApp", true);
 //        dc.setCapability("instrumentApp", Boolean.parseBoolean(instrumentAppChoiceBox.getValue()));
 //        dc.setCapability("noReset", Boolean.parseBoolean(noResetChoiceBox.getValue()));
         dc.setCapability(MobileCapabilityType.UDID, DriverServiceBuilder.getDeviceID());
-
-        if (isIOS)
-            dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iOSBundleId);
-
-        if (isAndroid)
-            dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, androidAppPackage);
-        dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, androidAppMainActivity);
 
         if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
             if (isAndroid) {
@@ -44,6 +38,16 @@ public class DesiredCapabilitiesManager {
                 }
             }
         }
+
+        if (isIOS) {
+            dc.setCapability(IOSMobileCapabilityType.BUNDLE_ID, iOSBundleId);
+        }
+
+        if (isAndroid) {
+            dc.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, androidAppPackage);
+            dc.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, androidAppMainActivity);
+        }
+
         return dc;
     }
 }

@@ -50,12 +50,12 @@ public class FunctionHelper {
     }
 
     void closeApp() {
-        MyLogger.logSys("Closing AppInfo ...");
+        MyLogger.logSys("Closing App...");
         DriverManager.getDriver().closeApp();
     }
 
     void launchApp() {
-        MyLogger.logSys("Launching AppInfo ...");
+        MyLogger.logSys("Launching App...");
         DriverManager.getDriver().launchApp();
     }
 

@@ -22,7 +22,10 @@ public class JenkinsManager {
     }
 
     public boolean isBuildingFromJenkins() {
-        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
+        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform");
+        if (jenkinsPlatformProperty == null) {
+            return false;
+        }
         return jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
     }
 
@@ -40,8 +43,6 @@ public class JenkinsManager {
 
                 default:
             }
-        } else {
-            throw new RuntimeException("Cannot define Jenkins selected Platform");
         }
     }
 
