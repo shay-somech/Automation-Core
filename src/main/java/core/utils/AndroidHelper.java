@@ -7,7 +7,8 @@ import io.appium.java_client.android.Activity;
 import java.io.File;
 import java.util.ArrayList;
 
-import static core.baseclasses.ElementFinder.getElementByPartialText;
+import static core.baseclasses.ElementFinder.FindBy.PARTIAL_TEXT;
+import static core.baseclasses.ElementFinder.findElementBy;
 import static core.constants.ZoneType.NATIVE;
 
 public class AndroidHelper {
@@ -26,7 +27,7 @@ public class AndroidHelper {
         ArrayList ADBConnectedDevices = ADBHelper.getConnectedDevices();
         for (Object connectedDevice : ADBConnectedDevices) {
             availableDevices.add(connectedDevice.toString());
-            MyLogger.logSys("Device found :: " + connectedDevice);
+            MyLogger.logSys("Found Android device :: " + connectedDevice);
         }
         if (availableDevices.size() == 0)
             throw new RuntimeException("Not a single device is available for testing at this time");
@@ -85,13 +86,13 @@ public class AndroidHelper {
     public void completeActionWithIntent(String appName) {
         MyLogger.logSys("Selecting to complete action with " + appName);
         if (completeActionWithIntentDisplayed()) {
-            getElementByPartialText(appName).findAndClick();
+            findElementBy(PARTIAL_TEXT, appName).findAndClick();
         }
     }
 
     private boolean completeActionWithIntentDisplayed() {
         ActionHelper.getInstance().setAppContext(NATIVE);
-        return getElementByPartialText("פתח באמצעות").findAndReturn().isExistAndDisplayed() || getElementByPartialText("Open with").findAndReturn().isExistAndDisplayed();
+        return findElementBy(PARTIAL_TEXT, "פתח באמצעות").findAndReturn().isExistAndDisplayed() || findElementBy(PARTIAL_TEXT, "Open with").findAndReturn().isExistAndDisplayed();
     }
 
     public static ArrayList<File> getAvailableAPKs(String fileDirectoryPath) {

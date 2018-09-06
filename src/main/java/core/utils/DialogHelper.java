@@ -1,8 +1,10 @@
 package core.utils;
 
-import core.baseclasses.BaseScreen;
+import core.baseclasses.ElementFinder.FindBy;
 
-public class DialogHelper extends BaseScreen {
+import static core.baseclasses.ElementFinder.findElementBy;
+
+public class DialogHelper {
 
     public static class ID {
         static final String ALLOW_PUSH_NOTIFICATIONS_BUTTON = "permission_allow_button";
@@ -13,10 +15,10 @@ public class DialogHelper extends BaseScreen {
     }
 
     public void clickAllowPushNotificationsButton() {
-        getElementById(ID.ALLOW_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
+        findElementBy(FindBy.ID, ID.ALLOW_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
     }
 
     public void clickDenyPushNotificationsButton() {
-        getElementById(ID.DENY_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
+        findElementBy(FindBy.ID, ID.DENY_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
     }
 }

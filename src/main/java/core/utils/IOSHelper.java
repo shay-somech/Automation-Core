@@ -1,5 +1,6 @@
 package core.utils;
 
+import core.baseclasses.ElementFinder;
 import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 
@@ -8,8 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import static core.baseclasses.ElementFinder.getElementByAccessibilityLabel;
 
 public class IOSHelper {
 
@@ -55,6 +54,21 @@ public class IOSHelper {
         throw new RuntimeException("Can't get Device Name");
     }
 
+    public static String getDeviceVersion(String udid) {
+        try {
+            String line;
+            Process getDeviceVersion = Runtime.getRuntime().exec("ideviceinfo -u " + udid + "| grep ProductVersion");
+            BufferedReader input = new BufferedReader(new InputStreamReader(getDeviceVersion.getInputStream()));
+            if ((line = input.readLine()) != null) {
+                return line;
+            }
+            input.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("Can't get Device Version");
+    }
+
     public static ArrayList<File> getAvailableIPAs(String fileDirectoryPath) {
         String directoryPath = System.getProperty("user.dir") + fileDirectoryPath;
         File directory = new File(directoryPath);
@@ -78,6 +92,6 @@ public class IOSHelper {
     }
 
     void clickIOSNativeCancelButton() {
-        getElementByAccessibilityLabel("Cancel").findAndClick();
+        ElementFinder.findElementBy(ElementFinder.FindBy.ACCESSIBILITY_LABEL, "Cancel").findAndClick();
     }
 }

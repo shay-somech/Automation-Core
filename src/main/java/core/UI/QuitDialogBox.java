@@ -8,6 +8,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import static core.UI.Buttons.setCustomButton;
+import static core.UI.Labels.setCustomLabel;
+
 class QuitDialogBox {
 
     private static boolean answer;
@@ -17,12 +20,10 @@ class QuitDialogBox {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
         window.setMinWidth(250);
-        Label label = new Label();
-        label.setText(message);
 
         //Create two buttons
-        Button yesButton = new Button("Yes");
-        Button noButton = new Button("No");
+        Button yesButton = setCustomButton("Yes", 12);
+        Button noButton = setCustomButton("No", 12);
 
         //Clicking will set answer and close window
         yesButton.setOnAction(e -> {
@@ -38,7 +39,7 @@ class QuitDialogBox {
         VBox layout = new VBox(10);
 
         //Add buttons
-        layout.getChildren().addAll(label, yesButton, noButton);
+        layout.getChildren().addAll(setCustomLabel(message), yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout, 150, 150);
         window.setScene(scene);

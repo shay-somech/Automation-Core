@@ -1,5 +1,8 @@
 package core.externalScreens;
 
+import static core.baseclasses.ElementFinder.FindBy.ID;
+import static core.baseclasses.ElementFinder.findElementBy;
+
 public class WhatsappAction extends WhatsappConstants {
 
     private static WhatsappAction instance;
@@ -13,6 +16,6 @@ public class WhatsappAction extends WhatsappConstants {
 
     // TODO: COMPLETE THIS METHOD
     public void shareViaWhatsappNativeOption() {
-        getElementById(Id.NATIVE_WHATSAPP_SHARE).findAndClick();
+        findElementBy(ID, Id.NATIVE_WHATSAPP_SHARE).findAndClick();
     }
 }

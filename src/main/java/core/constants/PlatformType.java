@@ -1,6 +1,6 @@
 package core.constants;
 
 public class PlatformType {
-    static final String ANDROID = "Android";
-    static final String IOS = "iOS";
+    public static final String ANDROID = "Android";
+    public static final String IOS = "iOS";
 }

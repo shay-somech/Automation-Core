@@ -3,7 +3,6 @@ package core.UI;
 import core.managers.MyLogger;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.util.ArrayList;

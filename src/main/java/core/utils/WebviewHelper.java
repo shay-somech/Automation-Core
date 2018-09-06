@@ -1,9 +1,11 @@
 package core.utils;
 
-import core.baseclasses.BaseScreen;
 import core.managers.drivers.AndroidDriverManager;
 
-public class WebviewHelper extends BaseScreen {
+import static core.baseclasses.ElementFinder.FindBy.ID;
+import static core.baseclasses.ElementFinder.findElementBy;
+
+public class WebviewHelper {
 
     private static WebviewHelper instance;
 
@@ -17,7 +19,7 @@ public class WebviewHelper extends BaseScreen {
 
     void clickWebviewBackButton() {
         if (AndroidDriverManager.isAndroid) {
-            getElementById(WEB_VIEW_BACK_BUTTON).findAndClick();
+            findElementBy(ID, WEB_VIEW_BACK_BUTTON).findAndClick();
         }
     }
 }

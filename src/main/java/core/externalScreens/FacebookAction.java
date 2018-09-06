@@ -1,12 +1,15 @@
 package core.externalScreens;
 
 import core.managers.MyLogger;
-import core.managers.drivers.DriverManager;
 import core.utils.FunctionHelper;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+
+import static core.baseclasses.ElementFinder.FindBy.TEXT;
+import static core.baseclasses.ElementFinder.FindBy.XPATH;
+import static core.baseclasses.ElementFinder.findElementBy;
+import static core.baseclasses.ElementFinder.findElementsBy;
 
 public class FacebookAction extends FacebookConstants {
 
@@ -20,18 +23,20 @@ public class FacebookAction extends FacebookConstants {
 
     private void loginToFacebookApp(String email, String password) {
 
-        List<WebElement> elements = DriverManager.getDriver().findElements(By.xpath(FacebookApp.Xpath.LOGIN_SCREEN_TEXT_FIELD));
+        List elements = findElementsBy(XPATH, FacebookApp.Xpath.LOGIN_SCREEN_TEXT_FIELD);
 
         for (int i = 0; i < elements.size(); i++) {
 
             switch (i) {
                 /** @case 0 represents Email or Username text field inside Facebook app */
                 case 0:
-                    elements.get(i).sendKeys(email);
+                    WebElement emailTextField = (WebElement) elements.get(i);
+                    emailTextField.sendKeys(email);
                     break;
                 /** @case 1 represents Password text field inside Facebook app */
                 case 1:
-                    elements.get(i).sendKeys(password);
+                    WebElement passwordField = (WebElement) elements.get(i);
+                    passwordField.sendKeys(password);
                     break;
                 default:
                     MyLogger.logSys("Can't locate Facebook elements");
@@ -44,43 +49,43 @@ public class FacebookAction extends FacebookConstants {
     private void facebookShare() {
         MyLogger.logSys("Facebook user is logged in... Posting to Facebook");
         FunctionHelper.wait(3);
-        getElementByText(Text.WRITE_SOMETHING_TEXT).findAndReturn().sendKeys("Automation Test");
-        if (getElementByText(Text.POST_BUTTON).findAndReturn().isExistAndDisplayed()) {
-            getElementByText(Text.POST_BUTTON).findAndClick();
-        } else getElementByText(Text.POST_BUTTON_UPPER_CASE).findAndClick();
+        findElementBy(TEXT, Text.WRITE_SOMETHING_TEXT).findAndReturn().sendKeys("Automation Test");
+        if (findElementBy(TEXT, Text.POST_BUTTON).findAndReturn().isExistAndDisplayed()) {
+            findElementBy(TEXT, Text.POST_BUTTON).findAndClick();
+        } else findElementBy(TEXT, Text.POST_BUTTON_UPPER_CASE).findAndClick();
     }
 
 
     private void loginIfUserConnected(String password) {
 
         MyLogger.logSys("Facebook user (Gini Tst) is connected but not Logged In!");
-        getElementByText("Gini Tst").findAndClick();
-        getElementByXpath(FacebookApp.Xpath.LOGIN_SCREEN_TEXT_FIELD).findAndReturn().sendKeys(password);
-        getElementByText(FacebookApp.LOGIN_SCREEN_LOGIN_BUTTON).findAndClick();
+        findElementBy(TEXT, "Gini Tst").findAndClick();
+        findElementBy(XPATH, FacebookApp.Xpath.LOGIN_SCREEN_TEXT_FIELD).findAndReturn().sendKeys(password);
+        findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_LOGIN_BUTTON).findAndClick();
     }
 
     private void fullUserLogin(String username, String password) {
 
         MyLogger.logSys("Facebook user is NOT connected! Facebook App identified... Connecting to Facebook");
         loginToFacebookApp(username, password);
-        getElementByText(FacebookApp.LOGIN_SCREEN_LOGIN_BUTTON).findAndClick();
+        findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_LOGIN_BUTTON).findAndClick();
     }
 
 
     public void loginToFacebookAndShare(String username, String password) {
 
-        if (getElementByText(FacebookApp.LOGIN_SCREEN_TAP_TO_LOGIN).find(false)) {
+        if (findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_TAP_TO_LOGIN).findAndReturn().isExistAndDisplayed()) {
             MyLogger.logSys("Facebook user is connected but not Logged In! Logging In then tapping on Share Button");
 
             loginIfUserConnected(password);
             facebookShare();
 
-        } else if (getElementByText(FacebookApp.LOGIN_SCREEN_EMAIL_OR_PHONE_TEXT_FIELD).find(false)) {
+        } else if (findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_EMAIL_OR_PHONE_TEXT_FIELD).findAndReturn().isExistAndDisplayed()) {
 
             fullUserLogin(username, password);
             facebookShare();
 
-        } else if (getElementByText(Text.FACEBOOK).find(false) && getElementByText(Text.POSTING_TO).find(false)) {
+        } else if (findElementBy(TEXT, Text.FACEBOOK).findAndReturn().isExistAndDisplayed() && findElementBy(TEXT, Text.POSTING_TO).findAndReturn().isExistAndDisplayed()) {
 
             facebookShare();
 

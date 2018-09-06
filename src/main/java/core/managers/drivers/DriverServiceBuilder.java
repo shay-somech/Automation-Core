@@ -1,13 +1,13 @@
 package core.managers.drivers;
 
+import core.constants.AppiumServerArgs;
 import core.managers.JenkinsManager;
 import core.managers.MyLogger;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-import io.appium.java_client.service.local.flags.GeneralServerFlag;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 
-import static core.UI.MainUIRunner.selectDeviceChoiceBox;
+import static core.UI.ComboBoxes.selectDeviceComboBox;
 
 public class DriverServiceBuilder {
 
@@ -35,7 +35,7 @@ public class DriverServiceBuilder {
             if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
                 deviceID = JenkinsManager.getInstance().getJenkinsDeviceId();
             } else {
-                deviceID = selectDeviceChoiceBox.getValue().substring(selectDeviceChoiceBox.getValue().indexOf("|| ") + 3);
+                deviceID = selectDeviceComboBox.getValue().substring(selectDeviceComboBox.getValue().indexOf("|| ") + 3);
             }
         }
         return deviceID;
@@ -49,8 +49,8 @@ public class DriverServiceBuilder {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                     .usingPort(port)
                     .withIPAddress(ipAddress)
-                    .withArgument(GeneralServerFlag.LOG_LEVEL, "warn")
-                    .withArgument(GeneralServerFlag.TEMP_DIRECTORY, null));
+                    .withArgument(AppiumServerArgs.LOG_LEVEL, AppiumServerArgs.WARNING)
+                    .withArgument(AppiumServerArgs.TEMP_DIRECTORY, null));
         }
 
         return service;
@@ -61,9 +61,7 @@ public class DriverServiceBuilder {
 
         if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
 
-            /** Build with Jenkins params */
-            String jenkinsPlatformProperty = System.getProperty("JenkinsPlatform", "Android");
-            if (jenkinsPlatformProperty.equals("Android")) {
+            if (JenkinsManager.getInstance().getJenkinsSelectedPlatform().equals("Android")) {
                 AndroidDriverManager.getInstance().startDriver(service);
             } else {
                 IOSDriverManager.getInstance().startDriver(service);
@@ -73,7 +71,7 @@ public class DriverServiceBuilder {
         }
     }
 
-    public static void createDriver(ChoiceBox<String> platform) {
+    public static void createDriver(ComboBox<String> platform) {
         createAppiumService().start();
 
         /** Build manually with UI Configurations */

@@ -4,7 +4,8 @@ import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import core.utils.ActionHelper;
 
-import static core.baseclasses.ElementFinder.getElementByXpath;
+import static core.baseclasses.ElementFinder.FindBy.XPATH;
+import static core.baseclasses.ElementFinder.findElementBy;
 
 public class ChromeAction extends ChromeConstants {
 
@@ -34,8 +35,8 @@ public class ChromeAction extends ChromeConstants {
 
     private void searchInsideGoogleChrome(String searchFor) {
         MyLogger.logSys("Searching Google for " + searchFor);
-        getElementByXpath(GOOGLE_SEARCH_BAR).findAndReturn().sendKeys(searchFor);
-        getElementByXpath(GOOGLE_SEARCH_BUTTON).findAndClick();
+        findElementBy(XPATH, GOOGLE_SEARCH_BAR).findAndReturn().sendKeys(searchFor);
+        findElementBy(XPATH, GOOGLE_SEARCH_BUTTON).findAndClick();
         ActionHelper.getInstance().wait(3);
 //        DriverManager.getAndroidDriver().pressKeyCode(66);  // Clicks Keyboard 'Enter' Key
     }

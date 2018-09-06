@@ -1,8 +1,6 @@
 package core.externalScreens;
 
-import core.baseclasses.BaseScreen;
-
-public class GmailConstants extends BaseScreen {
+public class GmailConstants {
 
     public static final class Id {
         public static final String SEND_BUTTON = "send";

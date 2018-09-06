@@ -51,7 +51,7 @@ public class SwipeHelper {
             for (int i = 0; i < 20; i++) {
                 swipe(DOWN);
 
-                if (elementWrapper.find(1, false) && elementWrapper.isDisplayed()) {
+                if (elementWrapper.find(1, false) && elementWrapper.isExistAndDisplayed()) {
                     found = true;
                     break;
                 }

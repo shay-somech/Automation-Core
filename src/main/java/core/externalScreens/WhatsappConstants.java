@@ -1,8 +1,6 @@
 package core.externalScreens;
 
-import core.baseclasses.BaseScreen;
-
-public class WhatsappConstants extends BaseScreen {
+public class WhatsappConstants {
 
     static class Id {
         static final String NATIVE_WHATSAPP_SHARE = "shareBarWhatsappIv";

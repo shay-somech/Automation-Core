@@ -4,7 +4,7 @@ import core.managers.JenkinsManager;
 
 import java.io.File;
 
-import static core.UI.MainUIRunner.selectAppToInstallChoiceBox;
+import static core.UI.ComboBoxes.selectAppToInstallComboBox;
 import static core.utils.AndroidHelper.getAvailableAPKs;
 import static core.utils.IOSHelper.getAvailableIPAs;
 
@@ -28,7 +28,7 @@ public class AppParams {
             }
             return apkAbsolutePath;
         } else {
-            return selectAppToInstallChoiceBox.getValue();
+            return selectAppToInstallComboBox.getValue();
         }
     }
 
@@ -41,7 +41,7 @@ public class AppParams {
             }
             return ipaAbsolutePath;
         } else {
-            return selectAppToInstallChoiceBox.getValue();
+            return selectAppToInstallComboBox.getValue();
         }
     }
 }

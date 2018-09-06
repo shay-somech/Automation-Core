@@ -1,5 +1,7 @@
 package core.utils;
 
+import core.baseclasses.ElementFinder;
+import core.baseclasses.ElementFinder.FindBy;
 import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import org.openqa.selenium.*;
@@ -12,7 +14,20 @@ import java.util.List;
 public class ElementWrapper implements WebElement {
 
     private WebElement locator;
+    private By selector;
     private String xpath;
+    private int timeout = 5;
+
+    public ElementWrapper(By by) {
+        this(by, true, false);
+    }
+
+    private ElementWrapper(By by, boolean shouldFailTestIfNotFound, boolean find) {
+        this.selector = by;
+
+        if (find)
+            find(timeout, shouldFailTestIfNotFound);
+    }
 
     public ElementWrapper(String xpath) {
         this(xpath, true, false);
@@ -22,25 +37,80 @@ public class ElementWrapper implements WebElement {
         this(xpath, onScreen, false);
     }
 
-    public ElementWrapper(String xpath, boolean onScreen, boolean find) {
-        this.xpath = xpath + XpathGenerator.getOnScreenParam(onScreen);
+    private ElementWrapper(String xpath, boolean onScreen, boolean find) {
+//        this.xpath = getOnScreenXpath(xpath, onScreen);
+        this.xpath = xpath;
 
         if (find)
             find();
     }
 
+    private String getOnScreenXpath(String xpath, boolean onScreen) {
+        return xpath + XpathGenerator.getOnScreenParam(onScreen);
+    }
+
+    void find() {
+        find(timeout, true);
+    }
+
+    boolean find(int timeOut, boolean shouldFailTestIfNotFound) {
+        try {
+            this.locator = new WebDriverWait(DriverManager.getDriver(), timeOut).until(ExpectedConditions.presenceOfElementLocated(getSelector()));
+            MyLogger.logSys("found desired Element : " + getSelector().toString());
+            return true;
+
+        } catch (WebDriverException e) {
+            if (shouldFailTestIfNotFound) {
+                throw new AssertionError("Unable to find Element within timeout : " + e.getMessage());
+            } else {
+                this.locator = null;
+                MyLogger.logSys("Unable to find element (" + getSelector().toString() + ") within timeout of : " + timeOut + " seconds");
+            }
+            return false;
+        }
+    }
+
+    public ElementWrapper findElementBy(FindBy by, String element) {
+        ElementFinder.findElementBy(by, element);
+        return this;
+    }
+
+    public static List findElements(FindBy findBy, String element) {
+        switch (findBy) {
+            case XPATH:
+                return DriverManager.getDriver().findElementsByXPath(element);
+
+            case ID:
+                return DriverManager.getDriver().findElementsById(element);
+
+            case TEXT:
+                return DriverManager.getDriver().findElementsByName(element);
+
+            case ACCESSIBILITY_IDENTIFIER:
+                return DriverManager.getDriver().findElementsByAccessibilityId(element);
+        }
+
+        throw new RuntimeException("Element Locator is not defined");
+    }
+
+    private By getSelector() {
+        if (xpath != null) {
+            return By.xpath(xpath);
+        } else return selector;
+    }
+
     public ElementWrapper findAndReturn() {
-        find(2, false);
+        find(timeout, false);
         return this;
     }
 
     public void findAndClick() {
-        find(2, false);
+        find(timeout, false);
         click();
     }
 
     public void findAndClickIfExist() {
-        findAndClickIfExist(2);
+        findAndClickIfExist(timeout);
     }
 
     private void findAndClickIfExist(int timeout) {
@@ -50,51 +120,23 @@ public class ElementWrapper implements WebElement {
 
     private void clickIfExist() {
         if (locator != null)
-            locator.click();
-    }
-
-    void find() {
-        find(2, true);
-    }
-
-    public boolean find(boolean shouldFailTestIfNotFound) {
-        return find(2, shouldFailTestIfNotFound);
-    }
-
-    boolean find(int timeOut, boolean shouldFailTestIfNotFound) {
-        try {
-            this.locator = new WebDriverWait(DriverManager.getDriver(), timeOut).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-            MyLogger.logSys("found desired UiObject: " + xpath);
-            return true;
-
-        } catch (WebDriverException e) {
-            if (shouldFailTestIfNotFound) {
-                throw new AssertionError("Unable to find  UiObject within timeout : " + e.getMessage());
-            } else {
-                this.locator = null;
-                MyLogger.logSys("Unable to find element (" + xpath + ") within timeout of : " + timeOut + " seconds");
-            }
-            return false;
-        }
-    }
-
-    public List<WebElement> findElements() {
-        return DriverManager.getDriver().findElements(By.xpath(xpath));
+            click();
     }
 
     public String getElementParent() {
         return xpath + "/parent::*";
     }
 
-    public String isSelected(boolean selected) {
+    public boolean isSelected(boolean selected) {
         if (selected) {
-            return xpath + "[@selected = 'true']";
-        } else
-            return xpath + "[@selected = 'false']";
+            return isSelected();
+        } else {
+            return false;
+        }
     }
 
     public boolean isChecked() {
-        return locator.getAttribute("checked").equals("true");
+        return getAttribute("checked").equals("true");
     }
 
     public void verifyChecked() {
@@ -104,11 +146,6 @@ public class ElementWrapper implements WebElement {
 
     public String getXpath() {
         return xpath;
-    }
-
-
-    private String getOnScreenXpath(String xpath, boolean onScreen) {
-        return xpath + XpathGenerator.getOnScreenParam(onScreen);
     }
 
     public void findAndVerifyDisplayed() {
@@ -136,28 +173,40 @@ public class ElementWrapper implements WebElement {
     }
 
     public boolean isExistAndDisplayed() {
-        boolean existAndDisplayed = locator != null && locator.isDisplayed();
-        MyLogger.logSys("isExistAndDisplayed called for object : " + xpath + " and found ? " + existAndDisplayed);
-        return locator != null && locator.isDisplayed();
+        boolean existAndDisplayed = locator != null && isDisplayed();
+        MyLogger.logSys("isExistAndDisplayed called for Element : " + getSelector().toString() + " and found ? " + existAndDisplayed);
+        return locator != null && isDisplayed();
     }
 
     public boolean isHidden() {
         return getAttribute("hidden").equals("true");
     }
 
-    public boolean isExistAndDisplayed(boolean findObject) {
-
-        if (findObject)
-            find(false);
-
-        return isExistAndDisplayed();
+    int getElementY() {
+        return getRect().getY();
     }
+
 
     // TODO: WebElement clean Override
 
     @Override
+    public <T extends WebElement> List<T> findElements(By by) {
+        return null;
+    }
+
+    @Override
+    public <T extends WebElement> T findElement(By by) {
+        return null;
+    }
+
+    @Override
     public void click() {
         locator.click();
+    }
+
+    @Override
+    public String getText() {
+        return locator.getText();
     }
 
     @Override
@@ -188,8 +237,7 @@ public class ElementWrapper implements WebElement {
 
     @Override
     public boolean isSelected() {
-        WebElement element = locator;
-        return element.isSelected();
+        return locator.isSelected();
     }
 
     @Override
@@ -197,6 +245,7 @@ public class ElementWrapper implements WebElement {
         return locator.isEnabled();
     }
 
+    @Override
     public Point getLocation() {
         return locator.getLocation();
     }
@@ -216,20 +265,6 @@ public class ElementWrapper implements WebElement {
         return locator.getCssValue(propertyName);
     }
 
-    public String getText() {
-        return locator.getText();
-    }
-
-    @Override
-    public <T extends WebElement> List<T> findElements(By by) {
-        return locator.findElements(by);
-    }
-
-    @Override
-    public <T extends WebElement> T findElement(By by) {
-        return findElement(by);
-    }
-
     @Override
     public boolean isDisplayed() {
         return locator.isDisplayed();
@@ -237,12 +272,6 @@ public class ElementWrapper implements WebElement {
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return getScreenshotAs(target);
-    }
-
-    int getElementY() {
-//        int elementHeight = getRect().getHeight();
-//        return (getRect().y + (elementHeight));
-        return locator.getRect().getY();
+        return locator.getScreenshotAs(target);
     }
 }

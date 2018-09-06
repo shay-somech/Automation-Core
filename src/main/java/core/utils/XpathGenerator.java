@@ -11,7 +11,7 @@ public class XpathGenerator {
      * @return xPath String generated from both id and text provided
      */
     public static String getXpathByIdAndText(String id, String text) {
-        return "//*[@text='" + text + "' and @id='" + id + "']";
+        return "//*[@text='" + text + "' and @resource-id='" + id + "']";
     }
 
     /**
@@ -20,7 +20,7 @@ public class XpathGenerator {
      * @return xPath String generated from both id and text provided
      */
     public static String getXpathByIdAndPartialText(String id, String text) {
-        return "//*[contains(text(),'" + text + "') and @id='" + id + "']";
+        return "//*[contains(text(),'" + text + "') and @resource-id='" + id + "']";
     }
 
     /**
@@ -44,7 +44,7 @@ public class XpathGenerator {
      * @return xPath String generated from id provided
      */
     public static String getXpathById(String id) {
-        return "xpath=//*[@id='" + id + "']";
+        return "//*[@resource-id='" + id + "']";
     }
 
     /**
@@ -85,7 +85,7 @@ public class XpathGenerator {
      * @return xPath String generated from text provided
      */
     public static String getXpathByText(String text) {
-        return "xpath=//*[@text='" + text + "']";
+        return "//*[@text='" + text + "']";
     }
 
     /**
@@ -93,7 +93,7 @@ public class XpathGenerator {
      * @return xPath String generated from contentDescription provided
      */
     public static String getXpathByDescription(String description) {
-        return "xpath=//*[@contentDescription='" + description + "']";
+        return "//*[@contentDescription='" + description + "']";
     }
 
     /**

@@ -11,7 +11,7 @@ public class JenkinsManager {
     private boolean isJenkinsIOSPlatform;
 
     private JenkinsManager() {
-        getJenkinsSelectedPlatform();
+        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform");
     }
 
     public static JenkinsManager getInstance() {
@@ -22,40 +22,32 @@ public class JenkinsManager {
     }
 
     public boolean isBuildingFromJenkins() {
-        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform");
-        if (jenkinsPlatformProperty == null) {
-            return false;
-        }
-        return jenkinsPlatformProperty.equals("Android") || jenkinsPlatformProperty.equals("iOS");
+        return jenkinsPlatformProperty != null;
     }
 
-    private void getJenkinsSelectedPlatform() {
-        if (isBuildingFromJenkins()) {
+    public String getJenkinsSelectedPlatform() {
+        switch (jenkinsPlatformProperty) {
+            case "Android":
+                isJenkinsAndroidPlatform = true;
+                return "Android";
 
-            switch (jenkinsPlatformProperty) {
-                case "Android":
-                    isJenkinsAndroidPlatform = true;
-                    return;
-
-                case "iOS":
-                    isJenkinsIOSPlatform = true;
-                    return;
-
-                default:
-            }
+            case "iOS":
+                isJenkinsIOSPlatform = true;
+                return "iOS";
         }
+
+        throw new RuntimeException("Could not get selected platform from Jenkins");
     }
 
     public String getJenkinsDeviceId() {
         if (isJenkinsAndroidPlatform) {
-            getAndroidDevices();
+            return getAndroidDevices().get(0);
 
         } else if (isJenkinsIOSPlatform) {
-            getIOSDevices();
+            return getIOSDevices().get(0);
 
         } else {
             throw new RuntimeException("Cannot get desired Device");
         }
-        return null;
     }
 }

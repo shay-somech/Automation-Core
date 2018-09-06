@@ -1,8 +1,6 @@
 package core.externalScreens;
 
-import core.baseclasses.BaseScreen;
-
-public class FacebookConstants extends BaseScreen {
+public class FacebookConstants {
 
     static class Id {
         static final String ARTICLE_FACEBOOK_SHARE = "shareBarFacebookIv";
