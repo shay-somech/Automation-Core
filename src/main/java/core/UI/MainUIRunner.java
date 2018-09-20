@@ -82,7 +82,6 @@ public class MainUIRunner extends Application {
             String shouldInstallApp = shouldInstallAppComboBox.getValue();
 
             if (shouldInstallApp.equals("true")) {
-                MyLogger.logSys("true");
                 labelsList.add(selectAppToInstallLabel);
                 comboBoxesList.add(selectAppToInstallComboBox);
             }

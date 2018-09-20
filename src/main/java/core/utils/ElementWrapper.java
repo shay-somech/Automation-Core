@@ -16,7 +16,7 @@ public class ElementWrapper implements WebElement {
     private WebElement locator;
     private By selector;
     private String xpath;
-    private int timeout = 5;
+    private int timeout = 3;
 
     public ElementWrapper(By by) {
         this(by, true, false);
@@ -104,6 +104,14 @@ public class ElementWrapper implements WebElement {
         return this;
     }
 
+    public String getElementParent() {
+        return xpath + "/parent::*";
+    }
+
+    public String getXpath() {
+        return xpath;
+    }
+
     public void findAndClick() {
         find(timeout, false);
         click();
@@ -123,29 +131,9 @@ public class ElementWrapper implements WebElement {
             click();
     }
 
-    public String getElementParent() {
-        return xpath + "/parent::*";
-    }
-
-    public boolean isSelected(boolean selected) {
-        if (selected) {
-            return isSelected();
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isChecked() {
-        return getAttribute("checked").equals("true");
-    }
-
     public void verifyChecked() {
         if (!isChecked())
             throw new AssertionError("Element is not checked");
-    }
-
-    public String getXpath() {
-        return xpath;
     }
 
     public void findAndVerifyDisplayed() {
@@ -169,13 +157,25 @@ public class ElementWrapper implements WebElement {
         }
 
         if (!verified)
-            throw new AssertionError("Unable to verify  :" + getXpath());
+            throw new AssertionError("Unable to verify  :" + getSelector());
     }
 
     public boolean isExistAndDisplayed() {
         boolean existAndDisplayed = locator != null && isDisplayed();
         MyLogger.logSys("isExistAndDisplayed called for Element : " + getSelector().toString() + " and found ? " + existAndDisplayed);
         return locator != null && isDisplayed();
+    }
+
+    public boolean isChecked() {
+        return getAttribute("checked").equals("true");
+    }
+
+    public boolean isSelected(boolean selected) {
+        if (selected) {
+            return isSelected();
+        } else {
+            return false;
+        }
     }
 
     public boolean isHidden() {

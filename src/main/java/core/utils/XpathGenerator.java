@@ -60,7 +60,7 @@ public class XpathGenerator {
      * @return xPath String generated from label provided
      */
     public static String getXpathByAccessibilityLabel(String label) {
-        return "//*[@accessibilityLabel='" + label + "']";
+        return "//*[@label='" + label + "']";
     }
 
     /**
@@ -68,7 +68,7 @@ public class XpathGenerator {
      * @return xPath String generated from label provided
      */
     public static String getXpathByAccessibilityLabelAndText(String label, String text) {
-        return "//*[@accessibilityLabel='" + label + "' and @text='" + text + "']";
+        return "//*[@label='" + label + "' and @text='" + text + "']";
     }
 
     /**
