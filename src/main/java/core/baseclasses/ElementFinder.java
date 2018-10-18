@@ -1,5 +1,6 @@
 package core.baseclasses;
 
+import core.constants.FindByLocator;
 import core.utils.ElementWrapper;
 import core.utils.XpathGenerator;
 import io.appium.java_client.MobileBy;
@@ -9,24 +10,7 @@ import java.util.List;
 
 public class ElementFinder {
 
-    public enum FindBy {
-        TEXT,
-        NAME,
-        ID,
-        XPATH,
-        LABEL,
-        CLASS,
-        ACCESSIBILITY_LABEL,
-        ACCESSIBILITY_IDENTIFIER,
-        PARTIAL_TEXT,
-        CONTENT_DESCRIPTION,
-        RESOURCE_ID_AND_TEXT,
-        RESOURCE_ID_AND_PARTIAL_TEXT,
-        ACCESSIBILITY_LABEL_AND_TEXT,
-        ACCESSIBILITY_IDENTIFIER_AND_TEXT,
-    }
-
-    public static ElementWrapper findElementBy(FindBy findBy, String element) {
+    public static ElementWrapper findElementBy(FindByLocator findBy, String element) {
         switch (findBy) {
             case NAME:
                 return new ElementWrapper(By.name(element));
@@ -62,7 +46,7 @@ public class ElementFinder {
         throw new RuntimeException("Element Locator is not defined");
     }
 
-    public static ElementWrapper findElementBy(FindBy findBy, String element, String element2) {
+    public static ElementWrapper findElementBy(FindByLocator findBy, String element, String element2) {
         switch (findBy) {
 
             case RESOURCE_ID_AND_TEXT:
@@ -81,7 +65,7 @@ public class ElementFinder {
         throw new RuntimeException("Element Locator is not defined");
     }
 
-    public static List findElementsBy(FindBy findBy, String element) {
+    public static List findElementsBy(FindByLocator findBy, String element) {
         return ElementWrapper.findElements(findBy, element);
     }
 }

@@ -1,7 +1,7 @@
 package core.utils;
 
 import core.baseclasses.ElementFinder;
-import core.managers.MyLogger;
+import core.managers.JenkinsManager;
 import core.managers.drivers.DriverManager;
 
 import java.io.BufferedReader;
@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import static core.UI.ComboBoxes.selectAppToInstallComboBox;
+import static core.constants.FindByLocator.ACCESSIBILITY_LABEL;
 
 public class IOSHelper {
 
@@ -27,7 +30,7 @@ public class IOSHelper {
             Process getConnectedDevices = Runtime.getRuntime().exec("idevice_id -l");
             BufferedReader input = new BufferedReader(new InputStreamReader(getConnectedDevices.getInputStream()));
             while ((line = input.readLine()) != null) {
-                MyLogger.logSys("Found iOS device :: " + line + "\n");
+                Log.info("Found iOS device :: " + line + "\n");
                 if (line.length() > 0) {
                     devices.add(line);
                 }
@@ -37,6 +40,19 @@ public class IOSHelper {
             e.printStackTrace();
         }
         return devices;
+    }
+
+    public static String getIOSAppInstallationPath() {
+        String ipaAbsolutePath = null;
+
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+            for (File apk : getAvailableIPAs("/src/main/resources/")) {
+                ipaAbsolutePath = apk.getAbsolutePath();
+            }
+            return ipaAbsolutePath;
+        } else {
+            return selectAppToInstallComboBox.getValue();
+        }
     }
 
     public static String getDeviceName(String udid) {
@@ -92,6 +108,6 @@ public class IOSHelper {
     }
 
     void clickIOSNativeCancelButton() {
-        ElementFinder.findElementBy(ElementFinder.FindBy.ACCESSIBILITY_LABEL, "Cancel").findAndClick();
+        ElementFinder.findElementBy(ACCESSIBILITY_LABEL, "Cancel").findAndClick();
     }
 }

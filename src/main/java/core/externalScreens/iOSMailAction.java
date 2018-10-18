@@ -4,9 +4,10 @@ import core.externalScreens.iOSMailConstants.ElementByAccessibilityLabel;
 import core.externalScreens.iOSMailConstants.ElementsByText;
 import core.utils.ActionHelper;
 
-import static core.baseclasses.ElementFinder.FindBy.ACCESSIBILITY_LABEL;
-import static core.baseclasses.ElementFinder.FindBy.TEXT;
+
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.ACCESSIBILITY_LABEL;
+import static core.constants.FindByLocator.TEXT;
 import static core.constants.ZoneType.INSTRUMENTED_APP;
 import static core.constants.ZoneType.NATIVE;
 

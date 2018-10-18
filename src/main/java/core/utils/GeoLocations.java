@@ -11,19 +11,15 @@ public class GeoLocations {
      * Coordinates below is based on Google Maps.
      * */
 
+    public enum Locations {
+        TEL_AVIV_UNIVERSITY, BEER_SHEVA_CENTRAL, GINI_APPS, PRINCESS_HOTEL_EILAT, TEL_AVIV_AZRIELI, MAMILLA_JERUSALEM, HAIFA, RISHON_LEZION, SOFIA_BULGARIA;
+    }
 
-    private static final String TEL_AVIV_UNIVERSITY = "Tel-Aviv University";
-    private static final String BEER_SHEVA_CENTRAL = "Beer-Sheva Central";
-    private static final String GINI_APPS = "Gini-Apps";
-    private static final String PRINCESS_HOTEL_EILAT = "Princess Hotel Eilat";
-    private static final String TEL_AVIV_AZRIELI = "Tel-Aviv Azrieli";
-    private static final String MAMILLA_JERUSALEM = "Mamilla BLVD Jerusalem";
-    private static final String HAIFA = "Haifa_Central";
-    private static final String RISHON_LEZION = "Rishon Lezion Central";
+    public static void setNewLocation(AppiumDriver driver, Locations locations) {
 
-    public static void newLocation(AppiumDriver driver, String location) {
         Location someLocation;
-        switch (location) {
+
+        switch (locations) {
             case TEL_AVIV_UNIVERSITY:
                 someLocation = new Location(32.111767, 34.801361, 0);
                 break;
@@ -56,10 +52,19 @@ public class GeoLocations {
                 someLocation = new Location(31.973001, 34.792501, 0);
                 break;
 
+            case SOFIA_BULGARIA:
+                someLocation = new Location(42.69770819999999, 23.321867500000053, 0);
+                break;
+
             default:
                 throw new RuntimeException("Location Unknown");
         }
 
         driver.setLocation(someLocation);
+    }
+
+    public static void setNewLocation(AppiumDriver driver, double latitude, double longitude, double altitude) {
+        Location location = new Location(latitude, longitude, altitude);
+        driver.setLocation(location);
     }
 }

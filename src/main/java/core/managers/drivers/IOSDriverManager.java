@@ -1,6 +1,6 @@
 package core.managers.drivers;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.SessionNotCreatedException;
@@ -21,11 +21,11 @@ public class IOSDriverManager {
     void startDriver(AppiumDriverLocalService service) {
         try {
             isIOS = true;
-            MyLogger.logSys("Starting iOS driver");
+            Log.info("Starting iOS driver");
             DriverManager.setDriver(new IOSDriver<>(service, setCapabilities()));
 
         } catch (SessionNotCreatedException e) {
-            MyLogger.logSys("Failed to start iOS driver");
+            Log.info("Failed to start iOS driver");
 
         }
     }

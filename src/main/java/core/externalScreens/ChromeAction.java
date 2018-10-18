@@ -1,11 +1,11 @@
 package core.externalScreens;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import core.managers.drivers.DriverManager;
 import core.utils.ActionHelper;
 
-import static core.baseclasses.ElementFinder.FindBy.XPATH;
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.XPATH;
 
 public class ChromeAction extends ChromeConstants {
 
@@ -24,7 +24,7 @@ public class ChromeAction extends ChromeConstants {
 
     public void searchForGoogleResultsInsideChrome(String searchFor) {
         String url = "www.google.co.il";
-        MyLogger.logSys("Launching " + url + " Website");
+        Log.info("Launching " + url + " Website");
         launchWebsiteInsideChrome(url);
         searchInsideGoogleChrome(searchFor);
     }
@@ -34,7 +34,7 @@ public class ChromeAction extends ChromeConstants {
     }
 
     private void searchInsideGoogleChrome(String searchFor) {
-        MyLogger.logSys("Searching Google for " + searchFor);
+        Log.info("Searching Google for " + searchFor);
         findElementBy(XPATH, GOOGLE_SEARCH_BAR).findAndReturn().sendKeys(searchFor);
         findElementBy(XPATH, GOOGLE_SEARCH_BUTTON).findAndClick();
         ActionHelper.getInstance().wait(3);

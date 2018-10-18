@@ -2,7 +2,7 @@ package core.managers.drivers;
 
 import core.constants.AppiumServerArgs;
 import core.managers.JenkinsManager;
-import core.managers.MyLogger;
+import core.utils.Log;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import javafx.scene.control.ComboBox;
@@ -18,7 +18,7 @@ public class DriverServiceBuilder {
 
     private static String getOS() {
         if (OS == null) OS = System.getProperty("os.name");
-        MyLogger.logSys("Running Automation on " + OS);
+        Log.info("Running Automation on " + OS);
         return OS;
     }
 
@@ -84,8 +84,8 @@ public class DriverServiceBuilder {
 
     public static void killDriver() {
         if (DriverManager.driver != null) {
-            MyLogger.logSys("Killing Driver");
+            Log.info("Killing Driver");
             service.stop();
-        } else MyLogger.logSys("Driver is not initialized, nothing to kill");
+        } else Log.info("Driver is not initialized, nothing to kill");
     }
 }

@@ -1,15 +1,15 @@
 package core.externalScreens;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import core.utils.FunctionHelper;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static core.baseclasses.ElementFinder.FindBy.TEXT;
-import static core.baseclasses.ElementFinder.FindBy.XPATH;
 import static core.baseclasses.ElementFinder.findElementBy;
 import static core.baseclasses.ElementFinder.findElementsBy;
+import static core.constants.FindByLocator.TEXT;
+import static core.constants.FindByLocator.XPATH;
 
 public class FacebookAction extends FacebookConstants {
 
@@ -39,7 +39,7 @@ public class FacebookAction extends FacebookConstants {
                     passwordField.sendKeys(password);
                     break;
                 default:
-                    MyLogger.logSys("Can't locate Facebook elements");
+                    Log.info("Can't locate Facebook elements");
                     break;
             }
         }
@@ -47,7 +47,7 @@ public class FacebookAction extends FacebookConstants {
 
 
     private void facebookShare() {
-        MyLogger.logSys("Facebook user is logged in... Posting to Facebook");
+        Log.info("Facebook user is logged in... Posting to Facebook");
         FunctionHelper.wait(3);
         findElementBy(TEXT, Text.WRITE_SOMETHING_TEXT).findAndReturn().sendKeys("Automation Test");
         if (findElementBy(TEXT, Text.POST_BUTTON).findAndReturn().isExistAndDisplayed()) {
@@ -58,7 +58,7 @@ public class FacebookAction extends FacebookConstants {
 
     private void loginIfUserConnected(String password) {
 
-        MyLogger.logSys("Facebook user (Gini Tst) is connected but not Logged In!");
+        Log.info("Facebook user (Gini Tst) is connected but not Logged In!");
         findElementBy(TEXT, "Gini Tst").findAndClick();
         findElementBy(XPATH, FacebookApp.Xpath.LOGIN_SCREEN_TEXT_FIELD).findAndReturn().sendKeys(password);
         findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_LOGIN_BUTTON).findAndClick();
@@ -66,7 +66,7 @@ public class FacebookAction extends FacebookConstants {
 
     private void fullUserLogin(String username, String password) {
 
-        MyLogger.logSys("Facebook user is NOT connected! Facebook App identified... Connecting to Facebook");
+        Log.info("Facebook user is NOT connected! Facebook App identified... Connecting to Facebook");
         loginToFacebookApp(username, password);
         findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_LOGIN_BUTTON).findAndClick();
     }
@@ -75,7 +75,7 @@ public class FacebookAction extends FacebookConstants {
     public void loginToFacebookAndShare(String username, String password) {
 
         if (findElementBy(TEXT, FacebookApp.LOGIN_SCREEN_TAP_TO_LOGIN).findAndReturn().isExistAndDisplayed()) {
-            MyLogger.logSys("Facebook user is connected but not Logged In! Logging In then tapping on Share Button");
+            Log.info("Facebook user is connected but not Logged In! Logging In then tapping on Share Button");
 
             loginIfUserConnected(password);
             facebookShare();

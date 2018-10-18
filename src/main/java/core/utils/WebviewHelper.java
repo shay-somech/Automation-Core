@@ -2,8 +2,8 @@ package core.utils;
 
 import core.managers.drivers.AndroidDriverManager;
 
-import static core.baseclasses.ElementFinder.FindBy.ID;
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.ID;
 
 public class WebviewHelper {
 

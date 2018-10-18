@@ -1,6 +1,6 @@
 package core.managers.drivers;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.SessionNotCreatedException;
@@ -21,11 +21,11 @@ public class AndroidDriverManager {
     void startDriver(AppiumDriverLocalService service) {
         try {
             isAndroid = true;
-            MyLogger.logSys("Starting Android driver");
+            Log.info("Starting Android driver");
             DriverManager.setDriver(new AndroidDriver<>(service, setCapabilities()));
 
         } catch (SessionNotCreatedException e) {
-            MyLogger.logSys("Failed to start Android driver");
+            Log.info("Failed to start Android driver");
         }
     }
 }

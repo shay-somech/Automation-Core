@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import core.managers.drivers.IOSDriverManager;
 import org.openqa.selenium.ScreenOrientation;
@@ -23,7 +22,7 @@ public class FunctionHelper {
             if (seconds > 60) {
                 int splitSeconds = seconds / 3;
                 for (int i = 0; i < 3; i++) {
-                    MyLogger.logSys("Duration is bigger than threshold, dividing Seconds by 3 ");
+                    Log.info("Duration is bigger than threshold, dividing Seconds by 3 ");
                     Thread.sleep(splitSeconds * 1000);
                 }
             } else
@@ -36,26 +35,26 @@ public class FunctionHelper {
     void changeDeviceOrientation(ScreenOrientation orientation) {
         if (DriverManager.getDriver().getOrientation() != ScreenOrientation.LANDSCAPE) {
             isPortrait = false;
-            MyLogger.logSys("Changing device orientation to " + orientation);
+            Log.info("Changing device orientation to " + orientation);
             DriverManager.getDriver().rotate(orientation);
 
         } else if (DriverManager.getDriver().getOrientation() != ScreenOrientation.PORTRAIT) {
             isPortrait = true;
-            MyLogger.logSys("Changing device orientation to " + orientation);
+            Log.info("Changing device orientation to " + orientation);
             DriverManager.getDriver().rotate(orientation);
 
         } else {
-            MyLogger.logSys("Cannot change to " + orientation + ", Please make sure device is not already in " + orientation);
+            Log.info("Cannot change to " + orientation + ", Please make sure device is not already in " + orientation);
         }
     }
 
     void closeApp() {
-        MyLogger.logSys("Closing App...");
+        Log.info("Closing App...");
         DriverManager.getDriver().closeApp();
     }
 
     void launchApp() {
-        MyLogger.logSys("Launching App...");
+        Log.info("Launching App...");
         DriverManager.getDriver().launchApp();
     }
 

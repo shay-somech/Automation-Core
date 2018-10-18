@@ -1,11 +1,11 @@
 package core.externalScreens;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import core.utils.FunctionHelper;
 
-import static core.baseclasses.ElementFinder.FindBy.ID;
-import static core.baseclasses.ElementFinder.FindBy.TEXT;
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.ID;
+import static core.constants.FindByLocator.TEXT;
 
 public class GmailAction extends GmailConstants {
 
@@ -18,7 +18,7 @@ public class GmailAction extends GmailConstants {
     }
 
     public void shareViaGmailOption(String emailTo) {
-        MyLogger.logSys("Sharing content via Native Gmail");
+        Log.info("Sharing content via Native Gmail");
         try {
             if (findElementBy(TEXT, Text.GMAIL).findAndReturn().isExistAndDisplayed()) {
                 findElementBy(TEXT, Text.GMAIL).findAndClick();

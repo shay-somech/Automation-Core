@@ -1,14 +1,15 @@
 package core.utils;
 
-import core.managers.MyLogger;
+import core.managers.JenkinsManager;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.android.Activity;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static core.baseclasses.ElementFinder.FindBy.PARTIAL_TEXT;
+import static core.UI.ComboBoxes.selectAppToInstallComboBox;
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.PARTIAL_TEXT;
 import static core.constants.ZoneType.NATIVE;
 
 public class AndroidHelper {
@@ -22,69 +23,82 @@ public class AndroidHelper {
     }
 
     public static ArrayList<String> getAndroidDevices() {
-        MyLogger.logSys("Checking for available devices");
+        Log.info("Checking for available devices");
         ArrayList<String> availableDevices = new ArrayList<>();
         ArrayList ADBConnectedDevices = ADBHelper.getConnectedDevices();
         for (Object connectedDevice : ADBConnectedDevices) {
             availableDevices.add(connectedDevice.toString());
-            MyLogger.logSys("Found Android device :: " + connectedDevice);
+            Log.info("Found Android device :: " + connectedDevice);
         }
         if (availableDevices.size() == 0)
             throw new RuntimeException("Not a single device is available for testing at this time");
         return availableDevices;
     }
 
+    public static String getAndroidAppInstallationPath() {
+        String apkAbsolutePath = null;
+
+        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+            for (File apk : getAvailableAPKs("/src/main/resources/")) {
+                apkAbsolutePath = apk.getAbsolutePath();
+            }
+            return apkAbsolutePath;
+        } else {
+            return selectAppToInstallComboBox.getValue();
+        }
+    }
+
     String getAndroidCurrentActivity() {
-        MyLogger.logSys("Getting Android Current Activity");
+        Log.info("Getting Android Current Activity");
         String currentActivity = null;
         try {
             currentActivity = DriverManager.getAndroidDriver().currentActivity();
         } catch (RuntimeException e) {
-            MyLogger.logSys("Cannot get Android Current Activity");
+            Log.info("Cannot get Android Current Activity");
         }
         return currentActivity;
     }
 
     void openAndroidNotificationCenter() {
-        MyLogger.logSys("Opening Android Notification Center");
+        Log.info("Opening Android Notification Center");
         try {
             DriverManager.getAndroidDriver().openNotifications();
         } catch (RuntimeException e) {
-            MyLogger.logSys("Cannot open Android Notification Center");
+            Log.info("Cannot open Android Notification Center");
         }
     }
 
     void startAndroidActivity(String appPackage, String appMainActivity) {
-        MyLogger.logSys("Starting Android App Activity");
+        Log.info("Starting Android App Activity");
         DriverManager.getAndroidDriver().startActivity(new Activity(appPackage, appMainActivity));
         ;
     }
 
     void clickAndroidBackButton() {
-        MyLogger.logSys("Clicking on the Android device back button");
+        Log.info("Clicking on the Android device back button");
         try {
             DriverManager.getDriver().navigate().back();
         } catch (RuntimeException e) {
-            MyLogger.logSys("Cannot click on Android device back button : " + e.getMessage());
+            Log.info("Cannot click on Android device back button : " + e.getMessage());
         }
     }
 
     void hideAndroidKeyboard() {
-        MyLogger.logSys("Closing Android Keyboard");
+        Log.info("Closing Android Keyboard");
         try {
             DriverManager.getAndroidDriver().hideKeyboard();
         } catch (RuntimeException e) {
-            MyLogger.logSys("Cannot hide Android Keyboard");
+            Log.info("Cannot hide Android Keyboard");
         }
     }
 
     void launchAndroidSettings() {
-        MyLogger.logSys("Launching Android Settings");
+        Log.info("Launching Android Settings");
         DriverManager.getAndroidDriver().startActivity(new Activity("com.android.settings", ".Settings"));
     }
 
     public void completeActionWithIntent(String appName) {
-        MyLogger.logSys("Selecting to complete action with " + appName);
+        Log.info("Selecting to complete action with " + appName);
         if (completeActionWithIntentDisplayed()) {
             findElementBy(PARTIAL_TEXT, appName).findAndClick();
         }

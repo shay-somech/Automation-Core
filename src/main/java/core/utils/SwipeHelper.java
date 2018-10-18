@@ -1,7 +1,6 @@
 package core.utils;
 
 import core.managers.DisplayManager;
-import core.managers.MyLogger;
 import core.managers.drivers.DriverManager;
 import core.managers.drivers.IOSDriverManager;
 import io.appium.java_client.TouchAction;
@@ -41,11 +40,11 @@ public class SwipeHelper {
      */
     private void swipeDownUntilElementFound(ElementWrapper elementWrapper, boolean tryToFindAlsoBeforeSwipingDown, boolean failIfNotFound, boolean click) {
 
-        MyLogger.logSys("start swipe for element : " + elementWrapper.getXpath());
+        Log.info("start swipe for element : " + elementWrapper.getXpath());
         boolean found = false;
 
         if (tryToFindAlsoBeforeSwipingDown && elementWrapper.find(1, false) && (elementWrapper.findAndReturn().getRect().y < (deviceHeight / 3))) {
-            MyLogger.logSys("element found before swiping down : " + elementWrapper.getXpath());
+            Log.info("element found before swiping down : " + elementWrapper.getXpath());
             found = true;
         } else {
             for (int i = 0; i < 20; i++) {
@@ -146,7 +145,7 @@ public class SwipeHelper {
                 }
                 break;
         }
-        MyLogger.logSys("Swiping " + direction);
+        Log.info("Swiping " + direction);
     }
 
     void customHorizontalSwipe(final int elementCentreY, String direction) {
@@ -179,7 +178,7 @@ public class SwipeHelper {
                     swipe((int) (startX * 0.1), (int) (y - (elementCentreY * 0.5)), (int) (endX * 0.8), (int) (y - (elementCentreY * 0.5)));
                 }
         }
-        MyLogger.logSys("Swiping " + direction);
+        Log.info("Swiping " + direction);
     }
 
     void swipe(int startX, int startY, int endX, int endY) {

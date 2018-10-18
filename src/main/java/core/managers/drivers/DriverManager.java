@@ -1,9 +1,11 @@
 package core.managers.drivers;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+
+import java.util.concurrent.TimeUnit;
 
 public class DriverManager {
 
@@ -11,9 +13,10 @@ public class DriverManager {
     private static String currentSessionId = "";
 
     private DriverManager() {
-        MyLogger.logSys("DriverManager initialized");
+        Log.info("DriverManager initialized");
 
         currentSessionId = getCurrentSessionId();
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
     }
 

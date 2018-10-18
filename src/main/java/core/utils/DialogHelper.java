@@ -1,12 +1,12 @@
 package core.utils;
 
-import core.baseclasses.ElementFinder.FindBy;
 
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.ID;
 
 public class DialogHelper {
 
-    public static class ID {
+    public static class Id {
         static final String ALLOW_PUSH_NOTIFICATIONS_BUTTON = "permission_allow_button";
         static final String DENY_PUSH_NOTIFICATIONS_BUTTON = "permission_deny_button";
         static final String PUSH_NOTIFICATION_TIME_STAMP = "smallNotificationTime";
@@ -15,10 +15,10 @@ public class DialogHelper {
     }
 
     public void clickAllowPushNotificationsButton() {
-        findElementBy(FindBy.ID, ID.ALLOW_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
+        findElementBy(ID, Id.ALLOW_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
     }
 
     public void clickDenyPushNotificationsButton() {
-        findElementBy(FindBy.ID, ID.DENY_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
+        findElementBy(ID, Id.DENY_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
     }
 }

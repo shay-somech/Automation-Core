@@ -1,7 +1,7 @@
 package core.externalScreens;
 
-import static core.baseclasses.ElementFinder.FindBy.ID;
 import static core.baseclasses.ElementFinder.findElementBy;
+import static core.constants.FindByLocator.ID;
 
 public class WhatsappAction extends WhatsappConstants {
 

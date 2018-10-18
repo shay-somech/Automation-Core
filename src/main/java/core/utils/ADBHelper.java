@@ -1,7 +1,5 @@
 package core.utils;
 
-import core.managers.MyLogger;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +48,7 @@ public class ADBHelper {
     }
 
     private static String command(String command) {
-        MyLogger.logSys("Formatting ADB Command: " + command);
+        Log.info("Formatting ADB Command: " + command);
 
         if (command.startsWith("adb")) {
             command = command.replace("adb ", getAndroidHome() + "/platform-tools/adb ");

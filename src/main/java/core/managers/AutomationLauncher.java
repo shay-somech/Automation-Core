@@ -3,6 +3,7 @@ package core.managers;
 import core.UI.MainUIRunner;
 import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
+import core.utils.Log;
 
 import static core.UI.ComboBoxes.selectPlatformComboBox;
 import static core.constants.AutomationStatesValues.JENKINS_PARAMETERIZED;
@@ -28,10 +29,10 @@ public class AutomationLauncher {
 
     public static void start() {
         if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
-            MyLogger.logSys("Starting Automation From Jenkins");
+            Log.info("Starting Automation From Jenkins");
             startAutomationState(JENKINS_PARAMETERIZED);
         } else {
-            MyLogger.logSys("Starting Automation Manually");
+            Log.info("Starting Automation Manually");
             startAutomationState(MANUAL);
         }
 

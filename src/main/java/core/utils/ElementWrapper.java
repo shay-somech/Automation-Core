@@ -1,9 +1,9 @@
 package core.utils;
 
 import core.baseclasses.ElementFinder;
-import core.baseclasses.ElementFinder.FindBy;
-import core.managers.MyLogger;
+import core.constants.FindByLocator;
 import core.managers.drivers.DriverManager;
+import io.appium.java_client.MobileBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -56,7 +56,7 @@ public class ElementWrapper implements WebElement {
     boolean find(int timeOut, boolean shouldFailTestIfNotFound) {
         try {
             this.locator = new WebDriverWait(DriverManager.getDriver(), timeOut).until(ExpectedConditions.presenceOfElementLocated(getSelector()));
-            MyLogger.logSys("found desired Element : " + getSelector().toString());
+            Log.info("found desired Element : " + getSelector().toString());
             return true;
 
         } catch (WebDriverException e) {
@@ -64,18 +64,18 @@ public class ElementWrapper implements WebElement {
                 throw new AssertionError("Unable to find Element within timeout : " + e.getMessage());
             } else {
                 this.locator = null;
-                MyLogger.logSys("Unable to find element (" + getSelector().toString() + ") within timeout of : " + timeOut + " seconds");
+                Log.info("Unable to find element (" + getSelector().toString() + ") within timeout of : " + timeOut + " seconds");
             }
             return false;
         }
     }
 
-    public ElementWrapper findElementBy(FindBy by, String element) {
+    public ElementWrapper findElementBy(FindByLocator by, String element) {
         ElementFinder.findElementBy(by, element);
         return this;
     }
 
-    public static List findElements(FindBy findBy, String element) {
+    public static List findElements(FindByLocator findBy, String element) {
         switch (findBy) {
             case XPATH:
                 return DriverManager.getDriver().findElementsByXPath(element);
@@ -162,7 +162,7 @@ public class ElementWrapper implements WebElement {
 
     public boolean isExistAndDisplayed() {
         boolean existAndDisplayed = locator != null && isDisplayed();
-        MyLogger.logSys("isExistAndDisplayed called for Element : " + getSelector().toString() + " and found ? " + existAndDisplayed);
+        Log.info("isExistAndDisplayed called for Element : " + getSelector().toString() + " and found ? " + existAndDisplayed);
         return locator != null && isDisplayed();
     }
 
@@ -186,6 +186,80 @@ public class ElementWrapper implements WebElement {
         return getRect().getY();
     }
 
+
+    public static WebElement waitForElementToAppear(WebElement element, int timeout) {
+        return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static WebElement waitForElementToAppear(FindByLocator by, String element, int timeout) {
+        switch (by) {
+            case ID:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.id(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to appear in the given " + timeout + " seconds timeout");
+                }
+
+            case XPATH:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to appear in the given " + timeout + " seconds timeout");
+                }
+
+            case NAME:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(By.name(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to appear in the given " + timeout + " seconds timeout");
+                }
+
+            case ACCESSIBILITY_IDENTIFIER:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.visibilityOfElementLocated(new MobileBy.ByAccessibilityId(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to appear in the given " + timeout + " seconds timeout");
+                }
+        }
+        throw new RuntimeException("Locator is not defined in scope");
+    }
+
+    public static boolean isElementDisappeared(WebElement element, int timeout) {
+        return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public static boolean isElementDisappeared(FindByLocator by, String element, int timeout) {
+        switch (by) {
+            case ID:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.invisibilityOfElementLocated(By.id(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to disappear in the given " + timeout + " seconds timeout");
+                }
+
+            case XPATH:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to disappear in the given " + timeout + " seconds timeout");
+                }
+
+            case NAME:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.invisibilityOfElementLocated(By.name(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to disappear in the given " + timeout + " seconds timeout");
+                }
+
+            case ACCESSIBILITY_IDENTIFIER:
+                try {
+                    return new WebDriverWait(DriverManager.getDriver(), timeout).until(ExpectedConditions.invisibilityOfElementLocated(new MobileBy.ByAccessibilityId(element)));
+                } catch (TimeoutException e) {
+                    throw new RuntimeException("Element failed to disappear in the given " + timeout + " seconds timeout");
+                }
+        }
+        throw new RuntimeException("Locator is not defined in scope");
+    }
 
     // TODO: WebElement clean Override
 
@@ -272,6 +346,7 @@ public class ElementWrapper implements WebElement {
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return locator.getScreenshotAs(target);
+        return DriverManager.getDriver().getScreenshotAs(target);
     }
+
 }

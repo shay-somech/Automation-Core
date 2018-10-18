@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.managers.MyLogger;
 import org.testng.TestNG;
 import org.testng.xml.XmlClass;
 import org.testng.xml.XmlPackage;
@@ -13,7 +12,7 @@ import java.util.List;
 public class TestNGHelper {
 
     public static void runTestNGSuiteByClass(String className) {
-        MyLogger.logSys("Running TestNG");
+        Log.info("Running TestNG");
         List<XmlSuite> suites = new ArrayList<>();
         List<XmlClass> classes = new ArrayList<>();
 
@@ -46,7 +45,7 @@ public class TestNGHelper {
         XmlSuite eachSuite = new XmlSuite();
         eachSuite.setName("My Suite");
         eachSuite.setTests(getTest(eachSuite, packageName));
-        MyLogger.logSys(eachSuite.toXml());
+        Log.info(eachSuite.toXml());
         suites.add(eachSuite);
         return suites;
     }

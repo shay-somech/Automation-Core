@@ -1,6 +1,6 @@
 package core.UI;
 
-import core.managers.MyLogger;
+import core.utils.Log;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
 
@@ -20,14 +20,14 @@ public class UIExecutioner {
     static ArrayList<String> getAvailableAndroidDevices() {
         ArrayList<String> availableDevices = new ArrayList<>();
 
-        MyLogger.logSys("Checking for available Android devices");
+        Log.info("Checking for available Android devices");
         for (Object connectedAndroidDevice : androidDevices) {
             String androidDevice = getDeviceModel(connectedAndroidDevice.toString()) + " " + getDeviceManufacturer(connectedAndroidDevice.toString()) + " " + getAndroidVersionAsString(connectedAndroidDevice.toString()) + " || " + connectedAndroidDevice.toString();
             availableDevices.add(androidDevice);
         }
 
         if (availableDevices.size() == 0)
-            MyLogger.logSys("Not a single Android device is available for testing at this time");
+            Log.info("Not a single Android device is available for testing at this time");
 
         return availableDevices;
     }
@@ -35,14 +35,14 @@ public class UIExecutioner {
     static ArrayList<String> getAvailableIOSDevices() {
         ArrayList<String> availableDevices = new ArrayList<>();
 
-        MyLogger.logSys("Checking for available iOS devices");
+        Log.info("Checking for available iOS devices");
         for (Object connectedIOSDevice : iOSDevices) {
             String iOSDevice = getDeviceName(connectedIOSDevice.toString()) + " || " + connectedIOSDevice.toString();
             availableDevices.add(iOSDevice);
         }
 
         if (availableDevices.size() == 0)
-            MyLogger.logSys("Not a single iOS device is available for testing at this time");
+            Log.info("Not a single iOS device is available for testing at this time");
 
         return availableDevices;
     }

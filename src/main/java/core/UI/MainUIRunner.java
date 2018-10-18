@@ -1,6 +1,5 @@
 package core.UI;
 
-import core.managers.MyLogger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

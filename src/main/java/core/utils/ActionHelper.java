@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.managers.MyLogger;
 import core.managers.drivers.AndroidDriverManager;
 import core.managers.drivers.DriverManager;
 import org.openqa.selenium.ScreenOrientation;
@@ -23,7 +22,7 @@ public class ActionHelper {
 
     private ActionHelper() {
 
-        MyLogger.logSys("ActionHelper created");
+        Log.info("ActionHelper created");
 
         // seeTest must use current driver , so we check driver is valid in case
         // we started new test and driver restarted on before and after class annotations.
@@ -88,7 +87,7 @@ public class ActionHelper {
     }
 
     public void setAppContext(String zone) {
-        MyLogger.logSys("Switching App Context to :: " + zone);
+        Log.info("Switching App Context to :: " + zone);
         DriverManager.getDriver().context(zone);
     }
 
