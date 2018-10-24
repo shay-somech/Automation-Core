@@ -22,7 +22,7 @@ public class FacebookConstants {
 
 
         static class Xpath {
-            static final String LOGIN_SCREEN_TEXT_FIELD = "//*[@class='android.widget.EditText']";
+            static final String LOGIN_SCREEN_TEXT_FIELD = "//*[@class='androidRadioButton.widget.EditText']";
 
             /**
              * This will ONLY work if Facebook app is instrumented

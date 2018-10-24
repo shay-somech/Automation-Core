@@ -1,13 +1,11 @@
 package core.managers.drivers;
 
+import core.UI.Controller;
 import core.constants.AppiumServerArgs;
 import core.managers.JenkinsManager;
 import core.utils.Log;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-import javafx.scene.control.ComboBox;
-
-import static core.UI.ComboBoxes.selectDeviceComboBox;
 
 public class DriverServiceBuilder {
 
@@ -35,7 +33,7 @@ public class DriverServiceBuilder {
             if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
                 deviceID = JenkinsManager.getInstance().getJenkinsDeviceId();
             } else {
-                deviceID = selectDeviceComboBox.getValue().substring(selectDeviceComboBox.getValue().indexOf("|| ") + 3);
+                deviceID = Controller.selectedDevice;
             }
         }
         return deviceID;
@@ -71,13 +69,13 @@ public class DriverServiceBuilder {
         }
     }
 
-    public static void createDriver(ComboBox<String> platform) {
+    public static void createDriver(String platform) {
         createAppiumService().start();
 
         /** Build manually with UI Configurations */
-        if (platform.getValue().equals("Android")) {
+        if (platform.equals("Android")) {
             AndroidDriverManager.getInstance().startDriver(service);
-        } else if (platform.getValue().equals("iOS")) {
+        } else if (platform.equals("iOS")) {
             IOSDriverManager.getInstance().startDriver(service);
         }
     }

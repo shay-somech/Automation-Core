@@ -1,13 +1,12 @@
 package core.managers;
 
+import core.UI.Controller;
 import core.managers.drivers.DriverServiceBuilder;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.IOSMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static core.UI.ComboBoxes.noResetComboBox;
-import static core.UI.ComboBoxes.shouldInstallAppComboBox;
 import static core.constants.AppParams.*;
 import static core.managers.drivers.AndroidDriverManager.isAndroid;
 import static core.managers.drivers.IOSDriverManager.isIOS;
@@ -24,18 +23,19 @@ public class DesiredCapabilitiesManager {
         dc.setCapability(MobileCapabilityType.UDID, DriverServiceBuilder.getDeviceID());
 
         if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+
+            dc.setCapability("noReset", true);
+
             if (isAndroid) {
                 dc.setCapability(MobileCapabilityType.APP, getAndroidAppInstallationPath());
-                dc.setCapability("noReset", "true");
             } else {
                 dc.setCapability(MobileCapabilityType.APP, getIOSAppInstallationPath());
-                dc.setCapability("noReset", "true");
             }
 
         } else {
-            dc.setCapability("noReset", Boolean.parseBoolean(noResetComboBox.getValue()));
+            dc.setCapability("noReset", Controller.resetApp);
 
-            if (Boolean.parseBoolean(shouldInstallAppComboBox.getValue())) {
+            if (Controller.installApp) {
                 if (isAndroid) {
                     dc.setCapability(MobileCapabilityType.APP, getAndroidAppInstallationPath());
                 } else {

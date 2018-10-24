@@ -1,5 +1,6 @@
 package core.utils;
 
+import core.UI.Controller;
 import core.managers.JenkinsManager;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.android.Activity;
@@ -7,10 +8,10 @@ import io.appium.java_client.android.Activity;
 import java.io.File;
 import java.util.ArrayList;
 
-import static core.UI.ComboBoxes.selectAppToInstallComboBox;
 import static core.baseclasses.ElementFinder.findElementBy;
 import static core.constants.FindByLocator.PARTIAL_TEXT;
 import static core.constants.ZoneType.NATIVE;
+import static core.utils.ADBHelper.*;
 
 public class AndroidHelper {
 
@@ -30,8 +31,20 @@ public class AndroidHelper {
             availableDevices.add(connectedDevice.toString());
             Log.info("Found Android device :: " + connectedDevice);
         }
+
         if (availableDevices.size() == 0)
-            throw new RuntimeException("Not a single device is available for testing at this time");
+            Log.info("Not a single device is available for testing at this time");
+        return availableDevices;
+    }
+
+    public static ArrayList<String> getAndroidDeviceWithDetails() {
+        ArrayList<String> availableDevices = new ArrayList<>();
+
+        Log.info("Checking for available Android devices");
+        for (Object connectedAndroidDevice : getAndroidDevices()) {
+            String androidDevice = getDeviceModel(connectedAndroidDevice.toString()) + " " + getDeviceManufacturer(connectedAndroidDevice.toString()) + " " + getAndroidVersionAsString(connectedAndroidDevice.toString()) + " || " + connectedAndroidDevice.toString();
+            availableDevices.add(androidDevice);
+        }
         return availableDevices;
     }
 
@@ -44,7 +57,7 @@ public class AndroidHelper {
             }
             return apkAbsolutePath;
         } else {
-            return selectAppToInstallComboBox.getValue();
+            return Controller.selectedApp;
         }
     }
 
@@ -94,7 +107,7 @@ public class AndroidHelper {
 
     void launchAndroidSettings() {
         Log.info("Launching Android Settings");
-        DriverManager.getAndroidDriver().startActivity(new Activity("com.android.settings", ".Settings"));
+        DriverManager.getAndroidDriver().startActivity(new Activity("com.androidRadioButton.settings", ".Settings"));
     }
 
     public void completeActionWithIntent(String appName) {

@@ -13,10 +13,6 @@ import java.io.IOException;
 
 public class Runner {
 
-    public static void main(String[] args) {
-        start();
-    }
-
     @BeforeSuite
     public static void start() {
         Log.info("Initializing Automation");

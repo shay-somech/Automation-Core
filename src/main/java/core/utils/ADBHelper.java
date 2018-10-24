@@ -15,8 +15,8 @@ public class ADBHelper {
     }
 
     public static class Commands {
-        final public static String CLICK_SELECTED = "adb shell am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings";
-        final public static String ARROW_UP = "adb shell am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings";
+        final public static String CLICK_SELECTED = "adb shell am start -a androidRadioButton.intent.action.MAIN -n com.androidRadioButton.settings/.wifi.WifiSettings";
+        final public static String ARROW_UP = "adb shell am start -a androidRadioButton.intent.action.MAIN -n com.androidRadioButton.settings/.wifi.WifiSettings";
     }
 
     private void runADBMethod(String commandToRun) {
@@ -51,7 +51,7 @@ public class ADBHelper {
         Log.info("Formatting ADB Command: " + command);
 
         if (command.startsWith("adb")) {
-            command = command.replace("adb ", getAndroidHome() + "/platform-tools/adb ");
+            command = command.replace("adb ", getAndroidHome() + "/Platform-tools/adb ");
         } else {
             throw new RuntimeException("This method is designed to run ADB commands only!");
         }
@@ -111,15 +111,15 @@ public class ADBHelper {
     public static void AirPlaneModeConncetion(boolean enabled) {
         if (enabled) {
             command("adb shell settings put global airplane_mode_on 1");
-            command("adb shell am broadcast -a android.intent.action.AIRPLANE_MODE");
+            command("adb shell am broadcast -a androidRadioButton.intent.action.AIRPLANE_MODE");
         } else {
             command("adb shell settings put global airplane_mode_on 0");
-            command("adb shell am broadcast -a android.intent.action.AIRPLANE_MODE");
+            command("adb shell am broadcast -a androidRadioButton.intent.action.AIRPLANE_MODE");
         }
     }
 
     public void openWiFiSettingsScreen() {
-        command("adb shell am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings");
+        command("adb shell am start -a androidRadioButton.intent.action.MAIN -n com.androidRadioButton.settings/.wifi.WifiSettings");
     }
 
     public static String getAppVersionNumber(String appPackage) {
@@ -128,7 +128,7 @@ public class ADBHelper {
     }
 
     public void openAppsActivity(String packageID, String activityID) {
-        command("adb -s " + ID + " shell am start -c api.android.intent.category.LAUNCHER -a api.android.intent.action.MAIN -n " + packageID + "/" + activityID);
+        command("adb -s " + ID + " shell am start -c api.androidRadioButton.intent.category.LAUNCHER -a api.androidRadioButton.intent.action.MAIN -n " + packageID + "/" + activityID);
     }
 
     public void clearAppsData(String packageID) {

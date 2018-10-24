@@ -1,5 +1,6 @@
 package core.utils;
 
+import core.UI.Controller;
 import core.baseclasses.ElementFinder;
 import core.managers.JenkinsManager;
 import core.managers.drivers.DriverManager;
@@ -10,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static core.UI.ComboBoxes.selectAppToInstallComboBox;
 import static core.constants.FindByLocator.ACCESSIBILITY_LABEL;
 
 public class IOSHelper {
@@ -39,7 +39,21 @@ public class IOSHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if (devices.size() == 0)
+            Log.info("Not a single iOS device is available for testing at this time");
         return devices;
+    }
+
+    public static ArrayList<String> getIOSDevicesWithDetails() {
+        ArrayList<String> availableDevices = new ArrayList<>();
+
+        Log.info("Checking for available iOS devices");
+        for (Object connectedIOSDevice : getIOSDevices()) {
+            String iOSDevice = getDeviceName(connectedIOSDevice.toString()) + " || " + connectedIOSDevice.toString();
+            availableDevices.add(iOSDevice);
+        }
+        return availableDevices;
     }
 
     public static String getIOSAppInstallationPath() {
@@ -51,7 +65,7 @@ public class IOSHelper {
             }
             return ipaAbsolutePath;
         } else {
-            return selectAppToInstallComboBox.getValue();
+            return Controller.selectedApp;
         }
     }
 

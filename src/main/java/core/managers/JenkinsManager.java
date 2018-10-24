@@ -36,7 +36,7 @@ public class JenkinsManager {
                 return "iOS";
         }
 
-        throw new RuntimeException("Could not get selected platform from Jenkins");
+        throw new RuntimeException("Could not get selected selectedPlatform from Jenkins");
     }
 
     public String getJenkinsDeviceId() {
