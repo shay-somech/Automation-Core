@@ -1,9 +1,7 @@
 package core.utils;
 
-import core.UI.Controller;
-import core.baseclasses.ElementFinder;
+import core.UI.controller.tab.Tab1Controller;
 import core.managers.JenkinsManager;
-import core.managers.drivers.DriverManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,16 +10,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import static core.constants.FindByLocator.ACCESSIBILITY_LABEL;
+import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
+import static core.utils.ElementWrapper.waitForElementToAppear;
 
 public class IOSHelper {
-
-    private static IOSHelper instance;
-
-    public static IOSHelper getInstance() {
-        if (instance == null)
-            instance = new IOSHelper();
-        return instance;
-    }
 
     public static ArrayList<String> getIOSDevices() {
         ArrayList<String> devices = new ArrayList<>();
@@ -30,14 +22,14 @@ public class IOSHelper {
             Process getConnectedDevices = Runtime.getRuntime().exec("idevice_id -l");
             BufferedReader input = new BufferedReader(new InputStreamReader(getConnectedDevices.getInputStream()));
             while ((line = input.readLine()) != null) {
-                Log.info("Found iOS device :: " + line + "\n");
+                Log.info("Found iOS device: " + line);
                 if (line.length() > 0) {
                     devices.add(line);
                 }
             }
             input.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.info("Not a single iOS device is available for testing at this time");
         }
 
         if (devices.size() == 0)
@@ -59,17 +51,17 @@ public class IOSHelper {
     public static String getIOSAppInstallationPath() {
         String ipaAbsolutePath = null;
 
-        if (JenkinsManager.getInstance().isBuildingFromJenkins()) {
+        if ((boolean) JenkinsManager.getInstance().getJenkinsSelection(JENKINS_INSTANCE)) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }
             return ipaAbsolutePath;
         } else {
-            return Controller.selectedApp;
+            return Tab1Controller.app;
         }
     }
 
-    public static String getDeviceName(String udid) {
+    private static String getDeviceName(String udid) {
         try {
             String line;
             Process getDeviceName = Runtime.getRuntime().exec("idevicename -u " + udid);
@@ -117,11 +109,7 @@ public class IOSHelper {
         return fileList;
     }
 
-    void closeIOSKeyboard() {
-        DriverManager.getIosDriver().hideKeyboard();
-    }
-
-    void clickIOSNativeCancelButton() {
-        ElementFinder.findElementBy(ACCESSIBILITY_LABEL, "Cancel").findAndClick();
+    public void clickIOSNativeCancelButton() {
+        waitForElementToAppear(ACCESSIBILITY_LABEL, "Cancel", 5).click();
     }
 }

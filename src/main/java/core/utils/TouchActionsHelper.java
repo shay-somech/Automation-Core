@@ -10,27 +10,27 @@ import org.openqa.selenium.interactions.Actions;
 
 public class TouchActionsHelper {
 
-    private static Actions action = new Actions(DriverManager.getDriver());
+    private static Actions actions = new Actions(DriverManager.getDriver());
     private static TouchAction touchAction = new TouchAction(DriverManager.getDriver());
 
     public static void tap(int x, int y) {
-        touchAction.press(PointOption.point(x, y)).release().perform();
+        touchAction.tap(PointOption.point(x, y)).perform();
     }
 
     public static void pressMoveElementToOffset(WebElement element, int xOffset, int yOffset) {
         touchAction.press(ElementOption.element(element)).moveTo(PointOption.point(xOffset, yOffset)).release().perform();
     }
 
-    public static void doubleClickElement(ElementWrapper elementWrapper) {
-        action.doubleClick(elementWrapper).perform();
+    public static void doubleClickElement(WebElement webElement) {
+        actions.doubleClick(webElement).perform();
     }
 
     public static void dragAndDropElement(WebElement element, int xOffset, int yOffset) {
-        action.dragAndDropBy(element, xOffset, yOffset).perform();
+        actions.dragAndDropBy(element, xOffset, yOffset).perform();
     }
 
-    public static void clickAndHoldElement(ElementWrapper elementWrapper) {
-        action.clickAndHold(elementWrapper).perform();
+    public static void clickAndHoldElement(WebElement webElement) {
+        actions.clickAndHold(webElement).perform();
     }
 
     public static void longPressElement(WebElement element) {

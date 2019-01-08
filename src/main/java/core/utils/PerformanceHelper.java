@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.constants.AppParams;
 import io.appium.java_client.android.AndroidDriver;
 
 import java.util.HashMap;
@@ -17,7 +16,7 @@ public class PerformanceHelper {
      * @throws Exception
      */
     public HashMap<String, Integer> getMemoryInfo(AndroidDriver driver) throws Exception {
-        List<List<Object>> data = driver.getPerformanceData(AppParams.androidAppPackage, "memoryinfo", 10);
+        List<List<Object>> data = driver.getPerformanceData(AppParams.getAndroidAppPackage(), "memoryinfo", 10);
         HashMap<String, Integer> readableData = new HashMap<>();
         for (int i = 0; i < data.get(0).size(); i++) {
             int val;
@@ -40,7 +39,7 @@ public class PerformanceHelper {
      * @throws Exception
      */
     public HashMap<String, Integer> getCPUInfo(AndroidDriver driver) throws Exception {
-        List<List<Object>> data = driver.getPerformanceData(AppParams.androidAppPackage, "cpuinfo", 10);
+        List<List<Object>> data = driver.getPerformanceData(AppParams.getAndroidAppPackage(), "cpuinfo", 10);
         HashMap<String, Integer> readableData = new HashMap<>();
         for (int i = 0; i < data.get(0).size(); i++) {
             int val;
@@ -63,7 +62,7 @@ public class PerformanceHelper {
      * @throws Exception
      */
     public HashMap<String, Integer> getBatteryInfo(AndroidDriver driver) throws Exception {
-        List<List<Object>> data = driver.getPerformanceData(AppParams.androidAppPackage, "batteryinfo", 10);
+        List<List<Object>> data = driver.getPerformanceData(AppParams.getAndroidAppPackage(), "batteryinfo", 10);
         HashMap<String, Integer> readableData = new HashMap<>();
         for (int i = 0; i < data.get(0).size(); i++) {
             int val;
@@ -86,7 +85,7 @@ public class PerformanceHelper {
      * @throws Exception
      */
     public HashMap<String, Integer> getNetworkInfo(AndroidDriver driver) throws Exception {
-        List<List<Object>> data = driver.getPerformanceData(AppParams.androidAppPackage, "networkinfo", 10);
+        List<List<Object>> data = driver.getPerformanceData(AppParams.getAndroidAppPackage(), "networkinfo", 10);
         HashMap<String, Integer> readableData = new HashMap<>();
         for (int i = 0; i < data.get(0).size(); i++) {
             int val;

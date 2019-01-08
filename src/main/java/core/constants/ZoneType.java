@@ -1,9 +1,19 @@
 package core.constants;
 
-public class ZoneType {
+public enum ZoneType {
+    NATIVE, WEBVIEW, INSTRUMENTED_APP;
 
-    public final static String NATIVE = "NATIVE";
-    public final static String WEBVIEW = "WEBVIEW_1";
-    public final static String INSTRUMENTED_APP = "NATIVE_APP_INSTRUMENTED";
+    @Override
+    public String toString() {
+        switch (this) {
+            case WEBVIEW:
+                return "WEBVIEW_1";
 
+            case INSTRUMENTED_APP:
+                return "INSTRUMENTED_APP";
+
+            default:
+                return "NATIVE";
+        }
+    }
 }

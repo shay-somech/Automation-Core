@@ -69,8 +69,8 @@ public class ADBHelper {
         command("adb start-server");
     }
 
-    public static ArrayList getConnectedDevices() {
-        ArrayList devices = new ArrayList();
+    static ArrayList<String> getConnectedDevices() {
+        ArrayList<String> devices = new ArrayList<>();
         String output = command("adb devices");
         for (String line : output.split("\n")) {
             line = line.trim();
@@ -83,7 +83,7 @@ public class ADBHelper {
         return command("adb -s " + ID + " shell dumpsys window windows | grep mCurrentFocus");
     }
 
-    public static String getAndroidVersionAsString(String ID) {
+    static String getAndroidVersionAsString(String ID) {
         String output = command("adb -s " + ID + " shell getprop ro.build.version.release");
         if (output.length() == 3) output += ".0";
         return output;
@@ -183,7 +183,7 @@ public class ADBHelper {
         return command("adb -s " + ID + " shell getprop ro.product.manufacturer");
     }
 
-    public static String getDeviceSerialNumber() {
+    public static String getDeviceSerialNumber(String ID) {
         return command("adb -s " + ID + " shell getprop ro.serialno");
     }
 

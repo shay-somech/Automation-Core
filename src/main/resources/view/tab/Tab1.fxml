@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<SplitPane fx:id="basicConfig" dividerPositions="0.5" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab1Controller">
+
+    <items>
+        <AnchorPane fx:id="leftAnchorPane">
+            <children>
+                <VBox>
+                    <children>
+                        <Label text="Run Type">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Medium" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Region>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="25.0" left="5.0" right="5.0" top="25.0" />
+                            </VBox.margin>
+                        </Region>
+                  <Label text="Test">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <font>
+                        <Font name="Heiti SC Medium" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                        <Label text="Platform">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Medium" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Region>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="25.0" left="5.0" right="5.0" top="25.0" />
+                            </VBox.margin>
+                        </Region>
+                        <Label text="Device">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Medium" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Region>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="15.0" left="5.0" right="5.0" top="25.0" />
+                            </VBox.margin>
+                        </Region>
+                        <CheckBox fx:id="noReset" mnemonicParsing="false" selected="true" text="Keep App data (noReset)">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Medium" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="installApp" mnemonicParsing="false" onAction="#setAppInstallationComboBox" text="Install App">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Medium" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </CheckBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="rightAnchorPane">
+            <children>
+                <VBox>
+                    <children>
+                        <RadioButton fx:id="singleRun" mnemonicParsing="false" onAction="#setSingleRunSelection" selected="true" text="Single Run">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Light" size="14.0" />
+                            </font>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="runType" />
+                            </toggleGroup>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                            </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="parallelRun" mnemonicParsing="false" onAction="#setParallelRunSelection" text="Parallel Run" toggleGroup="$runType">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Heiti SC Light" size="14.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </RadioButton>
+                  <ComboBox fx:id="testClassComboBox" layoutX="15.0" layoutY="113.0" promptText="Select Test">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                        <ComboBox fx:id="platformComboBox" promptText="Select Platform">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Android" />
+                                    <String fx:value="iOS" />
+                                </FXCollections>
+                            </items>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="platformComboBox2" promptText="Select 2nd Platform" visible="false">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Android" />
+                                    <String fx:value="iOS" />
+                                </FXCollections>
+                            </items>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="deviceComboBox" promptText="Select Device">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="deviceComboBox2" promptText="Select 2nd Device" visible="false">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Region>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </Region>
+                        <ComboBox fx:id="appComboBox" promptText="Select App" visible="false">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>

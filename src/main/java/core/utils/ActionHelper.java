@@ -1,66 +1,47 @@
 package core.utils;
 
-import core.managers.drivers.AndroidDriverManager;
+import com.google.common.collect.ImmutableMap;
+import core.constants.KeyboardEvents;
+import core.constants.SwipeDirection;
 import core.managers.drivers.DriverManager;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.ScreenOrientation;
-
-import static core.externalScreens.iOSMailAction.sendIOSEmail;
+import org.openqa.selenium.WebElement;
 
 public class ActionHelper {
 
-    private static ActionHelper instance;
-
+    private final AppiumDriver driver;
     private final SwipeHelper swipeHelper;
     private final FunctionHelper functionHelper;
-    private final WebviewHelper webviewHelper;
     private final AndroidHelper androidHelper;
     private final IOSHelper iosHelper;
-    private final ExternalCapabilities externalCapabilities;
-
-    private static String currentSessionId;
-
+    private static ActionHelper instance;
 
     private ActionHelper() {
-
         Log.info("ActionHelper created");
-
-        // seeTest must use current driver , so we check driver is valid in case
-        // we started new test and driver restarted on before and after class annotations.
-
-        currentSessionId = DriverManager.getDriver().getSessionId().toString();
-
-        this.swipeHelper = new SwipeHelper();
-        this.functionHelper = new FunctionHelper();
-        this.webviewHelper = new WebviewHelper();
-        this.androidHelper = new AndroidHelper();
-        this.iosHelper = new IOSHelper();
-        this.externalCapabilities = ExternalCapabilities.getInstance();
+        driver = DriverManager.getDriver();
+        swipeHelper = new SwipeHelper(driver);
+        functionHelper = new FunctionHelper(driver);
+        androidHelper = new AndroidHelper();
+        iosHelper = new IOSHelper();
+        Log.info("ActionHelper initialized");
     }
 
     public static ActionHelper getInstance() {
-        if (instance == null || DriverManager.isDriverExpired(currentSessionId)) {
+        if (instance == null)
             instance = new ActionHelper();
-        }
         return instance;
     }
 
-    public static void quit() {
-        instance = null;
+    public void swipeDownUntilElementFound(WebElement webElement, boolean failIfNotFound) {
+        swipeHelper.swipeDownUntilElementFound(webElement, failIfNotFound);
     }
 
-    public void swipeDownUntilElementFound(ElementWrapper elementWrapper) {
-        swipeHelper.swipeDownUntilElementFound(elementWrapper);
+    public void swipeDownUntilElementFound(WebElement webElement) {
+        swipeHelper.swipeDownUntilElementFound(webElement);
     }
 
-    public void swipeDownUntilElementFound(ElementWrapper elementWrapper, boolean click) {
-        swipeHelper.swipeDownUntilElementFound(elementWrapper, click);
-    }
-
-    public void swipeDownUntilElementFound(ElementWrapper elementWrapper, boolean failIfNotFound, boolean click) {
-        swipeHelper.swipeDownUntilElementFound(elementWrapper, failIfNotFound, click);
-    }
-
-    public void swipe(String direction) {
+    public void swipe(SwipeDirection direction) {
         swipeHelper.swipe(direction);
     }
 
@@ -68,9 +49,8 @@ public class ActionHelper {
         swipeHelper.swipe(startX, startY, endX, endY);
     }
 
-    public void customHorizontalSwipe(ElementWrapper elementWrapper, String direction) {
-        elementWrapper.find();
-        swipeHelper.customHorizontalSwipe(elementWrapper.getElementY(), direction);
+    public void customHorizontalSwipe(WebElement webElement, SwipeDirection direction) {
+        swipeHelper.customHorizontalSwipe(webElement.getRect().getY(), direction);
     }
 
     public void pullToRefresh() {
@@ -83,12 +63,12 @@ public class ActionHelper {
      */
 
     public void wait(int seconds) {
-        FunctionHelper.wait(seconds);
+        functionHelper.wait(seconds);
     }
 
     public void setAppContext(String zone) {
         Log.info("Switching App Context to :: " + zone);
-        DriverManager.getDriver().context(zone);
+        driver.context(zone);
     }
 
     public void closeApp() {
@@ -124,12 +104,8 @@ public class ActionHelper {
         return androidHelper.getAndroidCurrentActivity();
     }
 
-    public void hideKeyboard() {
-        if (AndroidDriverManager.isAndroid) {
-            androidHelper.hideAndroidKeyboard();
-        } else {
-            iosHelper.closeIOSKeyboard();
-        }
+    public void sendKeyboardEvent(KeyboardEvents events) {
+        driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", events.toString()));
     }
 
     public void luanchAndroidSettings() {
@@ -145,36 +121,16 @@ public class ActionHelper {
         iosHelper.clickIOSNativeCancelButton();
     }
 
-    public void shareViaIOSEmail(String recipient) {
-        sendIOSEmail(recipient);
-    }
 
     /**
-     * External Activity Handlers
+     * General Handlers
      */
 
-    public void shareViaFacebook(String username, String password) {
-        externalCapabilities.loginToFacebookAndShare(username, password);
-    }
-
-    public void shareViaGmail(String emailTo) {
-        externalCapabilities.shareViaGmailNativeOption(emailTo);
-    }
-
-    public void shareViaWhatsapp() {
-        externalCapabilities.shareViaWhatsappNativeOption();
-    }
-
-
-    /**
-     * Ynet App Handlers
-     */
-
-    public void playEntireVideo(ElementWrapper videoDurationElement) {
+    public void playEntireVideo(WebElement videoDurationElement) {
         functionHelper.playEntireVideo(videoDurationElement);
     }
 
-    public void clickWebviewBackButton() {
-        webviewHelper.clickWebviewBackButton();
+    public void hideKeyboard() {
+        driver.hideKeyboard();
     }
 }

@@ -1,8 +1,7 @@
 package core.utils;
 
-
-import static core.baseclasses.ElementFinder.findElementBy;
 import static core.constants.FindByLocator.ID;
+import static core.utils.ElementWrapper.waitForElementToAppear;
 
 public class DialogHelper {
 
@@ -15,10 +14,10 @@ public class DialogHelper {
     }
 
     public void clickAllowPushNotificationsButton() {
-        findElementBy(ID, Id.ALLOW_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
+        waitForElementToAppear(ID, Id.ALLOW_PUSH_NOTIFICATIONS_BUTTON, 3).click();
     }
 
     public void clickDenyPushNotificationsButton() {
-        findElementBy(ID, Id.DENY_PUSH_NOTIFICATIONS_BUTTON).findAndClick();
+        waitForElementToAppear(ID, Id.DENY_PUSH_NOTIFICATIONS_BUTTON, 3).click();
     }
 }

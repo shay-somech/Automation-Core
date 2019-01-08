@@ -7,11 +7,13 @@ public class JenkinsManager {
 
     private static JenkinsManager instance;
     private String jenkinsPlatformProperty;
+    private String jenkinsNoResetProperty;
     private boolean isJenkinsAndroidPlatform;
     private boolean isJenkinsIOSPlatform;
 
     private JenkinsManager() {
         jenkinsPlatformProperty = System.getProperty("JenkinsPlatform");
+        jenkinsNoResetProperty = System.getProperty("JenkinsNoReset");
     }
 
     public static JenkinsManager getInstance() {
@@ -21,11 +23,32 @@ public class JenkinsManager {
         return instance;
     }
 
-    public boolean isBuildingFromJenkins() {
+    public enum JenkinsProperty {
+        JENKINS_INSTANCE, NO_RESET_PROPERTY, PLATFORM, DEVICE_ID
+    }
+
+    public Object getJenkinsSelection(JenkinsProperty property) {
+        switch (property) {
+            case JENKINS_INSTANCE:
+                return isBuildingFromJenkins();
+
+            case PLATFORM:
+                return getJenkinsSelectedPlatform();
+
+            case DEVICE_ID:
+                return getJenkinsDeviceId();
+
+            case NO_RESET_PROPERTY:
+                return getJenkinsNoResetSelection();
+        }
+        throw new RuntimeException("Selected property is not defined in scope");
+    }
+
+    private boolean isBuildingFromJenkins() {
         return jenkinsPlatformProperty != null;
     }
 
-    public String getJenkinsSelectedPlatform() {
+    private String getJenkinsSelectedPlatform() {
         switch (jenkinsPlatformProperty) {
             case "Android":
                 isJenkinsAndroidPlatform = true;
@@ -36,10 +59,10 @@ public class JenkinsManager {
                 return "iOS";
         }
 
-        throw new RuntimeException("Could not get selected selectedPlatform from Jenkins");
+        throw new RuntimeException("Could not get selected selected Platform from Jenkins");
     }
 
-    public String getJenkinsDeviceId() {
+    private String getJenkinsDeviceId() {
         if (isJenkinsAndroidPlatform) {
             return getAndroidDevices().get(0);
 
@@ -49,5 +72,14 @@ public class JenkinsManager {
         } else {
             throw new RuntimeException("Cannot get desired Device");
         }
+    }
+
+    private boolean getJenkinsNoResetSelection() {
+        if (jenkinsNoResetProperty.equals("true")) {
+            return true;
+        } else if (jenkinsNoResetProperty.equals("false")) {
+            return false;
+        }
+        throw new RuntimeException("Could not get No Reset property selection");
     }
 }

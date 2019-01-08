@@ -1,47 +1,38 @@
 package core.utils;
 
 import core.managers.drivers.DriverManager;
-import core.managers.drivers.IOSDriverManager;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebElement;
 
 import static core.managers.DisplayManager.isPortrait;
 
 public class FunctionHelper {
 
-    private static FunctionHelper instance;
+    private static AppiumDriver driver;
 
-    public static FunctionHelper getInstance() {
-        if (instance == null)
-            instance = new FunctionHelper();
-        return instance;
+    FunctionHelper(AppiumDriver driver) {
+        FunctionHelper.driver = driver;
     }
 
-    public static void wait(int seconds) {
+    public void wait(int seconds) {
         try {
-            // TODO: Fix this method
-            if (seconds > 60) {
-                int splitSeconds = seconds / 3;
-                for (int i = 0; i < 3; i++) {
-                    Log.info("Duration is bigger than threshold, dividing Seconds by 3 ");
-                    Thread.sleep(splitSeconds * 1000);
-                }
-            } else
-                Thread.sleep(seconds * 1000);
+            driver.wait(seconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     void changeDeviceOrientation(ScreenOrientation orientation) {
-        if (DriverManager.getDriver().getOrientation() != ScreenOrientation.LANDSCAPE) {
+        if (driver.getOrientation() != ScreenOrientation.LANDSCAPE) {
             isPortrait = false;
             Log.info("Changing device orientation to " + orientation);
-            DriverManager.getDriver().rotate(orientation);
+            driver.rotate(orientation);
 
-        } else if (DriverManager.getDriver().getOrientation() != ScreenOrientation.PORTRAIT) {
+        } else if (driver.getOrientation() != ScreenOrientation.PORTRAIT) {
             isPortrait = true;
             Log.info("Changing device orientation to " + orientation);
-            DriverManager.getDriver().rotate(orientation);
+            driver.rotate(orientation);
 
         } else {
             Log.info("Cannot change to " + orientation + ", Please make sure device is not already in " + orientation);
@@ -50,20 +41,20 @@ public class FunctionHelper {
 
     void closeApp() {
         Log.info("Closing App...");
-        DriverManager.getDriver().closeApp();
+        driver.closeApp();
     }
 
     void launchApp() {
         Log.info("Launching App...");
-        DriverManager.getDriver().launchApp();
+        driver.launchApp();
     }
 
     /**
      * This method extracts the Video duration from the given Element then wait for the entire duration
      */
-    void playEntireVideo(ElementWrapper videoDurationElement) {
+    void playEntireVideo(WebElement videoDurationElement) {
 
-        videoDurationElement.findAndClick();
+        videoDurationElement.click();
         String videoLength = videoDurationElement.getText();
         System.out.println("Video length == " + videoLength);
 
@@ -86,7 +77,7 @@ public class FunctionHelper {
         videoMinutes = videoLength.substring(0, videoLength.indexOf(":"));
         videoSeconds = videoLength.substring(videoLength.indexOf(":") + 1, videoLength.length());
 
-        if (IOSDriverManager.isIOS) {
+        if (DriverManager.isIOS) {
             iosVideoMinutes = videoMinutes.replace("-", "");
             minutes = Integer.parseInt(iosVideoMinutes);
         } else {

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="core.UI.controller.MainController">
+
+    <top>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Gini Apps Automation" textAlignment="CENTER" textFill="#38a12a">
+                    <font>
+                        <Font name="Heiti SC Light" size="30.0"/>
+                    </font>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                    </padding>
+                    <graphic>
+                        <ImageView fitHeight="88.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../uiAssets/uedrxh.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Label>
+            </children>
+        </HBox>
+    </top>
+    <left>
+        <VBox spacing="20.0" BorderPane.alignment="CENTER"/>
+    </left>
+    <center>
+        <VBox BorderPane.alignment="CENTER_RIGHT">
+            <children>
+                <TabPane side="LEFT" style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Basic Configuration">
+                            <content>
+                                <fx:include fx:id="tab1" source="tab/Tab1.fxml"/>
+                            </content>
+                        </Tab>
+                        <Tab text="TestNG Configuration">
+                            <content>
+                                <fx:include fx:id="tab2" source="tab/Tab2.fxml"/>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </children>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-: ;">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../uiAssets/powered%20by@3x.png"/>
+                    </image>
+                </ImageView>
+                <Button fx:id="runButton" mnemonicParsing="false" onAction="#runButtonClicked"
+                        style="-fx-background-color: inherit;" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                    </HBox.margin>
+                    <graphic>
+                        <ImageView fitHeight="66.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../uiAssets/drawn-button-play-12.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </HBox>
+    </bottom>
+    <right>
+        <VBox BorderPane.alignment="CENTER"/>
+    </right>
+</BorderPane>

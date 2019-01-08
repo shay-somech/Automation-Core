@@ -1,79 +1,71 @@
 package core.utils;
 
+import core.constants.SwipeDirection;
 import core.managers.DisplayManager;
 import core.managers.drivers.DriverManager;
-import core.managers.drivers.IOSDriverManager;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 
-import static core.constants.SwipeDirection.*;
+import static core.constants.SwipeDirection.DOWN;
+import static core.constants.SwipeDirection.UP;
+import static core.utils.ElementWrapper.waitForElementToAppear;
 
-public class SwipeHelper {
-    private static SwipeHelper instance;
+class SwipeHelper {
 
     private static int deviceWidth;
     private static int deviceHeight;
-
     private TouchAction action;
 
-    SwipeHelper() {
-        action = new TouchAction(DriverManager.getDriver());
-
+    SwipeHelper(AppiumDriver driver) {
+        action = new TouchAction(driver);
         deviceWidth = DisplayManager.getInstance().getDeviceWidth();
         deviceHeight = DisplayManager.getInstance().getDeviceHeight();
     }
 
-    public static SwipeHelper getInstance() {
-        if (instance == null)
-            instance = new SwipeHelper();
-        return instance;
-    }
-
     /**
-     * swipe down until element provided is found , will try 20 swipes down before throw an AssertionError
+     * swipe down until element provided is found , will try to find the element pre-swiping, will swipe down 20 times before throwing an AssertionError
      *
-     * @param elementWrapper                 element we want to find
-     * @param tryToFindAlsoBeforeSwipingDown determine if we want to try finding object before the first swipe
+     * @param element element we want to find
      */
-    private void swipeDownUntilElementFound(ElementWrapper elementWrapper, boolean tryToFindAlsoBeforeSwipingDown, boolean failIfNotFound, boolean click) {
+    void swipeDownUntilElementFound(WebElement element, boolean failIfNotFound) {
 
-        Log.info("start swipe for element : " + elementWrapper.getXpath());
+        Log.info("start swipe for element : " + element.toString());
         boolean found = false;
 
-        if (tryToFindAlsoBeforeSwipingDown && elementWrapper.find(1, false) && (elementWrapper.findAndReturn().getRect().y < (deviceHeight / 3))) {
-            Log.info("element found before swiping down : " + elementWrapper.getXpath());
+        try {
+            waitForElementToAppear(element, 1);
+            Log.info("element found before swiping down");
             found = true;
-        } else {
+
+        } catch (TimeoutException e) {
+            Log.info("element was not found, start swiping down");
+
             for (int i = 0; i < 20; i++) {
                 swipe(DOWN);
 
-                if (elementWrapper.find(1, false) && elementWrapper.isExistAndDisplayed()) {
-                    found = true;
-                    break;
+                try {
+                    if (waitForElementToAppear(element, 1).isDisplayed()) {
+                        found = true;
+                        break;
+                    }
+                } catch (TimeoutException ignore) {
+                    Log.info("element was not found, continuing to swipe down ...");
                 }
             }
         }
+
         if (!found && failIfNotFound)
             throw new AssertionError("Can't navigate , element absent or blocked");
-
-        if (click) {
-            elementWrapper.findAndClick();
-        }
     }
 
-    void swipeDownUntilElementFound(ElementWrapper elementWrapper) {
-        swipeDownUntilElementFound(elementWrapper, true, false, false);
-    }
-
-    void swipeDownUntilElementFound(ElementWrapper elementWrapper, boolean click) {
-        swipeDownUntilElementFound(elementWrapper, true, false, click);
-    }
-
-    void swipeDownUntilElementFound(ElementWrapper elementWrapper, boolean failIfNotFound, boolean click) {
-        swipeDownUntilElementFound(elementWrapper, true, failIfNotFound, click);
+    void swipeDownUntilElementFound(WebElement webElement) {
+        swipeDownUntilElementFound(webElement, false);
     }
 
     void swipeUpOnce() {
@@ -86,7 +78,7 @@ public class SwipeHelper {
      * meaning this method adds the startX&startY to endX&endY by default, in order to avoid it we subtracting startX from endX.
      * The Multiplication operations representing percentage of the screen you want to swipe from > to
      */
-    void swipe(String direction) {
+    void swipe(SwipeDirection direction) {
         int startX = deviceWidth;
         int startY = deviceHeight;
         int endX = deviceWidth;
@@ -94,7 +86,7 @@ public class SwipeHelper {
 
         switch (direction) {
             case UP:
-                if (IOSDriverManager.isIOS) {
+                if (DriverManager.isIOS) {
                     int startUpX = (int) (startX * 0.5);
                     int startUpY = (int) (startY * 0.3);
                     int vectorUpX = (int) (endX * 0.5 - startUpX);
@@ -107,7 +99,7 @@ public class SwipeHelper {
                 break;
 
             case DOWN:
-                if (IOSDriverManager.isIOS) {
+                if (DriverManager.isIOS) {
                     int startDownX = (int) (startX * 0.5);
                     int startDownY = (int) (startY * 0.8);
                     int vectorDownX = (int) (endX * 0.5 - startDownX);
@@ -120,7 +112,7 @@ public class SwipeHelper {
                 break;
 
             case LEFT:
-                if (IOSDriverManager.isIOS) {
+                if (DriverManager.isIOS) {
                     int startLeftX = (int) (startX * 0.8);
                     int startLeftY = (int) (startY * 0.5);
                     int vectorLeftX = (int) (endX * 0.2 - startLeftX);
@@ -133,7 +125,7 @@ public class SwipeHelper {
                 break;
 
             case RIGHT:
-                if (IOSDriverManager.isIOS) {
+                if (DriverManager.isIOS) {
                     int startRightX = (int) (startX * 0.1);
                     int startRightY = (int) (startY * 0.5);
                     int vectorRightX = (int) (endX * 0.8 - startRightX);
@@ -148,14 +140,14 @@ public class SwipeHelper {
         Log.info("Swiping " + direction);
     }
 
-    void customHorizontalSwipe(final int elementCentreY, String direction) {
+    void customHorizontalSwipe(final int elementCentreY, SwipeDirection direction) {
         int startX = deviceWidth;
         int endX = deviceWidth;
         int y = deviceHeight;
 
         switch (direction) {
             case LEFT:
-                if (IOSDriverManager.isIOS) {
+                if (DriverManager.isIOS) {
                     int startLeftX = (int) (startX * 0.8);
                     int startLeftY = (int) (y - (elementCentreY * 0.5));
                     int vectorLeftX = (int) (endX * 0.2 - startLeftX);
@@ -167,7 +159,7 @@ public class SwipeHelper {
                 }
 
             case RIGHT:
-                if (IOSDriverManager.isIOS) {
+                if (DriverManager.isIOS) {
                     int startRightX = (int) (startX * 0.2);
                     int startRightY = (int) (y - (elementCentreY * 0.5));
                     int vectorRightX = (int) (endX * 0.8 - startRightX);
