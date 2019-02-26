@@ -1,12 +1,16 @@
 package core.UI.controller.tab;
 
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import core.UI.controller.MainController;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
 import org.testng.xml.XmlSuite.ParallelMode;
 
-public class Tab2Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Tab2Controller implements Initializable {
 
     private MainController main;
 
@@ -18,68 +22,44 @@ public class Tab2Controller {
     public static ParallelMode parallelMode;
 
     @FXML
-    private TextField testNGSuiteName;
+    private JFXTextField testNGSuiteName;
     @FXML
-    private TextField testNGTestName;
+    private JFXTextField testNGTestName;
     @FXML
-    private TextField testNGDeviceName;
+    private JFXTextField testNGDeviceName;
     @FXML
-    private ComboBox<Integer> testNGVerbose;
+    private JFXComboBox<Integer> testNGVerbose;
     @FXML
-    private ComboBox<Integer> testNGThreadCount;
+    private JFXComboBox<Integer> testNGThreadCount;
     @FXML
-    private ComboBox<ParallelMode> testNGParallel;
+    private JFXComboBox<ParallelMode> testNGParallel;
 
-    public void setParallelModeComboBox() {
-        testNGParallel.getItems().addAll(ParallelMode.NONE, ParallelMode.CLASSES, ParallelMode.TESTS, ParallelMode.METHODS, ParallelMode.INSTANCES);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setParallelModeComboBox();
+        setComboBoxesDefaults();
     }
 
-    public void setComboBoxesDefaults() {
-        testNGVerbose.setValue(0);
-        testNGThreadCount.setValue(1);
+    private void setParallelModeComboBox() {
+        testNGParallel.getItems().addAll(ParallelMode.NONE, ParallelMode.CLASSES, ParallelMode.TESTS, ParallelMode.METHODS, ParallelMode.INSTANCES);
         testNGParallel.setValue(ParallelMode.NONE);
     }
 
-    public String getTestNGSuiteName() {
-        return suiteName = testNGSuiteName.getText();
+    private void setComboBoxesDefaults() {
+        testNGVerbose.getItems().addAll(1, 2, 3, 4);
+        testNGThreadCount.getItems().addAll(1, 2, 3, 4);
+
+        testNGVerbose.setValue(0);
+        testNGThreadCount.setValue(0);
     }
 
-    public String getTestNGTestName() {
-        return testName = testNGTestName.getText();
-    }
-
-    public String getTestNGDeviceName() {
-        return deviceName = testNGDeviceName.getText();
-    }
-
-    public int getTestNGVerbose() {
-        return verbose = testNGVerbose.getValue();
-    }
-
-    public int getTestNGThreadCount() {
-        return threadCount = testNGThreadCount.getValue();
-    }
-
-    public ParallelMode getParallelMode() {
-        switch (testNGParallel.getValue()) {
-            case NONE:
-                return parallelMode = ParallelMode.NONE;
-
-            case CLASSES:
-                return parallelMode = ParallelMode.CLASSES;
-
-            case TESTS:
-                return parallelMode = ParallelMode.TESTS;
-
-            case METHODS:
-                return parallelMode = ParallelMode.METHODS;
-
-            case INSTANCES:
-                return parallelMode = ParallelMode.INSTANCES;
-
-            default:
-                return parallelMode = ParallelMode.NONE;
-        }
+    public void getSelections() {
+        suiteName = testNGSuiteName.getText();
+        testName = testNGTestName.getText();
+        deviceName = testNGDeviceName.getText();
+        verbose = testNGVerbose.getValue();
+        threadCount = testNGThreadCount.getValue();
+        parallelMode = testNGParallel.getValue();
     }
 
     public void init(MainController mainController) {

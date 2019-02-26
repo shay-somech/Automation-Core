@@ -6,15 +6,19 @@ import java.io.InputStreamReader;
 
 public class TestReporter {
 
-    public static void presentAllureReports() {
-        try {
-            Log.info("Generating Allure test report ...");
-            String projectDir = System.getProperties().get("user.dir").toString();
-            Process generateReport = Runtime.getRuntime().exec("allure serve " + projectDir + "/allure-results");
-            BufferedReader input = new BufferedReader(new InputStreamReader(generateReport.getInputStream()));
-            input.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void presentAllureReports(boolean shouldPresentReport) {
+        if (shouldPresentReport) {
+            try {
+                Log.info("Generating Allure test report ...");
+                String projectDir = System.getProperties().get("user.dir").toString();
+                Process generateReport = Runtime.getRuntime().exec("allure serve " + projectDir + "/allure-results");
+                new BufferedReader(new InputStreamReader(generateReport.getInputStream()));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.info("Allure Reporter is set to OFF");
         }
     }
 

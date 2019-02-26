@@ -1,160 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.collections.FXCollections?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab2Controller">
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <VBox>
-        <children>
-         <Label layoutX="20.0" layoutY="152.0" text="Suite Name">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <font>
-               <Font name="Heiti SC Medium" size="12.0" />
-            </font>
-            <VBox.margin>
-               <Insets left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-         </Label>
-            <TextField fx:id="testNGSuiteName" promptText="Suite Name" text="Default Suite">
-                <font>
-                    <Font name="Heiti SC Medium" size="14.0" />
-                </font>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                </VBox.margin>
-            </TextField>
-         <Label layoutX="10.0" layoutY="10.0" text="Test Name">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <font>
-               <Font name="Heiti SC Medium" size="12.0" />
-            </font>
-            <VBox.margin>
-               <Insets left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-         </Label>
-            <TextField fx:id="testNGTestName" promptText="Test Name" text="Default Test">
-                <font>
-                    <Font name="Heiti SC Medium" size="14.0" />
-                </font>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                </VBox.margin>
-            </TextField>
-         <Label layoutX="10.0" layoutY="78.0" text="Device Name">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <font>
-               <Font name="Heiti SC Medium" size="12.0" />
-            </font>
-            <VBox.margin>
-               <Insets left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-         </Label>
-            <TextField fx:id="testNGDeviceName" promptText="Device Name" text="Default Device">
-                <font>
-                    <Font name="Heiti SC Medium" size="14.0" />
-                </font>
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                </VBox.margin>
-            </TextField>
-         <Label text="Verbose">
-            <VBox.margin>
-               <Insets left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <font>
-               <Font name="Heiti SC Medium" size="14.0" />
-            </font>
-         </Label>
-            <ComboBox fx:id="testNGVerbose" promptText="Set Verbose">
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                </VBox.margin>
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <Integer fx:value="0" />
-                        <Integer fx:value="1" />
-                        <Integer fx:value="2" />
-                        <Integer fx:value="3" />
-                        <Integer fx:value="4" />
-                        <Integer fx:value="5" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-         <Label layoutX="25.0" layoutY="187.0" text="Thread Count">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <VBox.margin>
-               <Insets left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-            <font>
-               <Font name="Heiti SC Medium" size="14.0" />
-            </font>
-         </Label>
-            <ComboBox fx:id="testNGThreadCount" promptText="Set Thread Count">
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                </VBox.margin>
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <Integer fx:value="0" />
-                        <Integer fx:value="1" />
-                        <Integer fx:value="2" />
-                        <Integer fx:value="3" />
-                        <Integer fx:value="4" />
-                        <Integer fx:value="5" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-         <Label layoutX="25.0" layoutY="281.0" text="Parallel Mode">
-            <padding>
-               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </padding>
-            <VBox.margin>
-               <Insets left="10.0" right="10.0" top="10.0" />
-            </VBox.margin>
-            <font>
-               <Font name="Heiti SC Medium" size="14.0" />
-            </font>
-         </Label>
-            <ComboBox fx:id="testNGParallel" promptText="Set Parallel Mode">
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <VBox.margin>
-                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                </VBox.margin>
-            </ComboBox>
-        </children>
-    </VBox>
-
-
-</AnchorPane>
+<VBox alignment="CENTER_LEFT" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab2Controller">
+   <children>
+      <JFXTextField fx:id="testNGSuiteName" labelFloat="true" promptText="Suite Name">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+         <font>
+            <Font name="Heiti SC Medium" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="testNGTestName" labelFloat="true" layoutX="20.0" layoutY="20.0" promptText="Test Name">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+         <font>
+            <Font name="Heiti SC Medium" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="testNGDeviceName" labelFloat="true" layoutX="20.0" layoutY="67.0" promptText="Device Name">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+         <font>
+            <Font name="Heiti SC Medium" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXComboBox fx:id="testNGVerbose" labelFloat="true" layoutX="20.0" layoutY="347.0" prefWidth="150.0" promptText="Set Verbose">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </JFXComboBox>
+      <JFXComboBox fx:id="testNGThreadCount" labelFloat="true" prefWidth="150.0" promptText="Set Thread Count">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </JFXComboBox>
+      <JFXComboBox fx:id="testNGParallel" labelFloat="true" layoutX="20.0" layoutY="276.0" prefWidth="150.0" promptText="Set Parallel Mode">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </JFXComboBox>
+   </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</VBox>

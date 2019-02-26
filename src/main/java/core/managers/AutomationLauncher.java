@@ -2,10 +2,13 @@ package core.managers;
 
 import core.UI.application.Main;
 import core.UI.controller.tab.Tab1Controller;
+import core.UI.controller.tab.Tab2Controller;
 import core.constants.AutomationStates;
 import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
 import core.utils.Log;
+import core.utils.TestNGHelper;
+import org.testng.xml.XmlSuite;
 
 import static core.constants.AutomationStates.*;
 import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
@@ -26,6 +29,13 @@ public class AutomationLauncher {
                 DriverServiceBuilder.createAppiumService();
                 DriverServiceBuilder.createDriver(Tab1Controller.platform);
                 DriverServiceBuilder.createDriver(Tab1Controller.platform2);
+
+                try {
+                    new TestNGHelper(Tab2Controller.suiteName, Tab2Controller.testName, "Default Device ID", "Default Device Name", Class.forName(Tab1Controller.testClassName), Tab2Controller.verbose, Tab2Controller.threadCount, XmlSuite.ParallelMode.METHODS).createTestNGXml();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
                 ActionHelper.getInstance();
                 break;
 

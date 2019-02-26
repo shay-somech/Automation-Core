@@ -16,7 +16,7 @@ public class Main extends Application {
             window = primaryStage;
             window.setTitle("GINI-APPS Automation");
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 600, 700);
             window.setScene(scene);
             window.show();
         } catch (Exception e) {

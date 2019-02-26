@@ -1,6 +1,7 @@
 package core.managers;
 
 import core.constants.PlatformType;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static core.UI.controller.tab.Tab1Controller.*;
@@ -47,6 +48,7 @@ public class DesiredCapabilitiesManager {
                 caps.setCapability(APP_WAIT_ACTIVITY, getAndroidAppMainActivity());
                 caps.setCapability(APP_WAIT_PACKAGE, getAndroidAppPackage());
                 caps.setCapability(AUTO_GRANT_PERMISSIONS, true);
+                caps.setCapability("skipDeviceInitialization", true);
 
                 break;
 

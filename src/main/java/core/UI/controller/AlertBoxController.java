@@ -10,6 +10,7 @@ public class AlertBoxController {
     public void alertBox(AlertType alertType, String title, String message) {
         Alert alertBox = new Alert(alertType);
         alertBox.setTitle(title);
+        alertBox.setHeaderText(null);
         alertBox.setContentText(message);
         alertBox.initModality(Modality.APPLICATION_MODAL);
         alertBox.showAndWait();

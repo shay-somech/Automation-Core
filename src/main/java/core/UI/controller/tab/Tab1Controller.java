@@ -1,20 +1,24 @@
 package core.UI.controller.tab;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXRadioButton;
 import core.UI.controller.AlertBoxController;
 import core.UI.controller.MainController;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class Tab1Controller {
+public class Tab1Controller implements Initializable {
 
     private MainController main;
 
@@ -28,28 +32,42 @@ public class Tab1Controller {
     public static boolean isParallelRun;
     public static boolean isNoReset;
     public static boolean isInstallApp;
+    public static boolean isGenerateReports;
 
     @FXML
-    private RadioButton singleRun;
+    private JFXRadioButton singleRun;
     @FXML
-    private RadioButton parallelRun;
+    private JFXRadioButton parallelRun;
     @FXML
-    private ComboBox<String> testClassComboBox;
+    private JFXComboBox<String> testClassComboBox;
     @FXML
-    private ComboBox<String> platformComboBox;
+    private JFXComboBox<String> platformComboBox;
     @FXML
-    private ComboBox<String> platformComboBox2;
+    private JFXComboBox<String> platformComboBox2;
     @FXML
-    private ComboBox<String> deviceComboBox;
+    private JFXComboBox<String> deviceComboBox;
     @FXML
-    private ComboBox<String> deviceComboBox2;
+    private JFXComboBox<String> deviceComboBox2;
     @FXML
-    private ComboBox<String> appComboBox;
+    private JFXComboBox<String> appComboBox;
     @FXML
-    private CheckBox noReset;
+    private JFXCheckBox noReset;
     @FXML
-    private CheckBox installApp;
+    private JFXCheckBox installApp;
+    @FXML
+    private JFXCheckBox generateReport;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setTestsComboBox();
+        setPlatformComboBoxesValues();
+        setDevicesComboBox();
+        setDevicesComboBox2();
+    }
+
+    public void init(MainController mainController) {
+        main = mainController;
+    }
 
     @FXML
     private void setSingleRunSelection(ActionEvent event) {
@@ -80,17 +98,27 @@ public class Tab1Controller {
         }
     }
 
-    public void setTestsComboBox() {
+    @FXML
+    private void setGenerateReport(ActionEvent event) {
+        isGenerateReports = generateReport.isSelected();
+    }
+
+    private void setTestsComboBox() {
         File baseDirectory = new File(System.getProperty("user.dir") + "/src/test/java");
         String packagePath = System.getProperty("user.dir") + "/Tests";
         testClassComboBox.getItems().addAll(getAllTestClasses(baseDirectory, packagePath));
     }
 
-    public void setDevicesComboBox() {
+    private void setPlatformComboBoxesValues() {
+        platformComboBox.getItems().addAll("Android", "iOS");
+        platformComboBox2.getItems().addAll("Android", "iOS");
+    }
+
+    private void setDevicesComboBox() {
         setDeviceComboBoxSelection(platformComboBox, deviceComboBox);
     }
 
-    public void setDevicesComboBox2() {
+    private void setDevicesComboBox2() {
         setDeviceComboBoxSelection(platformComboBox2, deviceComboBox2);
     }
 
@@ -150,60 +178,28 @@ public class Tab1Controller {
         });
     }
 
-    public String getTestClassNameSelection() {
-        return testClassName = testClassComboBox.getValue();
-    }
+    public void getSelections() {
+        testClassName = testClassComboBox.getValue();
+        platform = platformComboBox.getValue();
+        platform2 = platformComboBox2.getValue();
 
-    public String getPlatformSelection() {
-        return platform = platformComboBox.getValue();
-    }
-
-    public String getPlatformSelection2() {
-        return platform2 = platformComboBox2.getValue();
-    }
-
-    public String getDeviceSelection() {
         if (deviceComboBox.getValue() != null) {
-            return device = deviceComboBox.getValue().substring(deviceComboBox.getValue().indexOf("||") + 3);
-        } else {
-            return null;
+            device = deviceComboBox.getValue().substring(deviceComboBox.getValue().indexOf("||") + 3);
         }
-    }
 
-    public String getDeviceSelection2() {
         if (deviceComboBox2.getValue() != null) {
-            return device2 = deviceComboBox2.getValue().substring(deviceComboBox2.getValue().indexOf("||") + 3);
-        } else {
-            return null;
+            device2 = deviceComboBox2.getValue().substring(deviceComboBox2.getValue().indexOf("||") + 3);
         }
-    }
 
-    public String getAppSelection() {
-        return app = appComboBox.getValue();
-    }
-
-    public boolean isNoResetSelected() {
-        return isNoReset = noReset.isSelected();
-    }
-
-    public boolean isSingleRunSelected() {
-        return isSingleRun = singleRun.isSelected();
-    }
-
-    public boolean isParallelRunSelected() {
-        return isParallelRun = parallelRun.isSelected();
-    }
-
-    public boolean isInstallAppSelected() {
-        return isInstallApp = installApp.isSelected();
+        app = appComboBox.getValue();
+        isNoReset = noReset.isSelected();
+        isSingleRun = singleRun.isSelected();
+        isParallelRun = parallelRun.isSelected();
+        isInstallApp = installApp.isSelected();
     }
 
     public boolean isDuplicateDevicesSet() {
         return deviceComboBox.getValue().equals(deviceComboBox2.getValue());
-    }
-
-    public void init(MainController mainController) {
-        main = mainController;
     }
 
 
@@ -238,5 +234,13 @@ public class Tab1Controller {
         }
 
         return classes;
+    }
+
+    public String getPlatformSelection() {
+        return platformComboBox.getValue();
+    }
+
+    public String getDeviceSelection() {
+        return deviceComboBox.getValue();
     }
 }
