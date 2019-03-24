@@ -1,6 +1,7 @@
 package core.utils;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Log {
     public enum TextColor {
@@ -25,7 +26,7 @@ public class Log {
     }
 
     //Initialize Log4j instance
-    private static Logger log = Logger.getLogger(Log.class.getName());
+    private static Logger log = LogManager.getLogger(Log.class.getName());
 
     //We can use it when starting tests
     public static void startLog(String testClassName) {

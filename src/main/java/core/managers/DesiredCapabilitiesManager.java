@@ -1,14 +1,15 @@
 package core.managers;
 
 import core.constants.PlatformType;
-import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static core.UI.controller.tab.Tab1Controller.*;
-import static core.utils.AppParams.*;
+import static core.UI.controller.tab.Tab1Controller.isNoReset;
+import static core.UI.controller.tab.Tab2Controller.isInstallApp;
+import static core.UI.controller.tab.Tab2Controller.isParallelRun;
 import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
 import static core.managers.JenkinsManager.JenkinsProperty.NO_RESET_PROPERTY;
 import static core.utils.AndroidHelper.getAndroidAppInstallationPath;
+import static core.utils.AppParams.*;
 import static core.utils.IOSHelper.getIOSAppInstallationPath;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
 import static io.appium.java_client.remote.IOSMobileCapabilityType.*;

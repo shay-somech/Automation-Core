@@ -1,198 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab1Controller">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab1Controller">
     <children>
-        <HBox>
-            <children>
-                <VBox>
-                    <children>
-                        <Label text="Run Type">
-                            <font>
-                                <Font name="Heiti SC Medium" size="14.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </Label>
-                        <Region>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="25.0" left="10.0" right="10.0" top="25.0" />
-                            </VBox.margin>
-                        </Region>
-                        <Label text="Test">
-                            <font>
-                                <Font name="Heiti SC Medium" size="14.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </Label>
-                        <Label text="Platform">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <font>
-                                <Font name="Heiti SC Medium" size="14.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </Label>
-                        <Region>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="25.0" left="10.0" right="10.0" top="25.0" />
-                            </VBox.margin>
-                        </Region>
-                        <Label text="Device">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <font>
-                                <Font name="Heiti SC Medium" size="14.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </Label>
-                        <Region>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="15.0" left="10.0" right="10.0" top="25.0" />
-                            </VBox.margin>
-                        </Region>
-                        <JFXCheckBox fx:id="noReset" text="Keep App data (noReset)" selected="true">
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </JFXCheckBox>
-                        <JFXCheckBox fx:id="installApp" layoutX="20.0" layoutY="356.0" onAction="#setAppInstallationComboBox" text="Install App">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </JFXCheckBox>
-                        <JFXCheckBox fx:id="generateReport" layoutX="20.0" layoutY="404.0" onAction="#setGenerateReport" text="Generate Report">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </JFXCheckBox>
-                    </children>
-                </VBox>
-                <VBox>
-                    <children>
-                        <JFXRadioButton fx:id="singleRun" onAction="#setSingleRunSelection" text="Single Run" selected="true">
-                            <toggleGroup>
-                                <ToggleGroup fx:id="runType" />
-                            </toggleGroup>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <font>
-                                <Font name="Heiti SC Light" size="14.0" />
-                            </font>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="parallelRun" layoutX="20.0" layoutY="20.0" onAction="#setParallelRunSelection" text="Parallel Run" toggleGroup="$runType">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <font>
-                                <Font name="Heiti SC Light" size="14.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </JFXRadioButton>
-                        <JFXComboBox fx:id="testClassComboBox" promptText="Select Test">
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </JFXComboBox>
-                        <JFXComboBox fx:id="platformComboBox" layoutX="10.0" layoutY="98.0" promptText="Select Platform">
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </JFXComboBox>
-                        <JFXComboBox fx:id="platformComboBox2" layoutX="10.0" layoutY="98.0" promptText="Select 2nd Platform" visible="false">
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </JFXComboBox>
-                        <JFXComboBox fx:id="deviceComboBox" layoutX="10.0" layoutY="98.0" promptText="Select Device">
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </JFXComboBox>
-                        <JFXComboBox fx:id="deviceComboBox2" layoutX="20.0" layoutY="279.0" promptText="Select 2nd Device" visible="false">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </JFXComboBox>
-                        <Region>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </Region>
-                        <JFXComboBox fx:id="appComboBox" layoutX="20.0" layoutY="336.0" promptText="Select App">
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </JFXComboBox>
-                    </children>
-                </VBox>
-            </children>
-        </HBox>
+      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="450.0" vgap="10.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+                  <Label text="Platform">
+                      <font>
+                          <Font name="Heiti SC Medium" size="18.0" />
+                      </font>
+                  </Label>
+                  <ComboBox fx:id="platformComboBox" promptText="Select Platform" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="platformComboBox2" promptText="Select 2nd Platform" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Device" GridPane.rowIndex="2">
+                      <font>
+                          <Font name="Heiti SC Medium" size="18.0" />
+                      </font>
+                  </Label>
+                  <ComboBox fx:id="deviceComboBox" promptText="Select Device" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="deviceComboBox2" promptText="Select 2nd Device" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="noReset" selected="true" text="Keep App data (noReset)" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Heiti SC Medium" size="18.0" />
+               </font></CheckBox>
+                  <CheckBox fx:id="generateReport" onAction="#setGenerateReport" text="Generate Report" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Heiti SC Medium" size="18.0" />
+               </font></CheckBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
     </children>
 </AnchorPane>

@@ -63,7 +63,11 @@ public class ActionHelper {
      */
 
     public void wait(int seconds) {
-        functionHelper.wait(seconds);
+        try {
+            driver.wait(seconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setAppContext(String zone) {
@@ -72,11 +76,13 @@ public class ActionHelper {
     }
 
     public void closeApp() {
-        functionHelper.closeApp();
+        Log.info("Closing App...");
+        driver.closeApp();
     }
 
     public void launchApp() {
-        functionHelper.launchApp();
+        Log.info("Launching App...");
+        driver.launchApp();
     }
 
     public void changeDeviceOrientation(ScreenOrientation orientation) {
@@ -125,10 +131,6 @@ public class ActionHelper {
     /**
      * General Handlers
      */
-
-    public void playEntireVideo(WebElement videoDurationElement) {
-        functionHelper.playEntireVideo(videoDurationElement);
-    }
 
     public void hideKeyboard() {
         driver.hideKeyboard();

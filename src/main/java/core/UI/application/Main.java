@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -16,7 +17,7 @@ public class Main extends Application {
             window = primaryStage;
             window.setTitle("GINI-APPS Automation");
             Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
-            Scene scene = new Scene(root, 600, 700);
+            Scene scene = new Scene(root, Region.USE_COMPUTED_SIZE, 500);
             window.setScene(scene);
             window.show();
         } catch (Exception e) {

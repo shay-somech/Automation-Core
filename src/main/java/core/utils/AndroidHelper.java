@@ -1,6 +1,6 @@
 package core.utils;
 
-import core.UI.controller.tab.Tab1Controller;
+import core.UI.controller.tab.Tab2Controller;
 import core.managers.JenkinsManager;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.android.Activity;
@@ -54,7 +54,7 @@ public class AndroidHelper {
             }
             return apkAbsolutePath;
         } else {
-            return Tab1Controller.app;
+            return Tab2Controller.app;
         }
     }
 

@@ -31,7 +31,15 @@ public class AutomationLauncher {
                 DriverServiceBuilder.createDriver(Tab1Controller.platform2);
 
                 try {
-                    new TestNGHelper(Tab2Controller.suiteName, Tab2Controller.testName, "Default Device ID", "Default Device Name", Class.forName(Tab1Controller.testClassName), Tab2Controller.verbose, Tab2Controller.threadCount, XmlSuite.ParallelMode.METHODS).createTestNGXml();
+                    new TestNGHelper(Tab2Controller.suiteName,
+                            Tab2Controller.testName,
+                            "Default Device ID",
+                            "Default Device Name",
+                            Class.forName(Tab2Controller.testClassName),
+                            Tab2Controller.verbose,
+                            Tab2Controller.threadCount,
+                            XmlSuite.ParallelMode.METHODS).createTestNGXml();
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -52,7 +60,7 @@ public class AutomationLauncher {
             Log.info("Starting Automation From Jenkins");
             startAutomationState(JENKINS_PARAMETERIZED);
 
-        } else if (Tab1Controller.isParallelRun) {
+        } else if (Tab2Controller.isParallelRun) {
             Log.info("Starting Parallel Automation Manually");
             startAutomationState(MANUAL_PARALLEL);
 

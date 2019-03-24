@@ -22,6 +22,8 @@ public class TestReporter {
         }
     }
 
+    public void reportBuilder() { }
+
     // TODO: 10/10/2018 Find a way to shut this down gracefully
 //    public static void presentAllureReports() throws IOException {
 //

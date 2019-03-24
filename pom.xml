@@ -19,7 +19,7 @@
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>6.1.0</version>
+            <version>7.0.0</version>
         </dependency>
 
         <dependency>
@@ -29,16 +29,21 @@
         </dependency>
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.2</version>
         </dependency>
 
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.7.0</version>
-            <scope>test</scope>
+            <version>2.10.0</version>
         </dependency>
 
         <dependency>
@@ -52,12 +57,6 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.jfoenix</groupId>
-            <artifactId>jfoenix</artifactId>
-            <version>8.0.8</version>
         </dependency>
     </dependencies>
 
@@ -80,7 +79,7 @@
                             <value>ru.yandex.qatools.allure.testng.AllureTestListener</value>
                         </property>
 
-                    <reportDirectory>${project.basedir}/target/Allure-Reports/</reportDirectory>
+                        <reportDirectory>${project.basedir}/target/Allure-Reports/</reportDirectory>
                     </properties>
 
                 </configuration>
@@ -118,6 +117,4 @@
 
         </plugins>
     </build>
-
-
 </project>
