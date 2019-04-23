@@ -6,18 +6,11 @@ public class AppParams {
     private static String androidAppMainActivity;
     private static String iOSBundleId;
 
-    public static String setAndroidAppPackage(String appPackage) {
-        return androidAppPackage = appPackage;
+    public AppParams(String androidAppPackage, String androidAppMainActivity, String iOSBundleId) {
+        this.androidAppPackage = androidAppPackage;
+        this.androidAppMainActivity = androidAppMainActivity;
+        this.iOSBundleId = iOSBundleId;
     }
-
-    public static String setAndroidAppMainActivity(String appMainActivity) {
-        return androidAppMainActivity = appMainActivity;
-    }
-
-    public static String setIOSBundleId(String bundleId) {
-        return iOSBundleId = bundleId;
-    }
-
 
     public static String getAndroidAppPackage() {
         return androidAppPackage;

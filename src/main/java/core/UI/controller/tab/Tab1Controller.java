@@ -2,7 +2,6 @@ package core.UI.controller.tab;
 
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -19,18 +18,13 @@ public class Tab1Controller implements Initializable {
     @FXML
     private ComboBox<String> platformComboBox, platformComboBox2, deviceComboBox, deviceComboBox2;
     @FXML
-    private CheckBox noReset, generateReport;
+    private CheckBox noReset;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setPlatformComboBoxesValues();
         setDevicesComboBox();
         setDevicesComboBox2();
-    }
-
-    @FXML
-    private void setGenerateReport(ActionEvent event) {
-        isGenerateReports = generateReport.isSelected();
     }
 
     private void setPlatformComboBoxesValues() {

@@ -42,6 +42,7 @@ public class DriverManager {
             return driver;
 
         } catch (SessionNotCreatedException e) {
+            e.printStackTrace();
             throw new RuntimeException("Failed to start Appium driver");
         }
     }

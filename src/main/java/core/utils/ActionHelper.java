@@ -64,7 +64,9 @@ public class ActionHelper {
 
     public void wait(int seconds) {
         try {
-            driver.wait(seconds);
+            synchronized (driver) {
+                driver.wait(seconds);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

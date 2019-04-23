@@ -2,7 +2,6 @@ package core.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class ADBHelper {
@@ -100,7 +99,7 @@ public class ADBHelper {
         return packages;
     }
 
-    public static void WiFiConnection(boolean enabled) {
+    public static void setWIFIConnection(boolean enabled) {
         if (enabled) {
             command("adb shell -s svc wifi enable");
         } else {
@@ -108,7 +107,7 @@ public class ADBHelper {
         }
     }
 
-    public static void AirPlaneModeConncetion(boolean enabled) {
+    public static void setAirPlaneModeConncetion(boolean enabled) {
         if (enabled) {
             command("adb shell settings put global airplane_mode_on 1");
             command("adb shell am broadcast -a androidRadioButton.intent.action.AIRPLANE_MODE");
@@ -189,49 +188,5 @@ public class ADBHelper {
 
     public String getDeviceCarrier() {
         return command("adb -s " + ID + " shell getprop gsm.operator.alpha");
-    }
-
-    public ArrayList getLogcatProcesses() {
-        String[] output = command("adb -s " + ID + " shell top -n 1 | grep -i 'logcat'").split("\n");
-        ArrayList processes = new ArrayList();
-        for (String line : output) {
-            processes.add(line.split(" ")[0]);
-            processes.removeAll(Arrays.asList("", null));
-        }
-        return processes;
-    }
-
-//    public Object startLogcat(final String logID, final String grep) {
-//        ArrayList pidBefore = getLogcatProcesses();
-//
-//        Thread logcat = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (grep == null) command("adb -s " + ElementsById + " shell logcat -v threadtime > /sdcard/" + logID + ".txt");
-//                else
-//                    command("adb -s " + ElementsById + " shell logcat -v threadtime | grep -i '" + grep + "'> /sdcard/" + logID + ".txt");
-//            }
-//        });
-//        logcat.setName(logID);
-//        logcat.start();
-//        logcat.interrupt();
-//
-//        ArrayList pidAfter = getLogcatProcesses();
-//        Timer timer = new Timer();
-//        timer.start();
-//        while (!timer.expired(5)) {
-//            if (pidBefore.size() > 0) pidAfter.removeAll(pidBefore);
-//            if (pidAfter.size() > 0) break;
-//            pidAfter = getLogcatProcesses();
-//        }
-//
-//        if (pidAfter.size() == 1) return pidAfter.get(0);
-//        else if (pidAfter.size() > 1)
-//            throw new RuntimeException("Multiple logcat processes were started when only one was expected!");
-//        else throw new RuntimeException("Failed to start logcat process!");
-//    }
-
-    public void stopLocat(Object PID) {
-        command("adb -s " + ID + " shell kill " + PID);
     }
 }
