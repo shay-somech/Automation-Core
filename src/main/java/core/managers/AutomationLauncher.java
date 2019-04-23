@@ -60,9 +60,9 @@ public class AutomationLauncher {
             Log.info("Starting Automation From Jenkins");
             startAutomationState(JENKINS_PARAMETERIZED);
 
-//        } else if (Tab2Controller.isParallelRun) {
-//            Log.info("Starting Parallel Automation Manually");
-//            startAutomationState(MANUAL_PARALLEL);
+        } else if (Tab2Controller.isParallelRun) {
+            Log.info("Starting Parallel Automation Manually");
+            startAutomationState(MANUAL_PARALLEL);
 
         } else {
             Log.info("Starting Automation Manually");
