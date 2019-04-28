@@ -14,8 +14,6 @@ import static core.utils.ADBHelper.*;
 
 public class AndroidHelper {
 
-    private static ArrayList<String> availableDevices = new ArrayList<>();
-
     private AndroidDriver driver;
 
     AndroidHelper(AndroidDriver driver) {
@@ -25,6 +23,7 @@ public class AndroidHelper {
     public static ArrayList<String> getAndroidDevices() {
         Log.info("Checking for available devices");
         ArrayList<String> ADBConnectedDevices = ADBHelper.getConnectedDevices();
+        ArrayList<String> availableDevices = new ArrayList<>();
 
         for (String connectedDevice : ADBConnectedDevices) {
             availableDevices.add(connectedDevice);
@@ -40,6 +39,7 @@ public class AndroidHelper {
 
     public static ArrayList<String> getAndroidDeviceWithDetails() {
         Log.info("Checking for available Android devices");
+        ArrayList<String> availableDevices= new ArrayList<>();
 
         for (String connectedAndroidDevice : getAndroidDevices()) {
             String androidDevice = getDeviceModel(connectedAndroidDevice) + " "
