@@ -5,8 +5,10 @@ import core.constants.KeyboardEvents;
 import core.constants.SwipeDirection;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.html5.Location;
 
 public class ActionHelper {
 
@@ -14,7 +16,7 @@ public class ActionHelper {
     private final SwipeHelper swipeHelper;
     private final FunctionHelper functionHelper;
     private final AndroidHelper androidHelper;
-    private final IOSHelper iosHelper;
+    private final TouchActionsHelper touchActions;
     private static ActionHelper instance;
 
     private ActionHelper() {
@@ -22,8 +24,8 @@ public class ActionHelper {
         driver = DriverManager.getDriver();
         swipeHelper = new SwipeHelper(driver);
         functionHelper = new FunctionHelper(driver);
-        androidHelper = new AndroidHelper();
-        iosHelper = new IOSHelper();
+        androidHelper = new AndroidHelper((AndroidDriver) driver);
+        touchActions = new TouchActionsHelper(driver);
         Log.info("ActionHelper initialized");
     }
 
@@ -32,6 +34,57 @@ public class ActionHelper {
             instance = new ActionHelper();
         return instance;
     }
+
+    /**
+     * Appium Generic functionality handlers
+     */
+
+    public void wait(int seconds) {
+        try {
+            synchronized (driver) {
+                driver.wait(seconds);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setAppContext(String zone) {
+        Log.info("Switching App Context to :: " + zone);
+        driver.context(zone);
+    }
+
+    public void getAppContext() {
+        Log.info("Getting App Context");
+        driver.getContext();
+    }
+
+    public void closeApp() {
+        Log.info("Closing App...");
+        driver.closeApp();
+    }
+
+    public void launchApp() {
+        Log.info("Launching App...");
+        driver.launchApp();
+    }
+
+    public void changeDeviceOrientation(ScreenOrientation orientation) {
+        functionHelper.changeDeviceOrientation(orientation);
+    }
+
+    public void hideKeyboard() {
+        driver.hideKeyboard();
+    }
+
+    public void setDeviceGeoLocation(double latitude, double longitude, double altitude) {
+        Location location = new Location(latitude, longitude, altitude);
+        driver.setLocation(location);
+    }
+
+    /**
+     * Swipe handlers
+     */
 
     public void swipeDownUntilElementFound(WebElement webElement, boolean failIfNotFound) {
         swipeHelper.swipeDownUntilElementFound(webElement, failIfNotFound);
@@ -53,47 +106,48 @@ public class ActionHelper {
         swipeHelper.customHorizontalSwipe(webElement.getRect().getY(), direction);
     }
 
+    public void scrollToView(String uiSelector) {
+        swipeHelper.UiScrollable(uiSelector);
+    }
+
     public void pullToRefresh() {
         swipeHelper.swipeUpOnce();
     }
 
-
     /**
-     * Appium Core functionality Handlers
+     * Gestures handlers
      */
 
-    public void wait(int seconds) {
-        try {
-            synchronized (driver) {
-                driver.wait(seconds);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void tap(int x, int y) {
+        touchActions.tap(x, y);
     }
 
-    public void setAppContext(String zone) {
-        Log.info("Switching App Context to :: " + zone);
-        driver.context(zone);
+    void pressAndMoveElementToCustomCoordinate(WebElement element, int xOffset, int yOffset) {
+        touchActions.pressMoveElementToOffset(element, xOffset, yOffset);
     }
 
-    public void closeApp() {
-        Log.info("Closing App...");
-        driver.closeApp();
+    void doubleClickElement(WebElement webElement) {
+        touchActions.doubleClickElement(webElement);
     }
 
-    public void launchApp() {
-        Log.info("Launching App...");
-        driver.launchApp();
+    void dragAndDropElement(WebElement element, int xOffset, int yOffset) {
+        touchActions.dragAndDropElement(element, xOffset, yOffset);
     }
 
-    public void changeDeviceOrientation(ScreenOrientation orientation) {
-        functionHelper.changeDeviceOrientation(orientation);
+    void clickAndHoldElement(WebElement webElement) {
+        touchActions.clickAndHoldElement(webElement);
     }
 
+    void longPressElement(WebElement element) {
+        touchActions.longPressElement(element);
+    }
+
+    void longPressPoint(int x, int y) {
+        touchActions.longPressPoint(x, y);
+    }
 
     /**
-     * Android Functionality Handlers
+     * Android functionality handlers
      */
 
     public void clickAndroidBackButton() {
@@ -120,21 +174,11 @@ public class ActionHelper {
         androidHelper.launchAndroidSettings();
     }
 
-
-    /**
-     * IOS Functionality handlers
-     */
-
-    public void clickIOSNativeCancelButton() {
-        iosHelper.clickIOSNativeCancelButton();
+    public void getNetworkConnection() {
+        androidHelper.getNetworkConnection();
     }
 
-
-    /**
-     * General Handlers
-     */
-
-    public void hideKeyboard() {
-        driver.hideKeyboard();
+    public void setNetworkConnection(boolean airplane, boolean wifi, boolean date) {
+        androidHelper.setNetworkConnection(airplane, wifi, date);
     }
 }

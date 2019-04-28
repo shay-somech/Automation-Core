@@ -23,9 +23,10 @@ class SwipeHelper {
     private TouchAction action;
 
     SwipeHelper(AppiumDriver driver) {
+        DisplayManager displayManager = new DisplayManager(driver);
         action = new TouchAction(driver);
-        deviceWidth = DisplayManager.getInstance().getDeviceWidth();
-        deviceHeight = DisplayManager.getInstance().getDeviceHeight();
+        deviceWidth = displayManager.getDeviceWidth();
+        deviceHeight = displayManager.getDeviceHeight();
     }
 
     /**
@@ -175,5 +176,9 @@ class SwipeHelper {
 
     void swipe(int startX, int startY, int endX, int endY) {
         action.press(PointOption.point(startX, startY)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1))).moveTo(PointOption.point(endX, endY)).release().perform();
+    }
+
+    String UiScrollable(String uiSelector) {
+        return "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(" + uiSelector + ".instance(0));";
     }
 }

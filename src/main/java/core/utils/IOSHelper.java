@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import static core.constants.FindByLocator.ACCESSIBILITY_LABEL;
 import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
-import static core.utils.ElementWrapper.waitForElementToAppear;
 
 public class IOSHelper {
 
@@ -107,9 +105,5 @@ public class IOSHelper {
             }
         }
         return fileList;
-    }
-
-    public void clickIOSNativeCancelButton() {
-        waitForElementToAppear(ACCESSIBILITY_LABEL, "Cancel", 5).click();
     }
 }

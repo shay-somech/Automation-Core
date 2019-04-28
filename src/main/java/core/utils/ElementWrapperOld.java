@@ -45,10 +45,6 @@ public class ElementWrapperOld implements WebElement {
             find();
     }
 
-    private String getOnScreenXpath(String xpath, boolean onScreen) {
-        return xpath + XpathGenerator.getOnScreenParam(onScreen);
-    }
-
     void find() {
         find(timeout, true);
     }

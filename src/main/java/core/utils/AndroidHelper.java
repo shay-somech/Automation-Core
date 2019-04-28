@@ -2,23 +2,28 @@ package core.utils;
 
 import core.UI.controller.tab.Tab2Controller;
 import core.managers.JenkinsManager;
-import core.managers.drivers.DriverManager;
 import io.appium.java_client.android.Activity;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.connection.ConnectionState;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import static core.constants.FindByLocator.PARTIAL_TEXT;
-import static core.constants.ZoneType.NATIVE;
 import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
 import static core.utils.ADBHelper.*;
-import static core.utils.ElementWrapper.waitForElementToAppear;
 
 public class AndroidHelper {
 
+    private static ArrayList<String> availableDevices = new ArrayList<>();
+
+    private AndroidDriver driver;
+
+    AndroidHelper(AndroidDriver driver) {
+        this.driver = driver;
+    }
+
     public static ArrayList<String> getAndroidDevices() {
         Log.info("Checking for available devices");
-        ArrayList<String> availableDevices = new ArrayList<>();
         ArrayList<String> ADBConnectedDevices = ADBHelper.getConnectedDevices();
 
         for (String connectedDevice : ADBConnectedDevices) {
@@ -35,10 +40,12 @@ public class AndroidHelper {
 
     public static ArrayList<String> getAndroidDeviceWithDetails() {
         Log.info("Checking for available Android devices");
-        ArrayList<String> availableDevices = new ArrayList<>();
 
         for (String connectedAndroidDevice : getAndroidDevices()) {
-            String androidDevice = getDeviceModel(connectedAndroidDevice) + " " + getDeviceManufacturer(connectedAndroidDevice) + " " + getAndroidVersionAsString(connectedAndroidDevice) + " || " + connectedAndroidDevice;
+            String androidDevice = getDeviceModel(connectedAndroidDevice) + " "
+                    + getDeviceManufacturer(connectedAndroidDevice) + " "
+                    + getAndroidVersionAsString(connectedAndroidDevice) + " || "
+                    + connectedAndroidDevice;
             availableDevices.add(androidDevice);
         }
 
@@ -60,33 +67,22 @@ public class AndroidHelper {
 
     String getAndroidCurrentActivity() {
         Log.info("Getting Android Current Activity");
-        String currentActivity = null;
-        try {
-            currentActivity = DriverManager.getAndroidDriver().currentActivity();
-        } catch (RuntimeException e) {
-            Log.info("Cannot get Android Current Activity");
-        }
-        return currentActivity;
+        return driver.currentActivity();
     }
 
     void openAndroidNotificationCenter() {
-        Log.info("Opening Android Notification Center");
-        try {
-            DriverManager.getAndroidDriver().openNotifications();
-        } catch (RuntimeException e) {
-            Log.info("Cannot open Android Notification Center");
-        }
+        driver.openNotifications();
     }
 
     void startAndroidActivity(String appPackage, String appMainActivity) {
         Log.info("Starting Android App Activity");
-        DriverManager.getAndroidDriver().startActivity(new Activity(appPackage, appMainActivity));
+        driver.startActivity(new Activity(appPackage, appMainActivity));
     }
 
     void clickAndroidBackButton() {
         Log.info("Clicking on the Android device back button");
         try {
-            DriverManager.getAndroidDriver().navigate().back();
+            driver.navigate().back();
         } catch (RuntimeException e) {
             Log.info("Cannot click on Android device back button : " + e.getMessage());
         }
@@ -94,19 +90,7 @@ public class AndroidHelper {
 
     void launchAndroidSettings() {
         Log.info("Launching Android Settings");
-        DriverManager.getAndroidDriver().startActivity(new Activity("com.androidRadioButton.settings", ".Settings"));
-    }
-
-    public void completeActionWithIntent(String appName) {
-        Log.info("Selecting to complete action with " + appName);
-        if (completeActionWithIntentDisplayed()) {
-            waitForElementToAppear(PARTIAL_TEXT, appName, 5).click();
-        }
-    }
-
-    private boolean completeActionWithIntentDisplayed() {
-        ActionHelper.getInstance().setAppContext(NATIVE.toString());
-        return waitForElementToAppear(PARTIAL_TEXT, "פתח באמצעות", 3).isDisplayed() || waitForElementToAppear(PARTIAL_TEXT, "Open with", 3).isDisplayed();
+        driver.startActivity(new Activity("com.androidRadioButton.settings", ".Settings"));
     }
 
     public static ArrayList<File> getAvailableAPKs(String fileDirectoryPath) {
@@ -125,5 +109,36 @@ public class AndroidHelper {
             }
         }
         return fileList;
+    }
+
+    /**
+     * method to get network settings
+     */
+    void getNetworkConnection() {
+        Log.info("Device connection : " + driver.getConnection());
+    }
+
+    /**
+     * method to set network settings
+     *
+     * @param airplaneMode pass true to activate airplane mode else false
+     * @param wifi         pass true to activate wifi mode else false
+     * @param data         pass true to activate data mode else false
+     */
+    void setNetworkConnection(boolean airplaneMode, boolean wifi, boolean data) {
+
+        long mode = 1L;
+
+        if (wifi) {
+            mode = 2L;
+        } else if (data) {
+            mode = 4L;
+        } else if (airplaneMode) {
+            mode = 3L;
+        }
+
+        ConnectionState connectionState = new ConnectionState(mode);
+        driver.setConnection(connectionState);
+        System.out.println("Your current connection settings are : " + driver.getConnection());
     }
 }

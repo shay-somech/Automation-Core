@@ -1,8 +1,6 @@
 package core.utils;
 
 
-import core.managers.DisplayManager;
-
 public class XpathGenerator {
 
     /**
@@ -94,24 +92,6 @@ public class XpathGenerator {
      */
     public static String getXpathByDescription(String description) {
         return "//*[@contentDescription='" + description + "']";
-    }
-
-    /**
-     * @param onScreen is element need to be shown or not
-     * @return xPath of screen dimensions that shown on screen
-     */
-    static String getOnScreenParam(boolean onScreen) {
-        if (onScreen) {
-            return "[@onScreen = 'true']" + getVisibleScreenParam();
-        } else
-            return "[@onScreen = 'false']";
-    }
-
-    /**
-     * @return xPath of screen dimensions
-     */
-    private static String getVisibleScreenParam() {
-        return "[@x <= '" + DisplayManager.getInstance().getDeviceWidth() + "']" + "[@y <= '" + DisplayManager.getInstance().getDeviceHeight() + "']";
     }
 
     public static String getXpathByAccessibilityIdentifier(String label) {

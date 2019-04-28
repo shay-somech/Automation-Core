@@ -1,42 +1,38 @@
 package core.managers;
 
-import core.managers.drivers.DriverManager;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
 
 public class DisplayManager {
 
+    private AppiumDriver driver;
     public static boolean isPortrait;
-    private static DisplayManager instance;
 
-    private int deviceHeight;
-    private int deviceWidth;
-
-    private DisplayManager() {
-        isPortrait = DriverManager.getDriver().getOrientation().equals(ScreenOrientation.PORTRAIT);
-    }
-
-    public static DisplayManager getInstance() {
-        if (instance == null)
-            instance = new DisplayManager();
-        return instance;
+    public DisplayManager(AppiumDriver driver) {
+        this.driver = driver;
+        isPortrait = driver.getOrientation().equals(ScreenOrientation.PORTRAIT);
     }
 
     public int getDeviceHeight() {
+        int deviceHeight;
+
         if (isPortrait) {
-            deviceHeight = DriverManager.getDriver().manage().window().getSize().height;
+            deviceHeight = driver.manage().window().getSize().height;
         } else {
-            deviceHeight = DriverManager.getDriver().manage().window().getSize().width;
+            deviceHeight = driver.manage().window().getSize().width;
         }
 
         return deviceHeight;
     }
 
     public int getDeviceWidth() {
+        int deviceWidth;
+
         if (isPortrait) {
-            deviceWidth = DriverManager.getDriver().manage().window().getSize().width;
+            deviceWidth = driver.manage().window().getSize().width;
         } else {
-            deviceWidth = DriverManager.getDriver().manage().window().getSize().height;
+            deviceWidth = driver.manage().window().getSize().height;
         }
 
         return deviceWidth;
