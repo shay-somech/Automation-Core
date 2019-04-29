@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 public class Tab1Controller implements Initializable {
 
     public static String platform, platform2, device, device2;
-    public static boolean isNoReset, isGenerateReports;
+    public static boolean isNoReset;
 
     @FXML
     private ComboBox<String> platformComboBox, platformComboBox2, deviceComboBox, deviceComboBox2;

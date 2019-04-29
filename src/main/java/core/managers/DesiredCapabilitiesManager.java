@@ -49,7 +49,10 @@ public class DesiredCapabilitiesManager {
                 caps.setCapability(APP_WAIT_ACTIVITY, getAndroidAppMainActivity());
                 caps.setCapability(APP_WAIT_PACKAGE, getAndroidAppPackage());
                 caps.setCapability(AUTO_GRANT_PERMISSIONS, true);
+
+                // Skip the installation of io.appium.settings app and the UIAutomator 2 server.
                 caps.setCapability("skipDeviceInitialization", true);
+                caps.setCapability("skipServerInstallation", true);
 
                 break;
 
