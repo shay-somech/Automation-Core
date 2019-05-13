@@ -17,6 +17,7 @@ public class ActionHelper {
     private final FunctionHelper functionHelper;
     private final AndroidHelper androidHelper;
     private final TouchActionsHelper touchActions;
+    private final MobilePhysicalKeyEvents physicalKeyEvents;
     private static ActionHelper instance;
 
     private ActionHelper() {
@@ -26,6 +27,7 @@ public class ActionHelper {
         functionHelper = new FunctionHelper(driver);
         androidHelper = new AndroidHelper((AndroidDriver) driver);
         touchActions = new TouchActionsHelper(driver);
+        physicalKeyEvents = new MobilePhysicalKeyEvents(driver, (AndroidDriver) driver);
         Log.info("ActionHelper initialized");
     }
 
@@ -82,16 +84,20 @@ public class ActionHelper {
         driver.setLocation(location);
     }
 
+    public void tapDevicePhysicalKey(MobilePhysicalKeyEvents.KeyEvents keyEvent) {
+        physicalKeyEvents.pressDevicePhysicalKey(keyEvent);
+    }
+
     /**
      * Swipe handlers
      */
 
-    public void swipeDownUntilElementFound(WebElement webElement, boolean failIfNotFound) {
-        swipeHelper.swipeDownUntilElementFound(webElement, failIfNotFound);
+    public boolean swipeDownUntilElementFound(WebElement webElement, int maxSwipes, boolean failIfNotFound) {
+        return swipeHelper.swipeDownUntilElementFound(webElement, maxSwipes, failIfNotFound);
     }
 
-    public void swipeDownUntilElementFound(WebElement webElement) {
-        swipeHelper.swipeDownUntilElementFound(webElement);
+    public boolean swipeDownUntilElementFound(WebElement webElement) {
+        return swipeHelper.swipeDownUntilElementFound(webElement);
     }
 
     public void swipe(SwipeDirection direction) {
@@ -108,10 +114,6 @@ public class ActionHelper {
 
     public void scrollToView(String uiSelector) {
         swipeHelper.UiScrollable(uiSelector);
-    }
-
-    public void pullToRefresh() {
-        swipeHelper.swipeUpOnce();
     }
 
     /**
