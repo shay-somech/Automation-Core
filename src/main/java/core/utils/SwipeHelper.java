@@ -3,6 +3,7 @@ package core.utils;
 import core.constants.SwipeDirection;
 import core.managers.DisplayManager;
 import core.managers.drivers.DriverManager;
+import core.utils.Log.TextColor;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.touch.WaitOptions;
@@ -13,7 +14,6 @@ import org.openqa.selenium.WebElement;
 import java.time.Duration;
 
 import static core.constants.SwipeDirection.DOWN;
-import static core.constants.SwipeDirection.UP;
 import static core.utils.ElementWrapper.waitForElementToAppear;
 
 class SwipeHelper {
@@ -30,47 +30,45 @@ class SwipeHelper {
     }
 
     /**
-     * swipe down until element provided is found , will try to find the element pre-swiping, will swipe down 20 times before throwing an AssertionError
+     * swipe down until element provided is found , will try to find the element pre-swiping
      *
-     * @param element element we want to find
+     * @param element        element we want to find
+     * @param maxSwipes      Maximum number of swipes before exiting the swipe loop
+     * @param failIfNotFound should throw exception if element was not found in the maxSwipes limit
      */
-    void swipeDownUntilElementFound(WebElement element, boolean failIfNotFound) {
+    boolean swipeDownUntilElementFound(WebElement element, int maxSwipes, boolean failIfNotFound) {
 
-        Log.info("start swipe for element : " + element.toString());
-        boolean found = false;
+        Log.info(TextColor.ANSI_GREEN, "start swipe for element : " + element.toString());
 
         try {
             waitForElementToAppear(element, 1);
-            Log.info("element found before swiping down");
-            found = true;
+            Log.info(TextColor.ANSI_GREEN, "element found before swiping down");
+            return true;
 
         } catch (TimeoutException e) {
-            Log.info("element was not found, start swiping down");
+            Log.info(TextColor.ANSI_RED, "element was not found, swiping down");
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < maxSwipes; i++) {
                 swipe(DOWN);
 
                 try {
-                    if (waitForElementToAppear(element, 1).isDisplayed()) {
-                        found = true;
-                        break;
-                    }
+                    waitForElementToAppear(element, 1);
+                    return true;
+
                 } catch (TimeoutException ignore) {
-                    Log.info("element was not found, continuing to swipe down ...");
+                    Log.info(TextColor.ANSI_RED, "element was not found, continuing to swipe down ...");
                 }
             }
         }
 
-        if (!found && failIfNotFound)
-            throw new AssertionError("Can't navigate , element absent or blocked");
+        if (failIfNotFound)
+            throw new RuntimeException("Can't navigate , element absent or blocked");
+        else
+            return false;
     }
 
-    void swipeDownUntilElementFound(WebElement webElement) {
-        swipeDownUntilElementFound(webElement, false);
-    }
-
-    void swipeUpOnce() {
-        swipe(UP);
+    boolean swipeDownUntilElementFound(WebElement webElement) {
+        return swipeDownUntilElementFound(webElement, 20, false);
     }
 
     /**

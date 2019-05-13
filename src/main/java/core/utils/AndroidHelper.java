@@ -139,6 +139,6 @@ public class AndroidHelper {
 
         ConnectionState connectionState = new ConnectionState(mode);
         driver.setConnection(connectionState);
-        System.out.println("Your current connection settings are : " + driver.getConnection());
+        Log.info("Your current connection settings are : " + driver.getConnection());
     }
 }
