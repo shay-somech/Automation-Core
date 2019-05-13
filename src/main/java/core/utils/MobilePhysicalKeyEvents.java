@@ -47,6 +47,7 @@ class MobilePhysicalKeyEvents {
 
                 case HOME:
                     androidDriver.pressKey(new KeyEvent(AndroidKey.HOME));
+                    break;
 
                 case CLEAR:
                     androidDriver.pressKey(new KeyEvent(AndroidKey.CLEAR));
@@ -54,6 +55,7 @@ class MobilePhysicalKeyEvents {
 
                 case VOLUME_UP:
                     androidDriver.pressKey(new KeyEvent(AndroidKey.VOLUME_UP));
+                    break;
 
                 case VOLUME_DOWN:
                     androidDriver.pressKey(new KeyEvent(AndroidKey.VOLUME_DOWN));
