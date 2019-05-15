@@ -3,6 +3,10 @@ package core.utils;
 import com.google.common.collect.ImmutableMap;
 import core.constants.KeyboardEvents;
 import core.constants.SwipeDirection;
+import core.database.AppsDataSource;
+import core.database.AppsDataSource.AndroidSystemApp;
+import core.database.AppsDataSource.IOSSystemApp;
+import core.managers.DisplayManager;
 import core.managers.drivers.DriverManager;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -13,21 +17,23 @@ import org.openqa.selenium.html5.Location;
 public class ActionHelper {
 
     private final AppiumDriver driver;
+    private final DisplayManager displayManager;
     private final SwipeHelper swipeHelper;
-    private final FunctionHelper functionHelper;
     private final AndroidHelper androidHelper;
     private final TouchActionsHelper touchActions;
     private final MobilePhysicalKeyEvents physicalKeyEvents;
+    private final SystemApps systemApps;
     private static ActionHelper instance;
 
     private ActionHelper() {
         Log.info("ActionHelper created");
         driver = DriverManager.getDriver();
+        displayManager = new DisplayManager(driver);
         swipeHelper = new SwipeHelper(driver);
-        functionHelper = new FunctionHelper(driver);
         androidHelper = new AndroidHelper((AndroidDriver) driver);
         touchActions = new TouchActionsHelper(driver);
         physicalKeyEvents = new MobilePhysicalKeyEvents(driver, (AndroidDriver) driver);
+        systemApps = new SystemApps(driver, (AndroidDriver) driver, new AppsDataSource());
         Log.info("ActionHelper initialized");
     }
 
@@ -72,7 +78,7 @@ public class ActionHelper {
     }
 
     public void changeDeviceOrientation(ScreenOrientation orientation) {
-        functionHelper.changeDeviceOrientation(orientation);
+        displayManager.changeDeviceOrientation(orientation);
     }
 
     public void hideKeyboard() {
@@ -168,7 +174,7 @@ public class ActionHelper {
         return androidHelper.getAndroidCurrentActivity();
     }
 
-    public void sendKeyboardEvent(KeyboardEvents events) {
+    public void sendAndroidKeyboardEvent(KeyboardEvents events) {
         driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", events.toString()));
     }
 
@@ -182,5 +188,17 @@ public class ActionHelper {
 
     public void setNetworkConnection(boolean airplane, boolean wifi, boolean date) {
         androidHelper.setNetworkConnection(airplane, wifi, date);
+    }
+
+    public void launchAndroidSystemApp(AndroidSystemApp app) {
+        systemApps.launchAndroidSystemApp(app);
+    }
+
+    /**
+     * iOS functionality
+     */
+
+    public void launchIOSSystemApp(IOSSystemApp app) {
+        systemApps.launchIOSSystemApp(app);
     }
 }

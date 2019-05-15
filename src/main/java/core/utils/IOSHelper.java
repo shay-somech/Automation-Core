@@ -2,6 +2,7 @@ package core.utils;
 
 import core.UI.controller.tab.Tab2Controller;
 import core.managers.JenkinsManager;
+import core.utils.Log.TextColor;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,11 +28,11 @@ public class IOSHelper {
             }
             input.close();
         } catch (IOException e) {
-            Log.info("Not a single iOS device is available for testing at this time");
+            Log.info(TextColor.ANSI_RED, "Not a single iOS device is available for testing at this time");
         }
 
         if (devices.size() == 0)
-            Log.info("Not a single iOS device is available for testing at this time");
+            Log.info(TextColor.ANSI_RED, "Not a single iOS device is available for testing at this time");
         return devices;
     }
 

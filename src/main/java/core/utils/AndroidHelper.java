@@ -2,6 +2,7 @@ package core.utils;
 
 import core.UI.controller.tab.Tab2Controller;
 import core.managers.JenkinsManager;
+import core.utils.Log.TextColor;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.connection.ConnectionState;
@@ -31,7 +32,7 @@ public class AndroidHelper {
         }
 
         if (availableDevices.size() == 0) {
-            Log.info("Not a single device is available for testing at this time");
+            Log.info(TextColor.ANSI_RED,"Not a single device is available for testing at this time");
         }
 
         return availableDevices;
@@ -75,7 +76,7 @@ public class AndroidHelper {
     }
 
     void startAndroidActivity(String appPackage, String appMainActivity) {
-        Log.info("Starting Android App Activity");
+        Log.info("Starting Android IOSSystemApp Activity");
         driver.startActivity(new Activity(appPackage, appMainActivity));
     }
 

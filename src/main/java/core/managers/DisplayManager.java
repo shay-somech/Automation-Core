@@ -1,13 +1,16 @@
 package core.managers;
 
+import core.utils.Log;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ScreenOrientation;
 
+import static core.utils.Log.TextColor.ANSI_RED;
+
 public class DisplayManager {
 
     private AppiumDriver driver;
-    public static boolean isPortrait;
+    private static boolean isPortrait;
 
     public DisplayManager(AppiumDriver driver) {
         this.driver = driver;
@@ -42,4 +45,13 @@ public class DisplayManager {
         return new Dimension(getDeviceWidth(), getDeviceHeight());
     }
 
+    public void changeDeviceOrientation(ScreenOrientation orientation) {
+        if (driver.getOrientation() != orientation) {
+            Log.info("Changing device orientation to " + orientation);
+            driver.rotate(orientation);
+
+        } else {
+            Log.info(ANSI_RED, "Cannot change Device orientation to " + orientation + ", Please make sure device is not already in " + orientation);
+        }
+    }
 }
