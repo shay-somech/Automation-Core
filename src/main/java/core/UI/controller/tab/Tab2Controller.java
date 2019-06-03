@@ -105,12 +105,12 @@ public class Tab2Controller implements Initializable {
         if (installApp.isSelected()) {
             appComboBox.setVisible(true);
             switch (platform) {
-                case "Android":
+                case ANDROID:
                     appComboBox.getItems().clear();
                     appComboBox.getItems().addAll("getAvailableAPKs");
                     break;
 
-                case "iOS":
+                case IOS:
                     appComboBox.getItems().clear();
                     appComboBox.getItems().addAll("getAvailableIPAs");
                     break;
@@ -130,11 +130,11 @@ public class Tab2Controller implements Initializable {
             ScreenRecorderHelper screenRecorder = new ScreenRecorderHelper();
 
             switch (platform) {
-                case "Android":
+                case ANDROID:
                     screenRecorder.startRecording(screenRecorder.androidRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
                     break;
 
-                case "iOS":
+                case IOS:
                     screenRecorder.startRecording(screenRecorder.iOSRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
                     break;
             }

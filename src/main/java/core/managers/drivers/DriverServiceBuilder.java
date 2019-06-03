@@ -1,41 +1,25 @@
 package core.managers.drivers;
 
 import core.constants.AppiumServerArgs;
+import core.constants.PlatformType;
 import core.managers.JenkinsManager;
 import core.utils.Log;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 
-import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
-import static core.managers.JenkinsManager.JenkinsProperty.PLATFORM;
+import static core.constants.PlatformType.ANDROID;
+import static core.constants.PlatformType.IOS;
 
 public class DriverServiceBuilder {
 
-    private static String OS;
     private static AppiumDriverLocalService service;
-    private static String unlockPackage = "io.appium.unlock";
-
-    private static String getOS() {
-        if (OS == null) OS = System.getProperty("os.name");
-        Log.info("Running Automation on " + OS);
-        return OS;
-    }
-
-    private static boolean isWindows() {
-        return getOS().startsWith("Windows");
-    }
-
-    private static boolean isMac() {
-        return getOS().startsWith("Mac");
-    }
 
     public static AppiumDriverLocalService createAppiumService() {
-        int port = 4723;
         String ipAddress = "127.0.0.1";
 
         if (service == null) {
             service = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
-                    .usingPort(port)
+                    .usingAnyFreePort()
                     .withIPAddress(ipAddress)
                     .withArgument(AppiumServerArgs.RELAXED_SECURITY)
                     .withArgument(AppiumServerArgs.LOG_TIMESTAMP)
@@ -47,31 +31,37 @@ public class DriverServiceBuilder {
     }
 
     public static void createJenkinsDriver() {
-        createAppiumService().start();
+        startAppiumServer();
 
-        if ((boolean) JenkinsManager.getInstance().getJenkinsSelection(JENKINS_INSTANCE)) {
+        if (JenkinsManager.getInstance().getJenkinsInstance()) {
 
-            if (JenkinsManager.getInstance().getJenkinsSelection(PLATFORM).equals("Android")) {
-                DriverManager.setDriver("Android", service);
-            } else {
-                DriverManager.setDriver("iOS", service);
+            switch (JenkinsManager.getInstance().getJenkinsSelectedPlatform()) {
+                case ANDROID:
+                    DriverManager.setDriver(ANDROID, service);
+                    break;
+
+                case IOS:
+                    DriverManager.setDriver(IOS, service);
+                    break;
             }
-        } else {
-            throw new RuntimeException("Cannot build from Jenkins, please make sure that the Running service is indeed from Jenkins");
         }
     }
 
     /**
      * Build manually with UI Configurations
      */
-    public static void createDriver(String platform) {
+    public static void createDriver(PlatformType platform) {
         DriverManager.setDriver(platform, service);
     }
 
-    public static void killDriver() {
+    public static void startAppiumServer() {
+        createAppiumService().start();
+    }
+
+    public static void stopAppiumServer() {
         if (DriverManager.getDriver() != null) {
-            Log.info("Killing Driver");
+            Log.info("Stopping Appium Server");
             service.stop();
-        } else Log.info("Driver is not initialized, nothing to kill");
+        } else Log.info("Appium Server not initialized, nothing to stop");
     }
 }

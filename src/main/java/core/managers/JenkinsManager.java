@@ -1,19 +1,23 @@
 package core.managers;
 
+import core.constants.PlatformType;
+import core.utils.Log;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import static core.utils.AndroidHelper.getAndroidDevices;
 import static core.utils.IOSHelper.getIOSDevices;
 
 public class JenkinsManager {
 
     private static JenkinsManager instance;
-    private String jenkinsPlatformProperty;
-    private String jenkinsNoResetProperty;
-    private boolean isJenkinsAndroidPlatform;
-    private boolean isJenkinsIOSPlatform;
+    private final String jenkinsPlatformProperty;
+    private boolean isJenkinsRunning;
 
     private JenkinsManager() {
-        jenkinsPlatformProperty = System.getProperty("JenkinsPlatform");
-        jenkinsNoResetProperty = System.getProperty("JenkinsNoReset");
+        jenkinsPlatformProperty = System.getProperty("Platform");
+        isJenkinsRunning = isJenkinsProcessRunning();
     }
 
     public static JenkinsManager getInstance() {
@@ -23,63 +27,60 @@ public class JenkinsManager {
         return instance;
     }
 
-    public enum JenkinsProperty {
-        JENKINS_INSTANCE, NO_RESET_PROPERTY, PLATFORM, DEVICE_ID
-    }
+    /**
+     * Checking for Jenkins process using Shell command
+     * @return boolean if Process matches criteria
+     */
+    private boolean isJenkinsProcessRunning() {
+        Log.info("Checking for Jenkins running instance");
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("ps -few");
 
-    public Object getJenkinsSelection(JenkinsProperty property) {
-        switch (property) {
-            case JENKINS_INSTANCE:
-                return isBuildingFromJenkins();
+            BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            String line;
 
-            case PLATFORM:
-                return getJenkinsSelectedPlatform();
+            while ((line = input.readLine()) != null) {
+                if (line.contains("Jenkins") || line.contains("jenkins")) {
+                    Log.info("Jenkins instance Found");
+                    return true;
+                }
+            }
 
-            case DEVICE_ID:
-                return getJenkinsDeviceId();
+            int exitVal = pr.waitFor();
+            Log.info("Exited with error code " + exitVal);
+            rt.exit(exitVal);
 
-            case NO_RESET_PROPERTY:
-                return getJenkinsNoResetSelection();
+        } catch (Exception e) {
+            Log.info(e.toString());
+            e.printStackTrace();
         }
-        throw new RuntimeException("Selected property is not defined in scope");
+        return false;
     }
 
-    private boolean isBuildingFromJenkins() {
-        return jenkinsPlatformProperty != null;
+    public boolean getJenkinsInstance() {
+        return isJenkinsRunning;
     }
 
-    private String getJenkinsSelectedPlatform() {
+    public PlatformType getJenkinsSelectedPlatform() {
         switch (jenkinsPlatformProperty) {
             case "Android":
-                isJenkinsAndroidPlatform = true;
-                return "Android";
+                return PlatformType.ANDROID;
 
             case "iOS":
-                isJenkinsIOSPlatform = true;
-                return "iOS";
+                return PlatformType.IOS;
         }
-
         throw new RuntimeException("Could not get selected selected Platform from Jenkins");
     }
 
-    private String getJenkinsDeviceId() {
-        if (isJenkinsAndroidPlatform) {
-            return getAndroidDevices().get(0);
+    String getJenkinsDeviceId() {
+        switch (getJenkinsSelectedPlatform()) {
+            case ANDROID:
+                return getAndroidDevices().get(0);
 
-        } else if (isJenkinsIOSPlatform) {
-            return getIOSDevices().get(0);
-
-        } else {
-            throw new RuntimeException("Cannot get desired Device");
+            case IOS:
+                return getIOSDevices().get(0);
         }
-    }
-
-    private boolean getJenkinsNoResetSelection() {
-        if (jenkinsNoResetProperty.equals("true")) {
-            return true;
-        } else if (jenkinsNoResetProperty.equals("false")) {
-            return false;
-        }
-        throw new RuntimeException("Could not get No Reset property selection");
+        throw new RuntimeException("Device not selected, Platform is not defined in scope");
     }
 }

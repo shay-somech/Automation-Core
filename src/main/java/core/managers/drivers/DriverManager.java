@@ -1,5 +1,6 @@
 package core.managers.drivers;
 
+import core.constants.PlatformType;
 import core.utils.Log;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -21,16 +22,16 @@ public class DriverManager {
     public static boolean isIOS = false;
     private static AppiumDriver driver;
 
-    static AppiumDriver setDriver(String platform, AppiumDriverLocalService service) {
+    static void setDriver(PlatformType platform, AppiumDriverLocalService service) {
         try {
             switch (platform) {
-                case "Android":
+                case ANDROID:
                     Log.info("Starting Android driver");
                     isAndroid = true;
                     driver = new AndroidDriver<>(service, setCapabilities(ANDROID));
                     break;
 
-                case "iOS":
+                case IOS:
                     Log.info("Starting iOS driver");
                     isIOS = true;
                     driver = new IOSDriver<>(service, setCapabilities(IOS));
@@ -39,7 +40,6 @@ public class DriverManager {
 
             Log.info("Driver initialized");
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            return driver;
 
         } catch (SessionNotCreatedException e) {
             e.printStackTrace();

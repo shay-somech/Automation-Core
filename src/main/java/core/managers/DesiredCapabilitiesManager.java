@@ -6,12 +6,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import static core.UI.controller.tab.Tab1Controller.isNoReset;
 import static core.UI.controller.tab.Tab2Controller.isInstallApp;
 import static core.UI.controller.tab.Tab2Controller.isParallelRun;
-import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
-import static core.managers.JenkinsManager.JenkinsProperty.NO_RESET_PROPERTY;
 import static core.utils.AndroidHelper.getAndroidAppInstallationPath;
 import static core.utils.AppParams.*;
 import static core.utils.IOSHelper.getIOSAppInstallationPath;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
+import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
+import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
 import static io.appium.java_client.remote.IOSMobileCapabilityType.*;
 import static io.appium.java_client.remote.MobileCapabilityType.*;
 
@@ -26,9 +26,9 @@ public class DesiredCapabilitiesManager {
 
         switch (platform) {
             case ANDROID:
-                if ((boolean) JenkinsManager.getInstance().getJenkinsSelection(JENKINS_INSTANCE)) {
-                    caps.setCapability(NO_RESET, JenkinsManager.getInstance().getJenkinsSelection(NO_RESET_PROPERTY));
-                    caps.setCapability(APP, getAndroidAppInstallationPath());
+                if (JenkinsManager.getInstance().getJenkinsInstance()) {
+                    caps.setCapability(NO_RESET, true);
+//                    caps.setCapability(APP, getAndroidAppInstallationPath());
 
                 } else {
                     caps.setCapability(NO_RESET, isNoReset);
@@ -43,7 +43,7 @@ public class DesiredCapabilitiesManager {
                     }
                 }
 
-                caps.setCapability(AUTOMATION_NAME, "UiAutomator2");
+                caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
                 caps.setCapability(APP_PACKAGE, getAndroidAppPackage());
                 caps.setCapability(APP_ACTIVITY, getAndroidAppMainActivity());
                 caps.setCapability(APP_WAIT_ACTIVITY, getAndroidAppMainActivity());
@@ -57,9 +57,9 @@ public class DesiredCapabilitiesManager {
                 break;
 
             case IOS:
-                if ((boolean) JenkinsManager.getInstance().getJenkinsSelection(JENKINS_INSTANCE)) {
-                    caps.setCapability(NO_RESET, JenkinsManager.getInstance().getJenkinsSelection(NO_RESET_PROPERTY));
-                    caps.setCapability(APP, getIOSAppInstallationPath());
+                if (JenkinsManager.getInstance().getJenkinsInstance()) {
+                    caps.setCapability(NO_RESET, true);
+//                    caps.setCapability(APP, getIOSAppInstallationPath());
 
                 } else {
                     caps.setCapability(NO_RESET, isNoReset);
@@ -74,7 +74,7 @@ public class DesiredCapabilitiesManager {
                     }
                 }
 
-                caps.setCapability(AUTOMATION_NAME, "XCUITest");
+                caps.setCapability(AUTOMATION_NAME, IOS_XCUI_TEST);
                 caps.setCapability(USE_PREBUILT_WDA, true);
                 caps.setCapability(WDA_LAUNCH_TIMEOUT, 60000);
                 caps.setCapability(WDA_CONNECTION_TIMEOUT, 60000);

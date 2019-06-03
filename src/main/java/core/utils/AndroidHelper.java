@@ -1,7 +1,6 @@
 package core.utils;
 
 import core.UI.controller.tab.Tab2Controller;
-import core.managers.JenkinsManager;
 import core.utils.Log.TextColor;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
@@ -10,7 +9,6 @@ import io.appium.java_client.android.connection.ConnectionState;
 import java.io.File;
 import java.util.ArrayList;
 
-import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
 import static core.utils.ADBHelper.*;
 
 public class AndroidHelper {
@@ -56,7 +54,7 @@ public class AndroidHelper {
     public static String getAndroidAppInstallationPath() {
         String apkAbsolutePath = null;
 
-        if ((boolean) JenkinsManager.getInstance().getJenkinsSelection(JENKINS_INSTANCE)) {
+        if (Tab2Controller.app == null) {
             for (File apk : getAvailableAPKs("/src/main/resources/")) {
                 apkAbsolutePath = apk.getAbsolutePath();
             }

@@ -1,7 +1,6 @@
 package core.utils;
 
 import core.UI.controller.tab.Tab2Controller;
-import core.managers.JenkinsManager;
 import core.utils.Log.TextColor;
 
 import java.io.BufferedReader;
@@ -9,8 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import static core.managers.JenkinsManager.JenkinsProperty.JENKINS_INSTANCE;
 
 public class IOSHelper {
 
@@ -50,7 +47,7 @@ public class IOSHelper {
     public static String getIOSAppInstallationPath() {
         String ipaAbsolutePath = null;
 
-        if ((boolean) JenkinsManager.getInstance().getJenkinsSelection(JENKINS_INSTANCE)) {
+        if (Tab2Controller.app == null) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }

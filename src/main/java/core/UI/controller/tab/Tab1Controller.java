@@ -1,5 +1,6 @@
 package core.UI.controller.tab;
 
+import core.constants.PlatformType;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
 import javafx.fxml.FXML;
@@ -10,13 +11,18 @@ import javafx.scene.control.ComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static core.constants.PlatformType.*;
+
 public class Tab1Controller implements Initializable {
 
-    public static String platform, platform2, device, device2;
+    public static PlatformType platform, platform2;
+    public static String device, device2;
     public static boolean isNoReset;
 
     @FXML
-    private ComboBox<String> platformComboBox, platformComboBox2, deviceComboBox, deviceComboBox2;
+    private ComboBox<PlatformType> platformComboBox, platformComboBox2;
+    @FXML
+    private ComboBox<String> deviceComboBox, deviceComboBox2;
     @FXML
     private CheckBox noReset;
 
@@ -28,8 +34,8 @@ public class Tab1Controller implements Initializable {
     }
 
     private void setPlatformComboBoxesValues() {
-        platformComboBox.getItems().addAll("Android", "iOS");
-        platformComboBox2.getItems().addAll("Android", "iOS");
+        platformComboBox.getItems().addAll(ANDROID, IOS);
+        platformComboBox2.getItems().addAll(ANDROID, IOS);
     }
 
     private void setDevicesComboBox() {
@@ -40,15 +46,15 @@ public class Tab1Controller implements Initializable {
         setDeviceComboBoxSelection(platformComboBox2, deviceComboBox2);
     }
 
-    private void setDeviceComboBoxSelection(ComboBox<String> platform, ComboBox<String> device) {
+    private void setDeviceComboBoxSelection(ComboBox<PlatformType> platform, ComboBox<String> device) {
         platform.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
                 switch (oldValue) {
-                    case "Android":
+                    case ANDROID:
                         device.getItems().clear();
                         break;
 
-                    case "iOS":
+                    case IOS:
                         device.getItems().clear();
                         break;
                 }
@@ -56,11 +62,11 @@ public class Tab1Controller implements Initializable {
 
             if (newValue != null) {
                 switch (newValue) {
-                    case "Android":
+                    case ANDROID:
                         device.getItems().addAll(AndroidHelper.getAndroidDeviceWithDetails());
                         break;
 
-                    case "iOS":
+                    case IOS:
                         device.getItems().addAll(IOSHelper.getIOSDevicesWithDetails());
                         break;
                 }
@@ -87,7 +93,7 @@ public class Tab1Controller implements Initializable {
         return deviceComboBox.getValue().equals(deviceComboBox2.getValue());
     }
 
-    public String getPlatformSelection() {
+    public PlatformType getPlatformSelection() {
         return platformComboBox.getValue();
     }
 
