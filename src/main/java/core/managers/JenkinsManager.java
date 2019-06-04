@@ -9,18 +9,16 @@ import java.io.InputStreamReader;
 import static core.utils.AndroidHelper.getAndroidDevices;
 import static core.utils.IOSHelper.getIOSDevices;
 
-public class JenkinsManager {
+class JenkinsManager {
 
     private static JenkinsManager instance;
-    private final String jenkinsPlatformProperty;
     private boolean isJenkinsRunning;
 
     private JenkinsManager() {
-        jenkinsPlatformProperty = System.getProperty("Platform");
         isJenkinsRunning = isJenkinsProcessRunning();
     }
 
-    public static JenkinsManager getInstance() {
+    static JenkinsManager getInstance() {
         if (instance == null) {
             instance = new JenkinsManager();
         }
@@ -62,7 +60,10 @@ public class JenkinsManager {
     }
 
     PlatformType getJenkinsSelectedPlatform() {
-        switch (jenkinsPlatformProperty) {
+        Log.info("About to run Jenkins on " + System.getProperty("Platform") + " Platform");
+        Log.info("System environment variables : " + System.getenv());
+
+        switch (System.getProperty("Platform")) {
             case "Android":
                 return PlatformType.ANDROID;
 
