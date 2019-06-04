@@ -47,9 +47,9 @@ public class JenkinsManager {
                 }
             }
 
-            int exitVal = pr.waitFor();
-            Log.info("Exited with error code " + exitVal);
-            rt.exit(exitVal);
+//            int exitVal = pr.waitFor();
+//            Log.info("Exited with error code " + exitVal);
+//            rt.exit(exitVal);
 
         } catch (Exception e) {
             Log.info(e.toString());
