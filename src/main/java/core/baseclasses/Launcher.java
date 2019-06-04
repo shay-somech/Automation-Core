@@ -15,7 +15,7 @@ public class Launcher {
 
     public static void tearDown() {
         Log.info("Quiting Automation");
-        DriverManager.getDriver().quit();
         stopAppiumServer();
+        DriverManager.getDriver().quit();
     }
 }
