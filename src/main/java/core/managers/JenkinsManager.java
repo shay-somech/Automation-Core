@@ -41,7 +41,7 @@ public class JenkinsManager {
             String line;
 
             while ((line = input.readLine()) != null) {
-                if (line.contains("Jenkins") || line.contains("jenkins")) {
+                if (line.toLowerCase().contains(("jenkins.war"))) {
                     Log.info("Jenkins instance Found");
                     return true;
                 }
