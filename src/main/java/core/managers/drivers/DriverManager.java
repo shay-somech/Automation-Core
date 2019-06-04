@@ -17,9 +17,8 @@ import static core.managers.DesiredCapabilitiesManager.setCapabilities;
 
 public class DriverManager {
 
-    public static WebDriverWait wait;
-    public static boolean isAndroid = false;
-    public static boolean isIOS = false;
+    public static boolean isAndroid;
+    public static boolean isIOS;
     private static AppiumDriver driver;
 
     static void setDriver(PlatformType platform, AppiumDriverLocalService service) {
@@ -39,7 +38,7 @@ public class DriverManager {
             }
 
             Log.info("Driver initialized");
-            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
         } catch (SessionNotCreatedException e) {
             e.printStackTrace();
@@ -70,7 +69,6 @@ public class DriverManager {
     }
 
     public static WebDriverWait webDriverWait(int timeout) {
-        wait = new WebDriverWait(driver, timeout);
-        return wait;
+        return new WebDriverWait(driver, timeout);
     }
 }

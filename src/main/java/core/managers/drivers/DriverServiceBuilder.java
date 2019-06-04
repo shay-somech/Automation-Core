@@ -2,7 +2,6 @@ package core.managers.drivers;
 
 import core.constants.AppiumServerArgs;
 import core.constants.PlatformType;
-import core.managers.JenkinsManager;
 import core.utils.Log;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
@@ -14,7 +13,11 @@ public class DriverServiceBuilder {
 
     private static AppiumDriverLocalService service;
 
-    public static AppiumDriverLocalService createAppiumService() {
+    public DriverServiceBuilder() {
+        createAppiumService();
+    }
+
+    private void createAppiumService() {
         String ipAddress = "127.0.0.1";
 
         if (service == null) {
@@ -26,24 +29,17 @@ public class DriverServiceBuilder {
                     .withArgument(AppiumServerArgs.LOG_LEVEL, AppiumServerArgs.WARNING_ERROR)
                     .withArgument(AppiumServerArgs.TEMP_DIRECTORY, null));
         }
-
-        return service;
     }
 
-    public static void createJenkinsDriver() {
-        startAppiumServer();
+    public static void createJenkinsDriver(PlatformType platformType) {
+        switch (platformType) {
+            case ANDROID:
+                DriverManager.setDriver(ANDROID, service);
+                break;
 
-        if (JenkinsManager.getInstance().getJenkinsInstance()) {
-
-            switch (JenkinsManager.getInstance().getJenkinsSelectedPlatform()) {
-                case ANDROID:
-                    DriverManager.setDriver(ANDROID, service);
-                    break;
-
-                case IOS:
-                    DriverManager.setDriver(IOS, service);
-                    break;
-            }
+            case IOS:
+                DriverManager.setDriver(IOS, service);
+                break;
         }
     }
 
@@ -55,7 +51,7 @@ public class DriverServiceBuilder {
     }
 
     public static void startAppiumServer() {
-        createAppiumService().start();
+        service.start();
     }
 
     public static void stopAppiumServer() {

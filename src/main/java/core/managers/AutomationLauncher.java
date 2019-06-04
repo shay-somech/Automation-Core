@@ -8,15 +8,11 @@ import core.utils.Log;
 
 public class AutomationLauncher {
 
-    public AutomationLauncher() {
-        start();
-    }
-
-    private void start() {
+    public void start() {
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             Log.info("Starting Automation From Jenkins");
-            DriverServiceBuilder.createAppiumService();
-            DriverServiceBuilder.createJenkinsDriver();
+            DriverServiceBuilder.startAppiumServer();
+            DriverServiceBuilder.createJenkinsDriver(JenkinsManager.getInstance().getJenkinsSelectedPlatform());
             ActionHelper.getInstance();
 
         } else {

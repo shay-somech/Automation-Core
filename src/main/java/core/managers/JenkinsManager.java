@@ -29,6 +29,7 @@ public class JenkinsManager {
 
     /**
      * Checking for Jenkins process using Shell command
+     *
      * @return boolean if Process matches criteria
      */
     private boolean isJenkinsProcessRunning() {
@@ -47,22 +48,20 @@ public class JenkinsManager {
                 }
             }
 
-//            int exitVal = pr.waitFor();
-//            Log.info("Exited with error code " + exitVal);
-//            rt.exit(exitVal);
-
         } catch (Exception e) {
             Log.info(e.toString());
             e.printStackTrace();
         }
+
+        Log.info("Jenkins instance was not Found");
         return false;
     }
 
-    public boolean getJenkinsInstance() {
+    boolean getJenkinsInstance() {
         return isJenkinsRunning;
     }
 
-    public PlatformType getJenkinsSelectedPlatform() {
+    PlatformType getJenkinsSelectedPlatform() {
         switch (jenkinsPlatformProperty) {
             case "Android":
                 return PlatformType.ANDROID;
@@ -70,7 +69,7 @@ public class JenkinsManager {
             case "iOS":
                 return PlatformType.IOS;
         }
-        throw new RuntimeException("Could not get selected selected Platform from Jenkins");
+        throw new RuntimeException("Could not get selected Platform from Jenkins");
     }
 
     String getJenkinsDeviceId() {

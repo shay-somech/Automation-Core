@@ -10,7 +10,7 @@ public class Launcher {
 
     public static void start() {
         Log.info("Initializing Automation");
-        new AutomationLauncher();
+        new AutomationLauncher().start();
     }
 
     public static void tearDown() {
