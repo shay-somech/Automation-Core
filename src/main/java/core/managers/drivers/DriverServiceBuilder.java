@@ -31,7 +31,22 @@ public class DriverServiceBuilder {
         }
     }
 
-    public static void createJenkinsDriver(PlatformType platformType) {
+    public void startAppiumServer() {
+        service.start();
+    }
+
+    public static void stopAppiumServer() {
+        if (DriverManager.getDriver() != null) {
+            Log.info("Stopping Appium Server");
+            service.stop();
+        } else Log.info("Appium Server not initialized, nothing to stop");
+    }
+
+    /**
+     * Build from Jenkins params
+     * @param platformType is being fetched from Jenkins System property
+     */
+    public void createJenkinsDriver(PlatformType platformType) {
         switch (platformType) {
             case ANDROID:
                 DriverManager.setDriver(ANDROID, service);
@@ -46,18 +61,7 @@ public class DriverServiceBuilder {
     /**
      * Build manually with UI Configurations
      */
-    public static void createDriver(PlatformType platform) {
+    public void createDriver(PlatformType platform) {
         DriverManager.setDriver(platform, service);
-    }
-
-    public static void startAppiumServer() {
-        service.start();
-    }
-
-    public static void stopAppiumServer() {
-        if (DriverManager.getDriver() != null) {
-            Log.info("Stopping Appium Server");
-            service.stop();
-        } else Log.info("Appium Server not initialized, nothing to stop");
     }
 }
