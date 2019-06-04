@@ -4,8 +4,6 @@ import core.managers.AutomationLauncher;
 import core.managers.drivers.DriverManager;
 import core.utils.Log;
 
-import static core.managers.drivers.DriverServiceBuilder.stopAppiumServer;
-
 public class Launcher {
 
     public static void start() {
@@ -15,7 +13,6 @@ public class Launcher {
 
     public static void tearDown() {
         Log.info("Quiting Automation");
-        stopAppiumServer();
         DriverManager.getDriver().quit();
     }
 }
