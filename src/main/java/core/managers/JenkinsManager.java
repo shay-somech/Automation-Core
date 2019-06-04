@@ -60,10 +60,9 @@ class JenkinsManager {
     }
 
     PlatformType getJenkinsSelectedPlatform() {
-        Log.info("About to run Jenkins on " + System.getProperty("Platform") + " Platform");
-        Log.info("System environment variables : " + System.getenv());
+        Log.info("About to run Jenkins on " + System.getenv("Platform") + " Platform");
 
-        switch (System.getProperty("Platform")) {
+        switch (System.getenv("Platform")) {
             case "Android":
                 return PlatformType.ANDROID;
 
