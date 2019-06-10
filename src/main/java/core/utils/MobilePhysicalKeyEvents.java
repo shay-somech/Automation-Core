@@ -8,7 +8,7 @@ import io.appium.java_client.android.nativekey.KeyEvent;
 
 import static core.managers.drivers.DriverManager.isAndroid;
 
-class MobilePhysicalKeyEvents {
+public class MobilePhysicalKeyEvents {
 
     private AppiumDriver driver;
     private AndroidDriver androidDriver;
