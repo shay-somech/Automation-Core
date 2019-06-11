@@ -6,12 +6,12 @@ import core.utils.Log;
 
 public class Launcher {
 
-    public static void start() {
+    public void start() {
         Log.info("Initializing Automation");
         new AutomationLauncher().start();
     }
 
-    public static void tearDown() {
+    public void tearDown() {
         Log.info("Quiting Automation");
         DriverManager.getDriver().quit();
     }

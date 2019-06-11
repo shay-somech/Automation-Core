@@ -1,6 +1,7 @@
 package core.managers.drivers;
 
 import core.constants.PlatformType;
+import core.managers.DesiredCapabilitiesManager;
 import core.utils.Log;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -10,10 +11,6 @@ import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
-
-import static core.constants.PlatformType.ANDROID;
-import static core.constants.PlatformType.IOS;
-import static core.managers.DesiredCapabilitiesManager.setCapabilities;
 
 public class DriverManager {
 
@@ -27,13 +24,13 @@ public class DriverManager {
                 case ANDROID:
                     Log.info("Starting Android driver");
                     isAndroid = true;
-                    driver = new AndroidDriver<>(service, setCapabilities(ANDROID));
+                    driver = new AndroidDriver<>(service, new DesiredCapabilitiesManager().getDesiredCapabilities());
                     break;
 
                 case IOS:
                     Log.info("Starting iOS driver");
                     isIOS = true;
-                    driver = new IOSDriver<>(service, setCapabilities(IOS));
+                    driver = new IOSDriver<>(service, new DesiredCapabilitiesManager().getDesiredCapabilities());
                     break;
             }
 
