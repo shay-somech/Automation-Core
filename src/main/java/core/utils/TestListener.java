@@ -20,7 +20,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onFinish(ISuite suite) {
-        Launcher.tearDown();
+//        Launcher.tearDown();
     }
 
 
@@ -39,6 +39,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onFinish(ITestContext context) {
+        Launcher.tearDown();
     }
 
     @Override
@@ -53,7 +54,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        Log.warn(getTestMethodName(result) + " Skipped! ");
+        Log.warn(getTestMethodName(result) + " Skipped! :| ");
     }
 
 
@@ -78,7 +79,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
     }
 
 
-    private static void showMessage(String prefix, IInvokedMethod method, ITestResult testResult) {
+    private void showMessage(String prefix, IInvokedMethod method, ITestResult testResult) {
         String msg;
         if (getTestXmlParams(method, testResult) != null) {
             msg = prefix + method.getTestMethod().getMethodName() + "() with the parameters " + getTestXmlParams(method, testResult);
@@ -88,7 +89,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
         Log.warn(msg);
     }
 
-    private static Map<String, String> getTestXmlParams(IInvokedMethod method, ITestResult testResult) {
+    private Map<String, String> getTestXmlParams(IInvokedMethod method, ITestResult testResult) {
         if (method.getTestMethod().findMethodParameters(testResult.getTestContext().getCurrentXmlTest()).isEmpty()) {
             return null;
         } else {
@@ -96,7 +97,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
         }
     }
 
-    private static String getTestMethodName(ITestResult iTestResult) {
+    private String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
     }
 
@@ -104,7 +105,7 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
         return (DriverManager.getDriver().getScreenshotAs(OutputType.BYTES));
     }
 
-    private static String saveTextLog(String message) {
+    private String saveTextLog(String message) {
         return message;
     }
 }
