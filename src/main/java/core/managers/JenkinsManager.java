@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import static core.utils.AndroidHelper.getAndroidDevices;
 import static core.utils.IOSHelper.getIOSDevices;
 
-class JenkinsManager {
+public class JenkinsManager {
 
     private static JenkinsManager instance;
     private boolean isJenkinsRunning;
@@ -18,7 +18,7 @@ class JenkinsManager {
         isJenkinsRunning = isJenkinsProcessRunning();
     }
 
-    static JenkinsManager getInstance() {
+    public static JenkinsManager getInstance() {
         if (instance == null) {
             instance = new JenkinsManager();
         }
@@ -55,11 +55,11 @@ class JenkinsManager {
         return false;
     }
 
-    boolean getJenkinsInstance() {
+    public boolean getJenkinsInstance() {
         return isJenkinsRunning;
     }
 
-    PlatformType getJenkinsSelectedPlatform() {
+    public PlatformType getJenkinsSelectedPlatform() {
         Log.info("About to run Jenkins on " + System.getenv("Platform") + " Platform");
 
         switch (System.getenv("Platform")) {

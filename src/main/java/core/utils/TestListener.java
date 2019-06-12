@@ -15,12 +15,11 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onStart(ISuite suite) {
-//        Launcher.start();
+        new Launcher().launchAutomationUI();
     }
 
     @Override
     public void onFinish(ISuite suite) {
-//        Launcher.tearDown();
     }
 
 
@@ -35,15 +34,17 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onStart(ITestContext context) {
+        new Launcher().start();
     }
 
     @Override
     public void onFinish(ITestContext context) {
+        new Launcher().tearDown();
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        Log.warn(getTestMethodName(result) + " Passed Successfully! :) ");
+        Log.warn(getTestMethodName(result) + " Passed! :) ");
     }
 
     @Override
@@ -70,13 +71,11 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
     @Override
     public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
         showMessage("About to run ", method, testResult);
-        new Launcher().start();
     }
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
         showMessage("Completed running ", method, testResult);
-        new Launcher().tearDown();
     }
 
 
