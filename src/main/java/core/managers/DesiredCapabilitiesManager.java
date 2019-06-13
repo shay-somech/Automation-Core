@@ -56,6 +56,7 @@ public class DesiredCapabilitiesManager {
         caps.setCapability(APP_WAIT_ACTIVITY, getAndroidAppMainActivity());
         caps.setCapability(APP_WAIT_PACKAGE, getAndroidAppPackage());
         caps.setCapability(AUTO_GRANT_PERMISSIONS, true);
+        caps.setCapability("autoLaunch", false);
 
         // Skip the installation of io.appium.settings app and the UIAutomator 2 server.
         caps.setCapability("skipDeviceInitialization", true);
@@ -83,7 +84,6 @@ public class DesiredCapabilitiesManager {
                 caps.setCapability(WDA_LOCAL_PORT, 8200);
             }
         }
-
         caps.setCapability(AUTOMATION_NAME, IOS_XCUI_TEST);
         caps.setCapability(USE_PREBUILT_WDA, true);
         caps.setCapability(WDA_LAUNCH_TIMEOUT, 60000);
@@ -92,6 +92,7 @@ public class DesiredCapabilitiesManager {
         caps.setCapability(WDA_STARTUP_RETRY_INTERVAL, 20000);
         caps.setCapability(LAUNCH_TIMEOUT, 60000);
         caps.setCapability(BUNDLE_ID, getIOSBundleId());
+        caps.setCapability("autoLaunch", false);
         return caps;
     }
 

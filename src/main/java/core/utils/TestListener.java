@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.baseclasses.Launcher;
 import core.managers.drivers.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.testng.*;
@@ -15,7 +14,6 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onStart(ISuite suite) {
-        new Launcher().launchAutomationUI();
     }
 
     @Override
@@ -34,12 +32,10 @@ public class TestListener implements ISuiteListener, ITestListener, IInvokedMeth
 
     @Override
     public void onStart(ITestContext context) {
-        new Launcher().start();
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        new Launcher().tearDown();
     }
 
     @Override
