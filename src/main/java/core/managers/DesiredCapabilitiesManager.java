@@ -20,6 +20,8 @@ public class DesiredCapabilitiesManager {
     private DesiredCapabilities caps;
 
     public DesiredCapabilitiesManager() {
+        caps = new DesiredCapabilities();
+
         if (isAndroid) {
             caps = setAndroidCaps();
         } else {
