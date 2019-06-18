@@ -35,14 +35,14 @@
         </HBox>
     </top>
     <bottom>
-        <HBox alignment="CENTER_RIGHT" style="-: ;" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER_RIGHT" fillHeight="false" style="-: ;">
             <children>
                 <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../uiAssets/powered%20by@3x.png" />
                     </image>
                 </ImageView>
-                <Button onAction="#runButtonClicked" style="-fx-background-color: transparent;" text=" ">
+                <Button fx:id="Run" contentDisplay="CENTER" onAction="#runButtonClicked" style="-fx-background-color: transparent;" text=" _Run" textFill="#cc101000">
                     <graphic>
                         <ImageView fitHeight="66.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -50,13 +50,13 @@
                             </image>
                         </ImageView>
                     </graphic>
+               <font>
+                  <Font />
+               </font>
                 </Button>
             </children>
         </HBox>
     </bottom>
-    <right>
-        <VBox BorderPane.alignment="CENTER" />
-    </right>
     <left>
         <VBox fx:id="sideMenu" alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -83,7 +83,7 @@
 
     </left>
     <center>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <AnchorPane BorderPane.alignment="CENTER">
             <children>
                 <fx:include fx:id="tab1" source="tab/Tab1.fxml" />
             </children>

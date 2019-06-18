@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab1Controller">
+<AnchorPane fx:id="anchor" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab1Controller">
     <children>
-      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="450.0" vgap="10.0">
+      <GridPane alignment="CENTER" vgap="10.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+          <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="380.0" minWidth="243.0" prefWidth="356.0" />
+          <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="287.0" minWidth="150.0" prefWidth="174.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -39,7 +39,7 @@
                   </Label>
                   <ComboBox fx:id="deviceComboBox" promptText="Select Device" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <ComboBox fx:id="deviceComboBox2" promptText="Select 2nd Device" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="noReset" selected="true" text="Keep App data (noReset)" GridPane.rowIndex="4">
+                  <CheckBox fx:id="noReset" text="_Keep App data (noReset Capability)" GridPane.rowIndex="4">
                <font>
                   <Font name="Heiti SC Medium" size="18.0" />
                </font></CheckBox>

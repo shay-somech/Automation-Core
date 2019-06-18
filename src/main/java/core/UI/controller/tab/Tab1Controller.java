@@ -11,7 +11,8 @@ import javafx.scene.control.ComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static core.constants.PlatformType.*;
+import static core.constants.PlatformType.ANDROID;
+import static core.constants.PlatformType.IOS;
 
 public class Tab1Controller implements Initializable {
 
@@ -20,11 +21,11 @@ public class Tab1Controller implements Initializable {
     public static boolean isNoReset;
 
     @FXML
-    private ComboBox<PlatformType> platformComboBox, platformComboBox2;
+    public CheckBox noReset;
     @FXML
-    private ComboBox<String> deviceComboBox, deviceComboBox2;
+    public ComboBox<PlatformType> platformComboBox, platformComboBox2;
     @FXML
-    private CheckBox noReset;
+    public ComboBox<String> deviceComboBox, deviceComboBox2;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,6 +33,7 @@ public class Tab1Controller implements Initializable {
         setDevicesComboBox();
         setDevicesComboBox2();
     }
+
 
     private void setPlatformComboBoxesValues() {
         platformComboBox.getItems().addAll(ANDROID, IOS);
