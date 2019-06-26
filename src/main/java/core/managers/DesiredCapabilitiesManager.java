@@ -49,7 +49,7 @@ public class DesiredCapabilitiesManager {
             }
         }
 
-        caps.setCapability(AUTOMATION_NAME, ESPRESSO);
+        caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
         caps.setCapability(APP_PACKAGE, getAndroidAppPackage());
         caps.setCapability(APP_ACTIVITY, getAndroidAppMainActivity());
         caps.setCapability(APP_WAIT_ACTIVITY, getAndroidAppMainActivity());
