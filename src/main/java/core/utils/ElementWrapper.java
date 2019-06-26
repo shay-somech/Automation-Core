@@ -1,5 +1,6 @@
 package core.utils;
 
+import core.managers.drivers.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -23,5 +24,9 @@ public class ElementWrapper {
 
     public static boolean waitForInvisibilityOfElement(WebElement element, int timeout) {
         return webDriverWait(timeout).until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public static WebElement findByImage(String path) {
+        return DriverManager.getDriver().findElementByImage(new ImageLocatorBuilder().getReferenceImageB64(path));
     }
 }

@@ -14,6 +14,8 @@ import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.html5.Location;
 
+import java.time.Duration;
+
 public class ActionHelper {
 
     private final AppiumDriver driver;
@@ -95,6 +97,14 @@ public class ActionHelper {
     }
 
     /**
+     * Exists\Minimizes to the background for the given time then returns to the same state
+     * @param seconds duration of staying @Background
+     */
+    public void runAppInBackground(int seconds) {
+        driver.runAppInBackground(Duration.ofSeconds(seconds));
+    }
+
+    /**
      * Swipe handlers
      */
 
@@ -118,6 +128,11 @@ public class ActionHelper {
         swipeHelper.customHorizontalSwipe(webElement.getRect().getY(), direction);
     }
 
+    /**
+     * Android Only
+     *
+     * @param uiSelector the element to scroll into
+     */
     public void scrollToView(String uiSelector) {
         swipeHelper.UiScrollable(uiSelector);
     }

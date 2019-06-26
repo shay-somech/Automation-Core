@@ -10,8 +10,7 @@ import static core.utils.AndroidHelper.getAndroidAppInstallationPath;
 import static core.utils.AppParams.*;
 import static core.utils.IOSHelper.getIOSAppInstallationPath;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
-import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
-import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
+import static io.appium.java_client.remote.AutomationName.*;
 import static io.appium.java_client.remote.IOSMobileCapabilityType.*;
 import static io.appium.java_client.remote.MobileCapabilityType.*;
 
@@ -50,7 +49,7 @@ public class DesiredCapabilitiesManager {
             }
         }
 
-        caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
+        caps.setCapability(AUTOMATION_NAME, ESPRESSO);
         caps.setCapability(APP_PACKAGE, getAndroidAppPackage());
         caps.setCapability(APP_ACTIVITY, getAndroidAppMainActivity());
         caps.setCapability(APP_WAIT_ACTIVITY, getAndroidAppMainActivity());

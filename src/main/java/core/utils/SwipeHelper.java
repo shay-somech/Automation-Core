@@ -75,7 +75,7 @@ class SwipeHelper {
      * @param direction int startX, startY, endX, endY are calculated as part of the Device height and width
      * @method swipe() implements TouchAction press.MoveTo, moveTo coordinates are relative to the current position.
      * meaning this method adds the startX&startY to endX&endY by default, in order to avoid it we subtracting startX from endX.
-     * The Multiplication operations representing percentage of the screen you want to swipe from > to
+     * The Multiplication operations representing percentage of the screen you want to swipe from -> to
      */
     void swipe(SwipeDirection direction) {
         int startX = deviceWidth;
@@ -86,53 +86,53 @@ class SwipeHelper {
         switch (direction) {
             case UP:
                 if (DriverManager.isIOS) {
-                    int startUpX = (int) (startX * 0.5);
+                    int startUpX = startX / 2;
                     int startUpY = (int) (startY * 0.3);
-                    int vectorUpX = (int) (endX * 0.5 - startUpX);
+                    int vectorUpX = endX / 2 - startUpX;
                     int vectorUpY = (int) (endY * 0.8 - startUpY);
 
                     swipe(startUpX, startUpY, vectorUpX, vectorUpY);
                 } else {
-                    swipe((int) (startX * 0.5), (int) (startY * 0.3), (int) (endX * 0.5), (int) (endY * 0.8));
+                    swipe(startX / 2, (int) (startY * 0.3), endX / 2, (int) (endY * 0.8));
                 }
                 break;
 
             case DOWN:
                 if (DriverManager.isIOS) {
-                    int startDownX = (int) (startX * 0.5);
+                    int startDownX = startX / 2;
                     int startDownY = (int) (startY * 0.8);
-                    int vectorDownX = (int) (endX * 0.5 - startDownX);
+                    int vectorDownX = endX / 2 - startDownX;
                     int vectorDownY = (int) (endY * 0.3 - startDownY);
 
                     swipe(startDownX, startDownY, vectorDownX, vectorDownY);
                 } else {
-                    swipe((int) (startX * 0.5), (int) (startY * 0.8), (int) (endX * 0.5), (int) (endY * 0.3));
+                    swipe(startX / 2, (int) (startY * 0.8), endX / 2, (int) (endY * 0.3));
                 }
                 break;
 
             case LEFT:
                 if (DriverManager.isIOS) {
                     int startLeftX = (int) (startX * 0.8);
-                    int startLeftY = (int) (startY * 0.5);
-                    int vectorLeftX = (int) (endX * 0.2 - startLeftX);
-                    int vectorLeftY = (int) (endY * 0.5 - startLeftY);
+                    int startLeftY = startY / 2;
+                    int vectorLeftX = (int) (endX * 0.1 - startLeftX);
+                    int vectorLeftY = endY / 2 - startLeftY;
 
                     swipe(startLeftX, startLeftY, vectorLeftX, vectorLeftY);
                 } else {
-                    swipe((int) (startX * 0.8), (int) (startY * 0.5), (int) (endX * 0.2), (int) (endY * 0.5));
+                    swipe((int) (startX * 0.8), startY / 2, (int) (endX * 0.1), (endY / 2));
                 }
                 break;
 
             case RIGHT:
                 if (DriverManager.isIOS) {
                     int startRightX = (int) (startX * 0.1);
-                    int startRightY = (int) (startY * 0.5);
+                    int startRightY = startY / 2;
                     int vectorRightX = (int) (endX * 0.8 - startRightX);
-                    int vectorRightY = (int) (endY * 0.5 - startRightY);
+                    int vectorRightY = endY / 2 - startRightY;
 
                     swipe(startRightX, startRightY, vectorRightX, vectorRightY);
                 } else {
-                    swipe((int) (startX * 0.1), (int) (startY * 0.5), (int) (endX * 0.8), (int) (endY * 0.5));
+                    swipe((int) (startX * 0.1), startY / 2, (int) (endX * 0.8), endY / 2);
                 }
                 break;
         }
@@ -148,25 +148,25 @@ class SwipeHelper {
             case LEFT:
                 if (DriverManager.isIOS) {
                     int startLeftX = (int) (startX * 0.8);
-                    int startLeftY = (int) (y - (elementCentreY * 0.5));
-                    int vectorLeftX = (int) (endX * 0.2 - startLeftX);
-                    int vectorLeftY = (int) (y - (elementCentreY * 0.5 - startLeftY));
+                    int startLeftY = (y - (elementCentreY / 2));
+                    int vectorLeftX = (int) (endX * 0.1 - startLeftX);
+                    int vectorLeftY = (y - (elementCentreY / 2 - startLeftY));
 
                     swipe(startLeftX, startLeftY, vectorLeftX, vectorLeftY);
                 } else {
-                    swipe((int) (startX * 0.8), (int) (y - (elementCentreY * 0.5)), (int) (endX * 0.2), (int) (y - (elementCentreY * 0.5)));
+                    swipe((int) (startX * 0.8), (y - (elementCentreY / 2)), (int) (endX * 0.1), (y - (elementCentreY / 2)));
                 }
 
             case RIGHT:
                 if (DriverManager.isIOS) {
                     int startRightX = (int) (startX * 0.2);
-                    int startRightY = (int) (y - (elementCentreY * 0.5));
+                    int startRightY = (y - (elementCentreY / 2));
                     int vectorRightX = (int) (endX * 0.8 - startRightX);
-                    int vectorRightY = (int) ((startRightY) - (y - (elementCentreY * 0.5)));
+                    int vectorRightY = ((startRightY) - (y - (elementCentreY / 2)));
 
                     swipe(startRightX, startRightY, vectorRightX, vectorRightY);
                 } else {
-                    swipe((int) (startX * 0.1), (int) (y - (elementCentreY * 0.5)), (int) (endX * 0.8), (int) (y - (elementCentreY * 0.5)));
+                    swipe((int) (startX * 0.1), (y - (elementCentreY / 2)), (int) (endX * 0.8), (y - (elementCentreY / 2)));
                 }
         }
         Log.info("Swiping " + direction);
