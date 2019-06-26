@@ -26,7 +26,7 @@ public class ElementWrapper {
         return webDriverWait(timeout).until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public static WebElement findByImage(String path) {
+    public static WebElement findElementByImage(String path) {
         return DriverManager.getDriver().findElementByImage(new ImageLocatorBuilder().getReferenceImageB64(path));
     }
 }
