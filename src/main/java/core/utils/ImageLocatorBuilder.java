@@ -4,6 +4,8 @@ import core.managers.drivers.DriverManager;
 import io.appium.java_client.HasSettings;
 import io.appium.java_client.Setting;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,23 +24,40 @@ public class ImageLocatorBuilder {
      * @param imageRelativePath image relative path (usually will be @resources)
      * @return Base64 encoded image
      */
-    String getReferenceImageB64(String imageRelativePath) {
-        URL refImgUrl;
-        File refImgFile;
-        String image = null;
-
-        refImgUrl = getClass().getClassLoader().getResource(imageRelativePath);
-        assert refImgUrl != null;
-
+    String getReferenceImageB64FromImageFile(String imageRelativePath) {
         try {
-            refImgFile = Paths.get(refImgUrl.toURI()).toFile();
+
+            URL refImgUrl = getClass().getClassLoader().getResource(imageRelativePath);
+            assert refImgUrl != null;
+            File refImgFile = Paths.get(refImgUrl.toURI()).toFile();
             assert refImgFile != null;
-            image = Base64.getEncoder().encodeToString(Files.readAllBytes(refImgFile.toPath()));
+            return Base64.getEncoder().encodeToString(Files.readAllBytes(refImgFile.toPath()));
+
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
         }
 
-        return image;
+        return null;
+    }
+
+    String getReferenceImageB64FromImageUrl(String imageUrl) {
+        try {
+
+            URL url = new URL(imageUrl);
+            BufferedInputStream bis = new BufferedInputStream(url.openConnection().getInputStream());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = bis.read(buffer, 0, buffer.length)) != -1) {
+                baos.write(buffer, 0, read);
+            }
+            baos.flush();
+            return Base64.getEncoder().encodeToString(baos.toByteArray());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

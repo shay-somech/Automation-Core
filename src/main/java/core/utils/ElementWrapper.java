@@ -27,6 +27,26 @@ public class ElementWrapper {
     }
 
     public static WebElement findElementByImage(String path) {
-        return DriverManager.getDriver().findElementByImage(new ImageLocatorBuilder().getReferenceImageB64(path));
+        return DriverManager.getDriver().findElementByImage(new ImageLocatorBuilder().getReferenceImageB64FromImageFile(path));
+    }
+
+    public static WebElement findElementByImageFromUrl(String path) {
+        return DriverManager.getDriver().findElementByImage(new ImageLocatorBuilder().getReferenceImageB64FromImageUrl(path));
+    }
+
+    public static WebElement waitForImageToAppear(String path, int timeout) {
+        return webDriverWait(timeout).until(ExpectedConditions.visibilityOf(findElementByImage(path)));
+    }
+
+    public static WebElement waitForImageFromUrlToAppear(String path, int timeout) {
+        return webDriverWait(timeout).until(ExpectedConditions.visibilityOf(findElementByImageFromUrl(path)));
+    }
+
+    public static boolean waitForImageToDisappear(String path, int timeout) {
+        return webDriverWait(timeout).until(ExpectedConditions.invisibilityOf(findElementByImage(path)));
+    }
+
+    public static boolean waitForImageFromUrlToDisappear(String path, int timeout) {
+        return webDriverWait(timeout).until(ExpectedConditions.invisibilityOf(findElementByImageFromUrl(path)));
     }
 }
