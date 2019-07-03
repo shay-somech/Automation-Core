@@ -4,6 +4,7 @@ import core.UI.controller.tab.Tab1Controller;
 import core.UI.controller.tab.Tab2Controller;
 import core.constants.PlatformType;
 import core.utils.Log;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -112,8 +112,7 @@ public class MainController implements Initializable {
         if (validateSelections()) {
             tab1Controller.getSelections();
 //            tab2Controller.getSelections();
-            Stage window = (Stage) Run.getScene().getWindow();
-            window.close();
+            Platform.exit();
         }
     }
 
