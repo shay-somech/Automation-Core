@@ -2,6 +2,8 @@ package core.managers;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.util.HashMap;
+
 import static core.UI.controller.tab.Tab1Controller.isNoReset;
 import static core.UI.controller.tab.Tab2Controller.isInstallApp;
 import static core.UI.controller.tab.Tab2Controller.isParallelRun;
@@ -10,13 +12,15 @@ import static core.utils.AndroidHelper.getAndroidAppInstallationPath;
 import static core.utils.AppParams.*;
 import static core.utils.IOSHelper.getIOSAppInstallationPath;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
-import static io.appium.java_client.remote.AutomationName.*;
+import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
+import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
 import static io.appium.java_client.remote.IOSMobileCapabilityType.*;
 import static io.appium.java_client.remote.MobileCapabilityType.*;
 
 public class DesiredCapabilitiesManager {
 
     private DesiredCapabilities caps;
+    HashMap<String, String> customFindModules = new HashMap<>();
 
     public DesiredCapabilitiesManager() {
         caps = new DesiredCapabilities();
@@ -57,9 +61,19 @@ public class DesiredCapabilitiesManager {
         caps.setCapability(AUTO_GRANT_PERMISSIONS, true);
         caps.setCapability("autoLaunch", false);
 
-        // Skip the installation of io.appium.settings app and the UIAutomator 2 server.
+        /**
+         Skip the installation of io.appium.settings app and the UIAutomator 2 server.
+         */
         caps.setCapability("skipDeviceInitialization", true);
         caps.setCapability("skipServerInstallation", true);
+
+        /**
+         * AI Locator Based Capability - Test.ai
+         * https://github.com/testdotai/appium-classifier-plugin
+         */
+        customFindModules.put("ai", "test-ai-classifier");
+        caps.setCapability("customFindModules", customFindModules);
+
         return caps;
     }
 
@@ -69,7 +83,7 @@ public class DesiredCapabilitiesManager {
 
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             caps.setCapability(NO_RESET, true);
-//                    caps.setCapability(APP, getIOSAppInstallationPath());
+//            caps.setCapability(APP, getIOSAppInstallationPath());
 
         } else {
             caps.setCapability(NO_RESET, isNoReset);
@@ -92,6 +106,14 @@ public class DesiredCapabilitiesManager {
         caps.setCapability(LAUNCH_TIMEOUT, 60000);
         caps.setCapability(BUNDLE_ID, getIOSBundleId());
         caps.setCapability("autoLaunch", false);
+
+        /**
+         * AI Locator Based Capability - Test.ai
+         * https://github.com/testdotai/appium-classifier-plugin
+         */
+        customFindModules.put("ai", "test-ai-classifier");
+        caps.setCapability("customFindModules", customFindModules);
+
         return caps;
     }
 
