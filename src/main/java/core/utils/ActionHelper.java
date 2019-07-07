@@ -121,7 +121,7 @@ public class ActionHelper {
         swipeHelper.swipe(direction);
     }
 
-    public void swipe(int startX, int endX, int startY, int endY) {
+    public void swipe(int startX, int startY, int endX, int endY) {
         swipeHelper.swipe(startX, startY, endX, endY);
     }
 
