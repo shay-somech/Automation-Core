@@ -2,7 +2,7 @@ package core.utils;
 
 import com.google.common.collect.ImmutableMap;
 import core.constants.KeyboardEvents;
-import core.constants.SwipeDirection;
+import core.constants.SwipeDirection.Direction;
 import core.database.AppsDataSource;
 import core.database.AppsDataSource.AndroidSystemApp;
 import core.database.AppsDataSource.IOSSystemApp;
@@ -98,6 +98,7 @@ public class ActionHelper {
 
     /**
      * Exists\Minimizes to the background for the given time then returns to the same state
+     *
      * @param seconds duration of staying @Background
      */
     public void runAppInBackground(int seconds) {
@@ -116,7 +117,7 @@ public class ActionHelper {
         return swipeHelper.swipeDownUntilElementFound(webElement);
     }
 
-    public void swipe(SwipeDirection direction) {
+    public void swipe(Direction direction) {
         swipeHelper.swipe(direction);
     }
 
@@ -124,8 +125,12 @@ public class ActionHelper {
         swipeHelper.swipe(startX, startY, endX, endY);
     }
 
-    public void customHorizontalSwipe(WebElement webElement, SwipeDirection direction) {
-        swipeHelper.customHorizontalSwipe(webElement.getRect().getY(), direction);
+    public void swipeElementToDirection(WebElement webElement, Direction direction) {
+        swipeHelper.swipeElementToDirection(webElement, direction);
+    }
+
+    public void swipeElementToCustomDirection(WebElement webElement, final int endX, final int endY) {
+        swipeHelper.swipeElementToCustomDirection(webElement, endX, endY);
     }
 
     /**
