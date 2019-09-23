@@ -45,7 +45,7 @@ public class IOSHelper {
     }
 
     public static String getIOSAppInstallationPath() {
-        UiSelection uiSelection = new UiSelection();
+        UiSelection uiSelection = UiSelection.getInstance();
         String ipaAbsolutePath = null;
 
         if (uiSelection.getApp().isEmpty()) {

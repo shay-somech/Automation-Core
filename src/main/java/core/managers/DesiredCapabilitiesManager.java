@@ -23,7 +23,7 @@ public class DesiredCapabilitiesManager {
     public DesiredCapabilitiesManager() {
         caps = new DesiredCapabilities();
         deviceManager = new DeviceManager();
-        uiSelection = new UiSelection();
+        uiSelection = UiSelection.getInstance();
 
         if (isAndroid) {
             caps = setAndroidCaps();

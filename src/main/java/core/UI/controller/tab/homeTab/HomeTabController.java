@@ -24,7 +24,7 @@ public class HomeTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        uiSelection = new UiSelection();
+        uiSelection = UiSelection.getInstance();
         setDevicesComboBoxes();
     }
 

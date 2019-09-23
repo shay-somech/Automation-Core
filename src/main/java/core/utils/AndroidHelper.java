@@ -55,7 +55,7 @@ public class AndroidHelper {
     }
 
     public String getAndroidAppInstallationPath() {
-        UiSelection uiSelection = new UiSelection();
+        UiSelection uiSelection = UiSelection.getInstance();
         String apkAbsolutePath = null;
 
         if (uiSelection.getApp().isEmpty()) {

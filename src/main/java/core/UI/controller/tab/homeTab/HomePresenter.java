@@ -10,9 +10,11 @@ import javafx.scene.input.KeyEvent;
 public class HomePresenter implements HomeContract.Presenter {
 
     private HomeContract.View view;
+    private UiSelection uiSelection;
 
     HomePresenter(HomeContract.View view) {
         this.view = view;
+        uiSelection = UiSelection.getInstance();
     }
 
     @Override
@@ -41,7 +43,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void updateSelections() {
-        view.updateSelections(new UiSelection());
+        view.updateSelections(uiSelection);
     }
 
     @Override

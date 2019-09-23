@@ -17,7 +17,7 @@ public class Launcher {
 
     private void createDriverForManualSession() {
         Log.info("Starting Automation Manually");
-        serviceBuilder.createDriver(new UiSelection().getPlatform());
+        serviceBuilder.createDriver(UiSelection.getInstance().getPlatform());
     }
 
     private void createDriverForJenkinsSession() {

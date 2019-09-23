@@ -4,6 +4,7 @@ import core.constants.PlatformType;
 
 public class UiSelection {
 
+    private static UiSelection instance;
     private PlatformType platform;
     private PlatformType secondPlatform;
     private String device;
@@ -11,8 +12,12 @@ public class UiSelection {
     private String app;
     private boolean noReset;
 
-    public UiSelection() {
+    private UiSelection() {
 
+    }
+
+    public static UiSelection getInstance() {
+        return instance == null ? instance = new UiSelection() : instance;
     }
 
     public PlatformType getPlatform() {

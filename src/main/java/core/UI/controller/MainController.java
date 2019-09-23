@@ -31,7 +31,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Log.info("Launching Automation Interface ...");
-        uiSelection = new UiSelection();
+        uiSelection = UiSelection.getInstance();
     }
 
     @FXML

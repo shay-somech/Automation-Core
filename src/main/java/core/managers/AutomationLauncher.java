@@ -9,7 +9,7 @@ import core.utils.Log;
 public class AutomationLauncher {
 
     private DriverServiceBuilder serviceBuilder = new DriverServiceBuilder();
-    private UiSelection uiSelection = new UiSelection();
+    private UiSelection uiSelection = UiSelection.getInstance();
 
     public void start() {
         if (JenkinsManager.getInstance().getJenkinsInstance()) {

@@ -17,7 +17,7 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
 
     AdvancedPresenter(AdvancedContract.View view) {
         this.view = view;
-        uiSelection = new UiSelection();
+        uiSelection = UiSelection.getInstance();
     }
 
     @Override
@@ -103,6 +103,6 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
 
     @Override
     public void updateSelection() {
-        view.updateSelections(new UiSelection());
+        view.updateSelections(uiSelection);
     }
 }
