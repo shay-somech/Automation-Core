@@ -3,30 +3,36 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane fx:id="root" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.MainController">
+<BorderPane fx:id="root" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.main.MainView">
 
     <top>
-        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER"
+              BorderPane.alignment="CENTER">
             <children>
-                <Label text="Gini Apps Automation" textAlignment="CENTER" textFill="#38a12a">
+                <Label text="Gini Apps Automation"
+                       textAlignment="CENTER"
+                       textFill="#38a12a">
                     <font>
-                        <Font name="Heiti SC Light" size="30.0" />
+                        <Font name="Heiti SC Light"
+                              size="30.0"/>
                     </font>
                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0"
+                                left="5.0"
+                                right="5.0"
+                                top="5.0"/>
                     </padding>
                     <graphic>
-                        <ImageView fitHeight="88.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="88.0"
+                                   fitWidth="77.0"
+                                   pickOnBounds="true"
+                                   preserveRatio="true">
                             <image>
-                                <Image url="@../uiAssets/uedrxh.png" />
+                                <Image url="@../uiAssets/uedrxh.png"/>
                             </image>
                         </ImageView>
                     </graphic>
@@ -35,61 +41,94 @@
         </HBox>
     </top>
     <bottom>
-        <HBox alignment="CENTER_RIGHT" fillHeight="false" style="-: ;">
+        <HBox alignment="CENTER_RIGHT"
+              fillHeight="false"
+              style="-: ;">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../uiAssets/powered%20by@3x.png" />
-                    </image>
+                <ImageView fitHeight="150.0"
+                           fitWidth="200.0"
+                           pickOnBounds="true"
+                           preserveRatio="true">
+                    <Image url="@../uiAssets/powered%20by@3x.png"/>
                 </ImageView>
-                <Button fx:id="Run" contentDisplay="CENTER" onAction="#runButtonClicked" style="-fx-background-color: transparent;" text=" _Run" textFill="#cc101000">
+                <Button fx:id="runButton"
+                        contentDisplay="CENTER"
+                        style="-fx-background-color: transparent;"
+                        text=" _Run"
+                        textFill="#cc101000">
                     <graphic>
-                        <ImageView fitHeight="66.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../uiAssets/icon.png" />
-                            </image>
+                        <ImageView fitHeight="66.0"
+                                   fitWidth="71.0"
+                                   pickOnBounds="true"
+                                   preserveRatio="true">
+                            <Image url="@../uiAssets/icon.png"/>
                         </ImageView>
                     </graphic>
-               <font>
-                  <Font />
-               </font>
+                    <font>
+                        <Font/>
+                    </font>
                 </Button>
             </children>
         </HBox>
     </bottom>
     <left>
-        <VBox fx:id="sideMenu" alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="home" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#homeButtonClicked" prefHeight="100.0" prefWidth="150.0" styleClass="home" text="Home">
-               <graphic>
-                  <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../uiAssets/house-outline.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="advancedSettings" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#advancedSettingsClicked" prefHeight="100.0" prefWidth="150.0" styleClass="advancedSetting" text="Advanced Settings">
-               <graphic>
-                  <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../uiAssets/settings.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
+        <VBox fx:id="sideMenu"
+              alignment="CENTER"
+              spacing="10.0"
+              BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="home"
+                        alignment="CENTER"
+                        contentDisplay="TOP"
+                        mnemonicParsing="false"
+                        onAction="#onHomeButtonClicked"
+                        prefHeight="100.0"
+                        prefWidth="150.0"
+                        styleClass="home"
+                        text="Home">
+                    <graphic>
+                        <ImageView fitHeight="64.0"
+                                   fitWidth="64.0"
+                                   pickOnBounds="true"
+                                   preserveRatio="true">
+                            <Image url="@../uiAssets/house-outline.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="advancedSettings"
+                        alignment="CENTER"
+                        contentDisplay="TOP"
+                        mnemonicParsing="false"
+                        onAction="#onAdvancedSettingsButtonClicked"
+                        prefHeight="100.0"
+                        prefWidth="150.0"
+                        styleClass="advancedSetting"
+                        text="Advanced Settings">
+                    <graphic>
+                        <ImageView fitHeight="64.0"
+                                   fitWidth="64.0"
+                                   pickOnBounds="true"
+                                   preserveRatio="true">
+                            <Image url="@../uiAssets/settings.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
         </VBox>
 
     </left>
     <center>
         <AnchorPane BorderPane.alignment="CENTER">
             <children>
-                <fx:include fx:id="tab1" source="tab/Tab1.fxml" />
+                <fx:include fx:id="tab1"
+                            source="tab/Tab1.fxml"/>
             </children>
         </AnchorPane>
     </center>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+    <padding>
+        <Insets bottom="10.0"
+                left="10.0"
+                right="10.0"
+                top="10.0"/>
+    </padding>
 </BorderPane>

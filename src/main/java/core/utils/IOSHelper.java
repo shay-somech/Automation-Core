@@ -1,6 +1,6 @@
 package core.utils;
 
-import core.UI.controller.tab.Tab2Controller;
+import core.UI.application.UiSelection;
 import core.utils.Log.TextColor;
 
 import java.io.BufferedReader;
@@ -45,15 +45,16 @@ public class IOSHelper {
     }
 
     public static String getIOSAppInstallationPath() {
+        UiSelection uiSelection = new UiSelection();
         String ipaAbsolutePath = null;
 
-        if (Tab2Controller.app == null) {
+        if (uiSelection.getApp().isEmpty()) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }
             return ipaAbsolutePath;
         } else {
-            return Tab2Controller.app;
+            return uiSelection.getApp();
         }
     }
 

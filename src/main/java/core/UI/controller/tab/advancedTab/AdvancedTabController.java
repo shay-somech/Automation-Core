@@ -1,8 +1,5 @@
-package core.UI.controller.tab;
+package core.UI.controller.tab.advancedTab;
 
-import core.UI.controller.AlertBoxController;
-import core.utils.Log;
-import core.utils.ScreenRecorderHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,13 +7,11 @@ import org.testng.xml.XmlSuite.ParallelMode;
 
 import java.io.File;
 import java.net.URL;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static core.UI.controller.tab.Tab1Controller.platform;
 
-public class Tab2Controller implements Initializable {
+public class AdvancedTabController implements Initializable {
 
     public static String testClassName, suiteName, testName, deviceName, app;
     public static boolean isSingleRun, isParallelRun, isInstallApp;
@@ -102,43 +97,43 @@ public class Tab2Controller implements Initializable {
 
     @FXML
     private void handleAppInstallation() {
-        if (installApp.isSelected()) {
-            appComboBox.setVisible(true);
-            switch (platform) {
-                case ANDROID:
-                    appComboBox.getItems().clear();
-                    appComboBox.getItems().addAll("getAvailableAPKs");
-                    break;
-
-                case IOS:
-                    appComboBox.getItems().clear();
-                    appComboBox.getItems().addAll("getAvailableIPAs");
-                    break;
-
-                default:
-                    new AlertBoxController().alertBox(Alert.AlertType.ERROR, "App Error", "Please select Platform before selecting App to install");
-
-            }
-        } else {
-            appComboBox.setVisible(false);
-        }
+//        if (installApp.isSelected()) {
+//            appComboBox.setVisible(true);
+//            switch (getPlatform()) {
+//                case ANDROID:
+//                    appComboBox.getItems().clear();
+//                    appComboBox.getItems().addAll("getAvailableAPKs");
+//                    break;
+//
+//                case IOS:
+//                    appComboBox.getItems().clear();
+//                    appComboBox.getItems().addAll("getAvailableIPAs");
+//                    break;
+//
+//                default:
+//                    new AlertBoxController(Alert.AlertType.ERROR, "App Error", "Please select Platform before selecting App to install").showAlert();
+//
+//            }
+//        } else {
+//            appComboBox.setVisible(false);
+//        }
     }
 
     private void handleVideoRecordSelection() {
-        if (recordVideo.isSelected()) {
-            Log.info("Starting Screen Recording");
-            ScreenRecorderHelper screenRecorder = new ScreenRecorderHelper();
-
-            switch (platform) {
-                case ANDROID:
-                    screenRecorder.startRecording(screenRecorder.androidRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
-                    break;
-
-                case IOS:
-                    screenRecorder.startRecording(screenRecorder.iOSRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
-                    break;
-            }
-        }
+//        if (recordVideo.isSelected()) {
+//            Log.info("Starting Screen Recording");
+//            ScreenRecorderHelper screenRecorder = new ScreenRecorderHelper();
+//
+//            switch (getPlatform()) {
+//                case ANDROID:
+//                    screenRecorder.startRecording(screenRecorder.androidRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
+//                    break;
+//
+//                case IOS:
+//                    screenRecorder.startRecording(screenRecorder.iOSRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
+//                    break;
+//            }
+//        }
     }
 
     public void getSelections() {

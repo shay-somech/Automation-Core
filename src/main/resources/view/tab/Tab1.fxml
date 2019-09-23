@@ -1,52 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import core.constants.PlatformType?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="anchor" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.Tab1Controller">
-    <children>
-      <GridPane alignment="CENTER" vgap="10.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchor" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            fx:controller="core.UI.controller.tab.homeTab.HomeController">
+    <GridPane alignment="CENTER" vgap="10.0">
         <columnConstraints>
-          <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="380.0" minWidth="243.0" prefWidth="356.0" />
-          <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="287.0" minWidth="150.0" prefWidth="174.0" />
+            <ColumnConstraints fillWidth="false"
+                               hgrow="NEVER"
+                               maxWidth="380.0"
+                               minWidth="243.0"
+                               prefWidth="356.0"/>
+
+            <ColumnConstraints fillWidth="false"
+                               hgrow="NEVER"
+                               maxWidth="287.0"
+                               minWidth="150.0"
+                               prefWidth="174.0"/>
         </columnConstraints>
+
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0"
+                            prefHeight="30.0"
+                            vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0"
+                            prefHeight="30.0"
+                            vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0"
+                            prefHeight="30.0"
+                            vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0"
+                            prefHeight="30.0"
+                            vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0"
+                            prefHeight="30.0"
+                            vgrow="SOMETIMES"/>
         </rowConstraints>
-         <children>
-                  <Label text="Platform">
-                      <font>
-                          <Font name="Heiti SC Medium" size="18.0" />
-                      </font>
-                  </Label>
-                  <ComboBox fx:id="platformComboBox" promptText="Select Platform" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="platformComboBox2" promptText="Select 2nd Platform" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Device" GridPane.rowIndex="2">
-                      <font>
-                          <Font name="Heiti SC Medium" size="18.0" />
-                      </font>
-                  </Label>
-                  <ComboBox fx:id="deviceComboBox" promptText="Select Device" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="deviceComboBox2" promptText="Select 2nd Device" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="noReset" text="_Keep App data (noReset Capability)" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Heiti SC Medium" size="18.0" />
-               </font></CheckBox>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </GridPane>
-    </children>
+
+        <padding>
+            <Insets bottom="10.0"
+                    left="10.0"
+                    right="10.0"
+                    top="10.0"/>
+        </padding>
+        <Label text="Platform">
+            <font>
+                <Font name="Heiti SC Medium"
+                      size="18.0"/>
+            </font>
+        </Label>
+
+        <ComboBox fx:id="platformComboBox"
+                  promptText="Select Platform"
+                  GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <PlatformType fx:value="ANDROID"/>
+                    <PlatformType fx:value="IOS"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <ComboBox fx:id="secondPlatformComBox"
+                  promptText="Select 2nd Platform"
+                  visible="false"
+                  GridPane.columnIndex="1"
+                  GridPane.rowIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <PlatformType fx:value="ANDROID"/>
+                    <PlatformType fx:value="IOS"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+
+        <Label text="Device"
+               GridPane.rowIndex="2">
+            <font>
+                <Font name="Heiti SC Medium"
+                      size="18.0"/>
+            </font>
+        </Label>
+
+        <ComboBox fx:id="deviceComboBox"
+                  promptText="Select Device"
+                  GridPane.columnIndex="1"
+                  GridPane.rowIndex="2"/>
+
+        <ComboBox fx:id="deviceComboBox2"
+                  promptText="Select 2nd Device"
+                  visible="false"
+                  GridPane.columnIndex="1"
+                  GridPane.rowIndex="3"/>
+
+        <CheckBox fx:id="noReset"
+                  text="_Keep App data (noReset Capability)"
+                  GridPane.rowIndex="4">
+            <font>
+                <Font name="Heiti SC Medium"
+                      size="18.0"/>
+            </font>
+        </CheckBox>
+    </GridPane>
 </AnchorPane>

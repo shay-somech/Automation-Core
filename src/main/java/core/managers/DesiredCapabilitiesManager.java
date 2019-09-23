@@ -1,16 +1,12 @@
 package core.managers;
 
+import core.UI.application.UiSelection;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
 
-import static core.UI.controller.tab.Tab1Controller.isNoReset;
-import static core.UI.controller.tab.Tab2Controller.isInstallApp;
-import static core.UI.controller.tab.Tab2Controller.isParallelRun;
 import static core.managers.drivers.DriverManager.isAndroid;
-import static core.utils.AndroidHelper.getAndroidAppInstallationPath;
 import static core.utils.AppParams.*;
-import static core.utils.IOSHelper.getIOSAppInstallationPath;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
 import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
 import static io.appium.java_client.remote.AutomationName.IOS_XCUI_TEST;
@@ -20,10 +16,14 @@ import static io.appium.java_client.remote.MobileCapabilityType.*;
 public class DesiredCapabilitiesManager {
 
     private DesiredCapabilities caps;
-    HashMap<String, String> customFindModules = new HashMap<>();
+    private DeviceManager deviceManager;
+    private UiSelection uiSelection;
+    private HashMap<String, String> customFindModules = new HashMap<>();
 
     public DesiredCapabilitiesManager() {
         caps = new DesiredCapabilities();
+        deviceManager = new DeviceManager();
+        uiSelection = new UiSelection();
 
         if (isAndroid) {
             caps = setAndroidCaps();
@@ -33,24 +33,14 @@ public class DesiredCapabilitiesManager {
     }
 
     private DesiredCapabilities setAndroidCaps() {
-        caps.setCapability(DEVICE_NAME, DeviceManager.getDeviceID());
-        caps.setCapability(UDID, DeviceManager.getDeviceID());
+        caps.setCapability(DEVICE_NAME, deviceManager.getDeviceID());
+        caps.setCapability(UDID, deviceManager.getDeviceID());
 
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             caps.setCapability(NO_RESET, true);
-//            caps.setCapability(APP, getAndroidAppInstallationPath());
 
         } else {
-            caps.setCapability(NO_RESET, isNoReset);
-
-            if (isInstallApp) {
-                caps.setCapability(APP, getAndroidAppInstallationPath());
-            }
-
-            if (isParallelRun) {
-                caps.setCapability(UDID, DeviceManager.getSecondDeviceID());
-                caps.setCapability(SYSTEM_PORT, 8200);
-            }
+            caps.setCapability(NO_RESET, uiSelection.isNoReset());
         }
 
         caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
@@ -78,25 +68,15 @@ public class DesiredCapabilitiesManager {
     }
 
     private DesiredCapabilities setIOSCaps() {
-        caps.setCapability(DEVICE_NAME, DeviceManager.getDeviceID());
-        caps.setCapability(UDID, DeviceManager.getDeviceID());
+        caps.setCapability(DEVICE_NAME, deviceManager.getDeviceID());
+        caps.setCapability(UDID, deviceManager.getDeviceID());
 
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             caps.setCapability(NO_RESET, true);
-//            caps.setCapability(APP, getIOSAppInstallationPath());
-
         } else {
-            caps.setCapability(NO_RESET, isNoReset);
-
-            if (isInstallApp) {
-                caps.setCapability(APP, getIOSAppInstallationPath());
-            }
-
-            if (isParallelRun) {
-                caps.setCapability(UDID, DeviceManager.getSecondDeviceID());
-                caps.setCapability(WDA_LOCAL_PORT, 8200);
-            }
+            caps.setCapability(NO_RESET, uiSelection.isNoReset());
         }
+
         caps.setCapability(AUTOMATION_NAME, IOS_XCUI_TEST);
         caps.setCapability(USE_PREBUILT_WDA, true);
         caps.setCapability(WDA_LAUNCH_TIMEOUT, 60000);

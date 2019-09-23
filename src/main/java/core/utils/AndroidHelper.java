@@ -1,6 +1,6 @@
 package core.utils;
 
-import core.UI.controller.tab.Tab2Controller;
+import core.UI.application.UiSelection;
 import core.utils.Log.TextColor;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
@@ -15,11 +15,14 @@ public class AndroidHelper {
 
     private AndroidDriver driver;
 
-    AndroidHelper(AndroidDriver driver) {
+    public AndroidHelper() {
+    }
+
+    public AndroidHelper(AndroidDriver driver) {
         this.driver = driver;
     }
 
-    public static ArrayList<String> getAndroidDevices() {
+    public ArrayList<String> getAndroidDevices() {
         Log.info("Checking for available devices");
         ArrayList<String> ADBConnectedDevices = ADBHelper.getConnectedDevices();
         ArrayList<String> availableDevices = new ArrayList<>();
@@ -30,15 +33,15 @@ public class AndroidHelper {
         }
 
         if (availableDevices.size() == 0) {
-            Log.info(TextColor.ANSI_RED,"Not a single device is available for testing at this time");
+            Log.info(TextColor.ANSI_RED, "Not a single device is available for testing at this time");
         }
 
         return availableDevices;
     }
 
-    public static ArrayList<String> getAndroidDeviceWithDetails() {
+    public ArrayList<String> getAndroidDeviceWithDetails() {
         Log.info("Checking for available Android devices");
-        ArrayList<String> availableDevices= new ArrayList<>();
+        ArrayList<String> availableDevices = new ArrayList<>();
 
         for (String connectedAndroidDevice : getAndroidDevices()) {
             String androidDevice = getDeviceModel(connectedAndroidDevice) + " "
@@ -51,16 +54,17 @@ public class AndroidHelper {
         return availableDevices;
     }
 
-    public static String getAndroidAppInstallationPath() {
+    public String getAndroidAppInstallationPath() {
+        UiSelection uiSelection = new UiSelection();
         String apkAbsolutePath = null;
 
-        if (Tab2Controller.app == null) {
+        if (uiSelection.getApp().isEmpty()) {
             for (File apk : getAvailableAPKs("/src/main/resources/")) {
                 apkAbsolutePath = apk.getAbsolutePath();
             }
             return apkAbsolutePath;
         } else {
-            return Tab2Controller.app;
+            return uiSelection.getApp();
         }
     }
 
@@ -92,7 +96,7 @@ public class AndroidHelper {
         driver.startActivity(new Activity("com.androidRadioButton.settings", ".Settings"));
     }
 
-    public static ArrayList<File> getAvailableAPKs(String fileDirectoryPath) {
+    public ArrayList<File> getAvailableAPKs(String fileDirectoryPath) {
         String directoryPath = System.getProperty("user.dir") + fileDirectoryPath;
         File directory = new File(directoryPath);
         ArrayList<File> fileList = new ArrayList<>();

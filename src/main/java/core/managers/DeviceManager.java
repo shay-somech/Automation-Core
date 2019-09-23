@@ -1,22 +1,24 @@
 package core.managers;
 
-import core.UI.controller.tab.Tab1Controller;
+import core.UI.application.UiSelection;
 
 class DeviceManager {
 
-    static String getDeviceID() {
-        if (Tab1Controller.device == null) {
+    private UiSelection uiSelection = new UiSelection();
+
+    String getDeviceID() {
+        if (uiSelection.getDevice().isEmpty()) {
             return JenkinsManager.getInstance().getJenkinsDeviceId();
         } else {
-            return Tab1Controller.device;
+            return uiSelection.getDevice();
         }
     }
 
-    static String getSecondDeviceID() {
-        if (Tab1Controller.device2 == null) {
+    String getSecondDeviceID() {
+        if (uiSelection.getSecondDevice().isEmpty()) {
             return JenkinsManager.getInstance().getJenkinsDeviceId();
         } else {
-            return Tab1Controller.device2;
+            return uiSelection.getSecondDevice();
         }
     }
 }

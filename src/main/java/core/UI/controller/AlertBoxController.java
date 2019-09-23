@@ -7,7 +7,17 @@ import javafx.stage.Modality;
 
 public class AlertBoxController {
 
-    public void alertBox(AlertType alertType, String title, String message) {
+    private AlertType alertType;
+    private String title;
+    private String message;
+
+    public AlertBoxController(AlertType alertType, String title, String message) {
+        this.alertType = alertType;
+        this.title = title;
+        this.message = message;
+    }
+
+    public void showAlert() {
         Alert alertBox = new Alert(alertType);
         alertBox.setTitle(title);
         alertBox.setHeaderText(null);

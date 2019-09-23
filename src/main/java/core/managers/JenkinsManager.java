@@ -1,12 +1,12 @@
 package core.managers;
 
 import core.constants.PlatformType;
+import core.utils.AndroidHelper;
 import core.utils.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import static core.utils.AndroidHelper.getAndroidDevices;
 import static core.utils.IOSHelper.getIOSDevices;
 
 public class JenkinsManager {
@@ -73,9 +73,10 @@ public class JenkinsManager {
     }
 
     String getJenkinsDeviceId() {
+        AndroidHelper androidHelper = new AndroidHelper();
         switch (getJenkinsSelectedPlatform()) {
             case ANDROID:
-                return getAndroidDevices().get(0);
+                return androidHelper.getAndroidDevices().get(0);
 
             case IOS:
                 return getIOSDevices().get(0);
