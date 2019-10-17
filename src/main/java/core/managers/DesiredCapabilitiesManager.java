@@ -1,5 +1,6 @@
 package core.managers;
 
+import core.utils.Log;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class DesiredCapabilitiesManager {
 //            caps.setCapability(APP, getAndroidAppInstallationPath());
 
         } else {
+            Log.info("NoReset Caps == " + uiSelection.get("NoReset"));
             caps.setCapability(NO_RESET, uiSelection.get("NoReset"));
 
             if (isInstallApp) {
