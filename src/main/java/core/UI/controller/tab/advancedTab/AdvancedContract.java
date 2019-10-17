@@ -1,7 +1,5 @@
 package core.UI.controller.tab.advancedTab;
 
-import core.UI.application.UiSelection;
-
 import java.util.ArrayList;
 
 public interface AdvancedContract {
@@ -24,7 +22,7 @@ public interface AdvancedContract {
 
         void setAppComboBoxIpas();
 
-        void updateSelections(UiSelection uiSelection);
+        void updateSelections();
     }
 
     interface Presenter {

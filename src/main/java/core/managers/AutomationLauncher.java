@@ -1,7 +1,7 @@
 package core.managers;
 
 import core.UI.application.Main;
-import core.UI.application.UiSelection;
+import core.UI.controller.main.MainView;
 import core.constants.PlatformType;
 import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
@@ -12,7 +12,6 @@ import static core.UI.controller.main.MainView.uiSelections;
 public class AutomationLauncher {
 
     private DriverServiceBuilder serviceBuilder = new DriverServiceBuilder();
-    private UiSelection uiSelection = UiSelection.getInstance();
 
     public void start() {
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
@@ -23,6 +22,9 @@ public class AutomationLauncher {
 
         } else {
             Log.info("Starting Automation Manually");
+
+            MainView.uiSelections.forEach((key, value) -> Log.info(value.toString()));
+
             Main.main(null);
             serviceBuilder.startAppiumServer();
             serviceBuilder.createDriver((PlatformType) uiSelections.get("Platform"));

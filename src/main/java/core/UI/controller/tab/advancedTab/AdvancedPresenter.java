@@ -16,11 +16,9 @@ import static core.UI.controller.main.MainView.uiSelections;
 class AdvancedPresenter implements AdvancedContract.Presenter {
 
     private AdvancedContract.View view;
-    private UiSelection uiSelection;
 
     AdvancedPresenter(AdvancedContract.View view) {
         this.view = view;
-        uiSelection = UiSelection.getInstance();
     }
 
     @Override
@@ -104,6 +102,6 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
 
     @Override
     public void updateSelection() {
-        view.updateSelections(uiSelection);
+        view.updateSelections();
     }
 }

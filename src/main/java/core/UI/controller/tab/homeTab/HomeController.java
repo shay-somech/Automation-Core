@@ -1,10 +1,10 @@
 package core.UI.controller.tab.homeTab;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.main.MainView;
 import core.constants.PlatformType;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
+import core.utils.Log;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,6 +34,8 @@ public class HomeController implements HomeContract.View, Initializable {
         homePresenter = new HomePresenter(this);
         homePresenter.onPlatformSelection();
         homePresenter.updateSelections();
+
+        MainView.uiSelections.forEach((key, value) -> Log.info(value.toString()));
 
         anchor.addEventHandler(KeyEvent.KEY_PRESSED, event -> homePresenter.handleKeyBoardShortcuts(event));
     }
@@ -90,7 +92,7 @@ public class HomeController implements HomeContract.View, Initializable {
     }
 
     @Override
-    public void updateSelections(UiSelection uiSelection) {
+    public void updateSelections() {
         MainView.uiSelections.put("Platform", platformComboBox.getValue());
         MainView.uiSelections.put("Device", deviceComboBox.getValue());
         MainView.uiSelections.put("NoReset", noReset.isSelected());

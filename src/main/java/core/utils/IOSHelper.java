@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.main.MainView;
 import core.utils.Log.TextColor;
 
@@ -46,7 +45,6 @@ public class IOSHelper {
     }
 
     public static String getIOSAppInstallationPath() {
-        UiSelection uiSelection = UiSelection.getInstance();
         String ipaAbsolutePath = null;
 
         String app = (String) MainView.uiSelections.get("App");

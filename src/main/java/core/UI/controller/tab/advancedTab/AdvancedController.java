@@ -1,6 +1,5 @@
 package core.UI.controller.tab.advancedTab;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.main.MainView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -78,7 +77,7 @@ public class AdvancedController implements AdvancedContract.View, Initializable 
     }
 
     @Override
-    public void updateSelections(UiSelection uiSelection) {
+    public void updateSelections() {
         MainView.uiSelections.put("App",appComboBox.getValue());
     }
 }

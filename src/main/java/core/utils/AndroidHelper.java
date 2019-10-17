@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.main.MainView;
 import core.utils.Log.TextColor;
 import io.appium.java_client.android.Activity;
@@ -56,7 +55,6 @@ public class AndroidHelper {
     }
 
     public String getAndroidAppInstallationPath() {
-        UiSelection uiSelection = UiSelection.getInstance();
         String apkAbsolutePath = null;
 
         String app = (String) MainView.uiSelections.get("App");
