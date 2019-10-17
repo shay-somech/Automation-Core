@@ -19,6 +19,11 @@ public class Launcher {
 
     private void createDriverForManualSession() {
         Log.info("Starting Automation Manually");
+
+        for (String key : uiSelection.keySet()) {
+            Log.info("AFTER INIT " + key + " :: " + uiSelection.get(key));
+        }
+
         serviceBuilder.createDriver((PlatformType) uiSelection.get("Platform"));
     }
 

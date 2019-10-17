@@ -52,15 +52,7 @@ public class Tab1Controller implements Initializable {
     private void setDeviceComboBoxSelection(ComboBox<PlatformType> platform, ComboBox<String> device) {
         platform.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                switch (oldValue) {
-                    case ANDROID:
-                        device.getItems().clear();
-                        break;
-
-                    case IOS:
-                        device.getItems().clear();
-                        break;
-                }
+                device.getItems().clear();
             }
 
             if (newValue != null) {
