@@ -2,12 +2,12 @@ package core.utils;
 
 import com.google.common.collect.ImmutableMap;
 import core.constants.KeyboardEvents;
-import core.constants.SwipeDirection.Direction;
 import core.database.AppsDataSource;
 import core.database.AppsDataSource.AndroidSystemApp;
 import core.database.AppsDataSource.IOSSystemApp;
 import core.managers.DisplayManager;
 import core.managers.drivers.DriverManager;
+import core.utils.SwipeDirectionHandler.Direction;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.ScreenOrientation;
@@ -117,20 +117,20 @@ public class ActionHelper {
         return swipeHelper.swipeDownUntilElementFound(webElement);
     }
 
-    public void swipe(Direction direction) {
-        swipeHelper.swipe(direction);
-    }
-
     public void swipe(int startX, int startY, int endX, int endY) {
         swipeHelper.swipe(startX, startY, endX, endY);
     }
 
-    public void swipeElementToDirection(WebElement webElement, Direction direction) {
-        swipeHelper.swipeElementToDirection(webElement, direction);
+    public void swipe(Direction direction) {
+        swipeHelper.swipe(direction);
     }
 
-    public void swipeElementToCustomDirection(WebElement webElement, final int endX, final int endY) {
-        swipeHelper.swipeElementToCustomDirection(webElement, endX, endY);
+    public void swipeElementToDirection(WebElement webElement, Direction direction, SwipeDirectionHandler.Position swipePosition) {
+        swipeHelper.swipeElementToDirection(webElement, direction, swipePosition);
+    }
+
+    public void swipeElementToCustomDirection(WebElement webElement, SwipeDirectionHandler.Position swipePosition, final int endX, final int endY) {
+        swipeHelper.swipeElementToCustomDirection(webElement, swipePosition, endX, endY);
     }
 
     /**
@@ -198,7 +198,7 @@ public class ActionHelper {
         driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", events.toString()));
     }
 
-    public void luanchAndroidSettings() {
+    public void launchAndroidSettings() {
         androidHelper.launchAndroidSettings();
     }
 
