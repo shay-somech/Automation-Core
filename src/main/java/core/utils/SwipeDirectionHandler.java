@@ -16,11 +16,11 @@ public class SwipeDirectionHandler {
         deviceWidth = displayManager.getDeviceWidth();
     }
 
-    enum Direction {
+    public enum Direction {
         UP, DOWN, LEFT, RIGHT
     }
 
-    enum Position {
+    public enum Position {
         START, CENTER, END
     }
 
