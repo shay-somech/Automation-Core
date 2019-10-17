@@ -5,7 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 
-class SwipeDirectionHandler {
+public class SwipeDirectionHandler {
 
     private final int deviceHeight;
     private final int deviceWidth;
