@@ -3,12 +3,15 @@ package core.UI.controller.tab;
 import core.constants.PlatformType;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
+import core.utils.Log;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import static core.constants.PlatformType.ANDROID;
@@ -16,9 +19,7 @@ import static core.constants.PlatformType.IOS;
 
 public class Tab1Controller implements Initializable {
 
-    public static PlatformType platform, platform2;
-    public static String device, device2;
-    public static boolean isNoReset;
+    public static final Map<String, Object> uiSelection = new HashMap<>();
 
     @FXML
     public CheckBox noReset;
@@ -77,18 +78,13 @@ public class Tab1Controller implements Initializable {
     }
 
     public void getSelections() {
-        platform = platformComboBox.getValue();
-        platform2 = platformComboBox2.getValue();
+        uiSelection.put("Platform", platformComboBox.getValue());
+        uiSelection.put("Device", deviceComboBox.getValue().substring(deviceComboBox.getValue().indexOf("||") + 3));
+        uiSelection.put("NoReset", noReset.isSelected());
 
-        if (deviceComboBox.getValue() != null) {
-            device = deviceComboBox.getValue().substring(deviceComboBox.getValue().indexOf("||") + 3);
+        for (String key : uiSelection.keySet()) {
+            Log.info(key + " :: " + uiSelection.get(key));
         }
-
-        if (deviceComboBox2.getValue() != null) {
-            device2 = deviceComboBox2.getValue().substring(deviceComboBox2.getValue().indexOf("||") + 3);
-        }
-
-        isNoReset = noReset.isSelected();
     }
 
     public boolean isDuplicateDevicesSet() {

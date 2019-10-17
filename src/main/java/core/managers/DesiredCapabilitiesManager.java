@@ -4,7 +4,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
 
-import static core.UI.controller.tab.Tab1Controller.isNoReset;
+import static core.UI.controller.tab.Tab1Controller.uiSelection;
 import static core.UI.controller.tab.Tab2Controller.isInstallApp;
 import static core.UI.controller.tab.Tab2Controller.isParallelRun;
 import static core.managers.drivers.DriverManager.isAndroid;
@@ -20,7 +20,7 @@ import static io.appium.java_client.remote.MobileCapabilityType.*;
 public class DesiredCapabilitiesManager {
 
     private DesiredCapabilities caps;
-    HashMap<String, String> customFindModules = new HashMap<>();
+    private HashMap<String, String> customFindModules = new HashMap<>();
 
     public DesiredCapabilitiesManager() {
         caps = new DesiredCapabilities();
@@ -41,14 +41,14 @@ public class DesiredCapabilitiesManager {
 //            caps.setCapability(APP, getAndroidAppInstallationPath());
 
         } else {
-            caps.setCapability(NO_RESET, isNoReset);
+            caps.setCapability(NO_RESET, uiSelection.get("NoReset"));
 
             if (isInstallApp) {
                 caps.setCapability(APP, getAndroidAppInstallationPath());
             }
 
             if (isParallelRun) {
-                caps.setCapability(UDID, DeviceManager.getSecondDeviceID());
+                caps.setCapability(UDID, "");
                 caps.setCapability(SYSTEM_PORT, 8200);
             }
         }
@@ -86,14 +86,14 @@ public class DesiredCapabilitiesManager {
 //            caps.setCapability(APP, getIOSAppInstallationPath());
 
         } else {
-            caps.setCapability(NO_RESET, isNoReset);
+            caps.setCapability(NO_RESET, uiSelection.get("NoReset"));
 
             if (isInstallApp) {
                 caps.setCapability(APP, getIOSAppInstallationPath());
             }
 
             if (isParallelRun) {
-                caps.setCapability(UDID, DeviceManager.getSecondDeviceID());
+                caps.setCapability(UDID, "");
                 caps.setCapability(WDA_LOCAL_PORT, 8200);
             }
         }

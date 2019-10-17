@@ -1,6 +1,7 @@
 package core.UI.controller.tab;
 
 import core.UI.controller.AlertBoxController;
+import core.constants.PlatformType;
 import core.utils.Log;
 import core.utils.ScreenRecorderHelper;
 import javafx.fxml.FXML;
@@ -14,7 +15,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static core.UI.controller.tab.Tab1Controller.platform;
+import static core.UI.controller.tab.Tab1Controller.uiSelection;
 
 public class Tab2Controller implements Initializable {
 
@@ -104,7 +105,7 @@ public class Tab2Controller implements Initializable {
     private void handleAppInstallation() {
         if (installApp.isSelected()) {
             appComboBox.setVisible(true);
-            switch (platform) {
+            switch ((PlatformType) uiSelection.get("Platform")) {
                 case ANDROID:
                     appComboBox.getItems().clear();
                     appComboBox.getItems().addAll("getAvailableAPKs");
@@ -129,7 +130,7 @@ public class Tab2Controller implements Initializable {
             Log.info("Starting Screen Recording");
             ScreenRecorderHelper screenRecorder = new ScreenRecorderHelper();
 
-            switch (platform) {
+            switch ((PlatformType) uiSelection.get("Platform")) {
                 case ANDROID:
                     screenRecorder.startRecording(screenRecorder.androidRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
                     break;
