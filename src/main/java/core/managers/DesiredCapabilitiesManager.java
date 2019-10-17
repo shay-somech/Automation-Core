@@ -1,6 +1,6 @@
 package core.managers;
 
-import core.UI.application.UiSelection;
+import core.UI.controller.main.MainView;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
@@ -17,13 +17,11 @@ public class DesiredCapabilitiesManager {
 
     private DesiredCapabilities caps;
     private DeviceManager deviceManager;
-    private UiSelection uiSelection;
     private HashMap<String, String> customFindModules = new HashMap<>();
 
     public DesiredCapabilitiesManager() {
         caps = new DesiredCapabilities();
         deviceManager = new DeviceManager();
-        uiSelection = UiSelection.getInstance();
 
         if (isAndroid) {
             caps = setAndroidCaps();
@@ -40,7 +38,7 @@ public class DesiredCapabilitiesManager {
             caps.setCapability(NO_RESET, true);
 
         } else {
-            caps.setCapability(NO_RESET, uiSelection.isNoReset());
+            caps.setCapability(NO_RESET, MainView.uiSelections.get("NoReset"));
         }
 
         caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
@@ -74,7 +72,7 @@ public class DesiredCapabilitiesManager {
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             caps.setCapability(NO_RESET, true);
         } else {
-            caps.setCapability(NO_RESET, uiSelection.isNoReset());
+            caps.setCapability(NO_RESET, MainView.uiSelections.get("NoReset"));
         }
 
         caps.setCapability(AUTOMATION_NAME, IOS_XCUI_TEST);

@@ -1,6 +1,7 @@
 package core.utils;
 
 import core.UI.application.UiSelection;
+import core.UI.controller.main.MainView;
 import core.utils.Log.TextColor;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
@@ -58,13 +59,14 @@ public class AndroidHelper {
         UiSelection uiSelection = UiSelection.getInstance();
         String apkAbsolutePath = null;
 
-        if (uiSelection.getApp().isEmpty()) {
+        String app = (String) MainView.uiSelections.get("App");
+        if (app.isEmpty()) {
             for (File apk : getAvailableAPKs("/src/main/resources/")) {
                 apkAbsolutePath = apk.getAbsolutePath();
             }
             return apkAbsolutePath;
         } else {
-            return uiSelection.getApp();
+            return app;
         }
     }
 

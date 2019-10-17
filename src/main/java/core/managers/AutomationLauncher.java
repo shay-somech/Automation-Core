@@ -2,9 +2,12 @@ package core.managers;
 
 import core.UI.application.Main;
 import core.UI.application.UiSelection;
+import core.constants.PlatformType;
 import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
 import core.utils.Log;
+
+import static core.UI.controller.main.MainView.uiSelections;
 
 public class AutomationLauncher {
 
@@ -22,7 +25,7 @@ public class AutomationLauncher {
             Log.info("Starting Automation Manually");
             Main.main(null);
             serviceBuilder.startAppiumServer();
-            serviceBuilder.createDriver(uiSelection.getPlatform());
+            serviceBuilder.createDriver((PlatformType) uiSelections.get("Platform"));
             ActionHelper.getInstance();
         }
     }

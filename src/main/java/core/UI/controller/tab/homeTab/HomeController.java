@@ -1,6 +1,7 @@
 package core.UI.controller.tab.homeTab;
 
 import core.UI.application.UiSelection;
+import core.UI.controller.main.MainView;
 import core.constants.PlatformType;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
@@ -90,8 +91,8 @@ public class HomeController implements HomeContract.View, Initializable {
 
     @Override
     public void updateSelections(UiSelection uiSelection) {
-        uiSelection.setPlatform(platformComboBox.getValue());
-        uiSelection.setDevice(deviceComboBox.getValue());
-        uiSelection.setNoReset(noReset.isSelected());
+        MainView.uiSelections.put("Platform", platformComboBox.getValue());
+        MainView.uiSelections.put("Device", deviceComboBox.getValue());
+        MainView.uiSelections.put("NoReset", noReset.isSelected());
     }
 }

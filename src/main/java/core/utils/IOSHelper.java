@@ -1,6 +1,7 @@
 package core.utils;
 
 import core.UI.application.UiSelection;
+import core.UI.controller.main.MainView;
 import core.utils.Log.TextColor;
 
 import java.io.BufferedReader;
@@ -48,13 +49,14 @@ public class IOSHelper {
         UiSelection uiSelection = UiSelection.getInstance();
         String ipaAbsolutePath = null;
 
-        if (uiSelection.getApp().isEmpty()) {
+        String app = (String) MainView.uiSelections.get("App");
+        if (app.isEmpty()) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }
             return ipaAbsolutePath;
         } else {
-            return uiSelection.getApp();
+            return app;
         }
     }
 

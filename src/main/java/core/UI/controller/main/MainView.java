@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MainView implements MainContract.View, Initializable {
@@ -16,6 +18,8 @@ public class MainView implements MainContract.View, Initializable {
     private BorderPane root;
     public Button runButton;
     private MainPresenter presenter;
+
+    public final static Map<String, Object> uiSelections = new HashMap<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
