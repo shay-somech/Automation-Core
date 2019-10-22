@@ -27,7 +27,9 @@ public class MainController implements Initializable {
     public enum UiSelections {
         PLATFORM, DEVICE, SECOND_DEVICE, NO_RESET, APP
     }
-    public static Map<UiSelections, Object> uiSelection;
+
+    public static Map<UiSelections, Object> uiSelection = new HashMap<>();
+    ;
 
     @FXML
     private BorderPane root;
@@ -38,7 +40,6 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Log.info("Launching Automation Interface ...");
-        uiSelection = new HashMap<>();
     }
 
     @FXML
