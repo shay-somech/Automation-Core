@@ -95,10 +95,13 @@ public class HomeTabController implements HomeTabContract.View, Initializable {
         }
     }
 
-    // TODO: 22/10/2019 Bug! - Button needs to be pressed twice in order to be closed 
+    // TODO: 22/10/2019 Bug! - Button needs to be pressed twice in order to be closed
     public void onRunButtonClicked(ActionEvent event) {
+        String deviceWithDetails = deviceComboBox.getValue();
+        String deviceId = deviceWithDetails.substring(deviceWithDetails.indexOf("||") + 3);
+
         uiSelection.put(PLATFORM, platformComboBox.getValue());
-        uiSelection.put(DEVICE, deviceComboBox.getValue());
+        uiSelection.put(DEVICE, deviceId);
         uiSelection.put(NO_RESET, noReset.isSelected());
 
         runButton.setOnAction(closeEvent -> {
