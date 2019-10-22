@@ -8,10 +8,10 @@ import org.testng.xml.XmlSuite.ParallelMode;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static core.UI.controller.MainController.UiSelections.APP;
-import static core.UI.controller.MainController.uiSelection;
+import static core.UI.controller.main.MainView.UiSelections.APP;
+import static core.UI.controller.main.MainView.uiSelection;
 
-public class AdvancedController implements AdvancedContract.View, Initializable {
+public class AdvancedTabController implements AdvancedTabContract.View, Initializable {
 
     @FXML
     private Accordion accordion;
@@ -28,11 +28,11 @@ public class AdvancedController implements AdvancedContract.View, Initializable 
     @FXML
     private ComboBox<ParallelMode> testNGParallel;
 
-    private AdvancedContract.Presenter advancedPresenter;
+    private AdvancedTabContract.Presenter advancedPresenter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        advancedPresenter = new AdvancedPresenter(this);
+        advancedPresenter = new AdvancedTabPresenter(this);
         advancedPresenter.initComboBoxesDefaults();
         advancedPresenter.initTestComboBox();
         advancedPresenter.handleVideoRecordSelection();

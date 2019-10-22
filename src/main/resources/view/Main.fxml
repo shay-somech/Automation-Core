@@ -40,37 +40,6 @@
             </children>
         </HBox>
     </top>
-    <bottom>
-        <HBox alignment="CENTER_RIGHT"
-              fillHeight="false"
-              style="-: ;">
-            <children>
-                <ImageView fitHeight="150.0"
-                           fitWidth="200.0"
-                           pickOnBounds="true"
-                           preserveRatio="true">
-                    <Image url="@../uiAssets/powered%20by@3x.png"/>
-                </ImageView>
-                <Button fx:id="runButton"
-                        contentDisplay="CENTER"
-                        style="-fx-background-color: transparent;"
-                        text=" _Run"
-                        textFill="#cc101000">
-                    <graphic>
-                        <ImageView fitHeight="66.0"
-                                   fitWidth="71.0"
-                                   pickOnBounds="true"
-                                   preserveRatio="true">
-                            <Image url="@../uiAssets/icon.png"/>
-                        </ImageView>
-                    </graphic>
-                    <font>
-                        <Font/>
-                    </font>
-                </Button>
-            </children>
-        </HBox>
-    </bottom>
     <left>
         <VBox fx:id="sideMenu"
               alignment="CENTER"

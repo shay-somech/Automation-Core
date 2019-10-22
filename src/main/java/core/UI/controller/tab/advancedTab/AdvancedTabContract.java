@@ -2,7 +2,7 @@ package core.UI.controller.tab.advancedTab;
 
 import java.util.ArrayList;
 
-public interface AdvancedContract {
+public interface AdvancedTabContract {
 
     interface View {
 

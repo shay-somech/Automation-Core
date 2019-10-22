@@ -8,8 +8,8 @@ import io.appium.java_client.android.connection.ConnectionState;
 import java.io.File;
 import java.util.ArrayList;
 
-import static core.UI.controller.MainController.UiSelections.APP;
-import static core.UI.controller.MainController.uiSelection;
+import static core.UI.controller.main.MainView.UiSelections.APP;
+import static core.UI.controller.main.MainView.uiSelection;
 import static core.utils.ADBHelper.*;
 
 public class AndroidHelper {

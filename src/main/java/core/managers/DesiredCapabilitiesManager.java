@@ -1,11 +1,11 @@
 package core.managers;
 
-import core.UI.controller.MainController;
+import core.UI.controller.main.MainView;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
 
-import static core.UI.controller.MainController.uiSelection;
+import static core.UI.controller.main.MainView.uiSelection;
 import static core.managers.drivers.DriverManager.isAndroid;
 import static core.utils.AppParams.*;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
@@ -39,7 +39,7 @@ public class DesiredCapabilitiesManager {
             caps.setCapability(NO_RESET, true);
 
         } else {
-            caps.setCapability(NO_RESET, uiSelection.get(MainController.UiSelections.NO_RESET));
+            caps.setCapability(NO_RESET, uiSelection.get(MainView.UiSelections.NO_RESET));
         }
 
         caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
@@ -73,7 +73,7 @@ public class DesiredCapabilitiesManager {
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             caps.setCapability(NO_RESET, true);
         } else {
-            caps.setCapability(NO_RESET, uiSelection.get(MainController.UiSelections.NO_RESET));
+            caps.setCapability(NO_RESET, uiSelection.get(MainView.UiSelections.NO_RESET));
         }
 
         caps.setCapability(AUTOMATION_NAME, IOS_XCUI_TEST);

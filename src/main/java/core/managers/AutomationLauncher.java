@@ -6,8 +6,8 @@ import core.managers.drivers.DriverServiceBuilder;
 import core.utils.ActionHelper;
 import core.utils.Log;
 
-import static core.UI.controller.MainController.UiSelections.PLATFORM;
-import static core.UI.controller.MainController.uiSelection;
+import static core.UI.controller.main.MainView.UiSelections.PLATFORM;
+import static core.UI.controller.main.MainView.uiSelection;
 
 public class AutomationLauncher {
 

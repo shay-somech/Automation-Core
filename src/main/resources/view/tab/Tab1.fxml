@@ -4,10 +4,12 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchor" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            fx:controller="core.UI.controller.tab.homeTab.HomeController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vBox" xmlns="http://javafx.com/javafx/8.0.172-ea"
+      fx:controller="core.UI.controller.tab.homeTab.HomeTabController">
     <GridPane alignment="CENTER" vgap="10.0">
         <columnConstraints>
             <ColumnConstraints fillWidth="false"
@@ -107,4 +109,35 @@
             </font>
         </CheckBox>
     </GridPane>
-</AnchorPane>
+
+    <HBox alignment="CENTER_RIGHT"
+          fillHeight="false"
+          style="-: ;">
+        <ImageView fitHeight="150.0"
+                   fitWidth="200.0"
+                   pickOnBounds="true"
+                   preserveRatio="true">
+            <Image url="/uiAssets/powered by@3x.png"/>
+        </ImageView>
+
+        <Button fx:id="runButton"
+                contentDisplay="CENTER"
+                style="-fx-background-color: transparent;"
+                text=" _Run"
+                textFill="#cc101000"
+                onAction="#onRunButtonClicked">
+
+            <graphic>
+                <ImageView fitHeight="66.0"
+                           fitWidth="71.0"
+                           pickOnBounds="true"
+                           preserveRatio="true">
+                    <Image url="/uiAssets/icon.png"/>
+                </ImageView>
+            </graphic>
+            <font>
+                <Font/>
+            </font>
+        </Button>
+    </HBox>
+</VBox>

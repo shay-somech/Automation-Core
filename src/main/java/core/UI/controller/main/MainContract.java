@@ -1,9 +1,9 @@
 package core.UI.controller.main;
 
-import core.UI.controller.tab.advancedTab.AdvancedController;
-import core.UI.controller.tab.homeTab.HomeController;
+import core.UI.controller.tab.advancedTab.AdvancedTabController;
+import core.UI.controller.tab.homeTab.HomeTabController;
 import javafx.scene.control.Accordion;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -20,11 +20,11 @@ class MainContract {
 
     interface Presenter {
 
-        HomeController getHomeController() throws IOException;
+        HomeTabController getHomeController() throws IOException;
 
-        AdvancedController getAdvancedSettingsController() throws IOException;
+        AdvancedTabController getAdvancedSettingsController() throws IOException;
 
-        AnchorPane getHomeScene() throws IOException;
+        VBox getHomeScene() throws IOException;
 
         Accordion getAdvancedSettingsScene() throws IOException;
 

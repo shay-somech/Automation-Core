@@ -4,39 +4,44 @@ import core.constants.PlatformType;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static core.UI.controller.MainController.UiSelections.*;
-import static core.UI.controller.MainController.uiSelection;
+import static core.UI.controller.main.MainView.UiSelections.*;
+import static core.UI.controller.main.MainView.uiSelection;
 
-public class HomeController implements HomeContract.View, Initializable {
+
+public class HomeTabController implements HomeTabContract.View, Initializable {
 
     @FXML
-    private AnchorPane anchor;
+    private VBox vBox;
     @FXML
     public CheckBox noReset;
     @FXML
     public ComboBox<PlatformType> platformComboBox;
     @FXML
     public ComboBox<String> deviceComboBox;
+    @FXML
+    public Button runButton;
 
-    private HomePresenter homePresenter;
+    private HomeTabPresenter homePresenter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        homePresenter = new HomePresenter(this);
+        homePresenter = new HomeTabPresenter(this);
         homePresenter.onPlatformSelection();
-        homePresenter.updateSelections();
 
-        anchor.addEventHandler(KeyEvent.KEY_PRESSED, event -> homePresenter.handleKeyBoardShortcuts(event));
+        vBox.addEventHandler(KeyEvent.KEY_PRESSED, event -> homePresenter.handleKeyBoardShortcuts(event));
     }
 
     @Override
@@ -90,10 +95,15 @@ public class HomeController implements HomeContract.View, Initializable {
         }
     }
 
-    @Override
-    public void updateSelections() {
+    // TODO: 22/10/2019 Bug! - Button needs to be pressed twice in order to be closed 
+    public void onRunButtonClicked(ActionEvent event) {
         uiSelection.put(PLATFORM, platformComboBox.getValue());
         uiSelection.put(DEVICE, deviceComboBox.getValue());
         uiSelection.put(NO_RESET, noReset.isSelected());
+
+        runButton.setOnAction(closeEvent -> {
+            Stage stage = (Stage) vBox.getScene().getWindow();
+            stage.close();
+        });
     }
 }

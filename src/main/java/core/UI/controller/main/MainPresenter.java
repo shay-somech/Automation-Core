@@ -1,10 +1,10 @@
 package core.UI.controller.main;
 
-import core.UI.controller.tab.advancedTab.AdvancedController;
-import core.UI.controller.tab.homeTab.HomeController;
+import core.UI.controller.tab.advancedTab.AdvancedTabController;
+import core.UI.controller.tab.homeTab.HomeTabController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -22,19 +22,19 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public HomeController getHomeController() throws IOException {
+    public HomeTabController getHomeController() throws IOException {
         getScene("/view/tab/Tab1.fxml").load();
         return loader.getController();
     }
 
     @Override
-    public AdvancedController getAdvancedSettingsController() throws IOException {
+    public AdvancedTabController getAdvancedSettingsController() throws IOException {
         getScene("/view/tab/Tab2.fxml").load();
         return loader.getController();
     }
 
     @Override
-    public AnchorPane getHomeScene() throws IOException {
+    public VBox getHomeScene() throws IOException {
         return getScene("/view/tab/Tab1.fxml").load();
     }
 
