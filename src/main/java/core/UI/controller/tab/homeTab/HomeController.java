@@ -1,6 +1,5 @@
 package core.UI.controller.tab.homeTab;
 
-import core.UI.application.UiSelection;
 import core.constants.PlatformType;
 import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
@@ -14,6 +13,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static core.UI.controller.MainController.UiSelections.*;
+import static core.UI.controller.MainController.uiSelection;
 
 public class HomeController implements HomeContract.View, Initializable {
 
@@ -89,9 +91,9 @@ public class HomeController implements HomeContract.View, Initializable {
     }
 
     @Override
-    public void updateSelections(UiSelection uiSelection) {
-        uiSelection.setPlatform(platformComboBox.getValue());
-        uiSelection.setDevice(deviceComboBox.getValue());
-        uiSelection.setNoReset(noReset.isSelected());
+    public void updateSelections() {
+        uiSelection.put(PLATFORM, platformComboBox.getValue());
+        uiSelection.put(DEVICE, deviceComboBox.getValue());
+        uiSelection.put(NO_RESET, noReset.isSelected());
     }
 }

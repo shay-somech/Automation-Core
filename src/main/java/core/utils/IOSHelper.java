@@ -1,6 +1,6 @@
 package core.utils;
 
-import core.UI.application.UiSelection;
+import core.UI.controller.MainController;
 import core.utils.Log.TextColor;
 
 import java.io.BufferedReader;
@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import static core.UI.controller.MainController.uiSelection;
 
 public class IOSHelper {
 
@@ -45,16 +47,16 @@ public class IOSHelper {
     }
 
     public static String getIOSAppInstallationPath() {
-        UiSelection uiSelection = new UiSelection();
         String ipaAbsolutePath = null;
 
-        if (uiSelection.getApp().isEmpty()) {
+        String app = (String) uiSelection.get(MainController.UiSelections.APP);
+        if (app.isEmpty()) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();
             }
             return ipaAbsolutePath;
         } else {
-            return uiSelection.getApp();
+            return app;
         }
     }
 

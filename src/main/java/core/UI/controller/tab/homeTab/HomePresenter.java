@@ -1,6 +1,5 @@
 package core.UI.controller.tab.homeTab;
 
-import core.UI.application.UiSelection;
 import core.constants.PlatformType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -41,7 +40,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void updateSelections() {
-        view.updateSelections(new UiSelection());
+        view.updateSelections();
     }
 
     @Override

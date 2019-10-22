@@ -1,6 +1,5 @@
 package core.UI.controller.tab.homeTab;
 
-import core.UI.application.UiSelection;
 import core.constants.PlatformType;
 import javafx.scene.input.KeyEvent;
 
@@ -23,7 +22,7 @@ public interface HomeContract {
 
         void updateNoResetCheckbox();
 
-        void updateSelections(UiSelection uiSelection);
+        void updateSelections();
     }
 
     interface Presenter {

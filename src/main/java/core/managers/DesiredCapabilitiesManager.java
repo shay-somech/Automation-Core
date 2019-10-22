@@ -1,10 +1,11 @@
 package core.managers;
 
-import core.UI.application.UiSelection;
+import core.UI.controller.MainController;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.HashMap;
 
+import static core.UI.controller.MainController.uiSelection;
 import static core.managers.drivers.DriverManager.isAndroid;
 import static core.utils.AppParams.*;
 import static io.appium.java_client.remote.AndroidMobileCapabilityType.*;
@@ -17,13 +18,11 @@ public class DesiredCapabilitiesManager {
 
     private DesiredCapabilities caps;
     private DeviceManager deviceManager;
-    private UiSelection uiSelection;
     private HashMap<String, String> customFindModules = new HashMap<>();
 
     public DesiredCapabilitiesManager() {
         caps = new DesiredCapabilities();
         deviceManager = new DeviceManager();
-        uiSelection = new UiSelection();
 
         if (isAndroid) {
             caps = setAndroidCaps();
@@ -40,7 +39,7 @@ public class DesiredCapabilitiesManager {
             caps.setCapability(NO_RESET, true);
 
         } else {
-            caps.setCapability(NO_RESET, uiSelection.isNoReset());
+            caps.setCapability(NO_RESET, uiSelection.get(MainController.UiSelections.NO_RESET));
         }
 
         caps.setCapability(AUTOMATION_NAME, ANDROID_UIAUTOMATOR2);
@@ -74,7 +73,7 @@ public class DesiredCapabilitiesManager {
         if (JenkinsManager.getInstance().getJenkinsInstance()) {
             caps.setCapability(NO_RESET, true);
         } else {
-            caps.setCapability(NO_RESET, uiSelection.isNoReset());
+            caps.setCapability(NO_RESET, uiSelection.get(MainController.UiSelections.NO_RESET));
         }
 
         caps.setCapability(AUTOMATION_NAME, IOS_XCUI_TEST);

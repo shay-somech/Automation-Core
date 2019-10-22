@@ -1,7 +1,8 @@
 package core.UI.controller.tab.advancedTab;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.AlertBoxController;
+import core.UI.controller.MainController;
+import core.constants.PlatformType;
 import core.utils.Log;
 import core.utils.ScreenRecorderHelper;
 import javafx.scene.control.Alert;
@@ -10,14 +11,14 @@ import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
 
+import static core.UI.controller.MainController.UiSelections.PLATFORM;
+
 class AdvancedPresenter implements AdvancedContract.Presenter {
 
     private AdvancedContract.View view;
-    private UiSelection uiSelection;
 
     AdvancedPresenter(AdvancedContract.View view) {
         this.view = view;
-        uiSelection = new UiSelection();
     }
 
     @Override
@@ -63,7 +64,7 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
             Log.info("Starting Screen Recording");
             ScreenRecorderHelper screenRecorder = new ScreenRecorderHelper();
 
-            switch (uiSelection.getPlatform()) {
+            switch ((PlatformType) MainController.uiSelection.get(PLATFORM)) {
                 case ANDROID:
                     screenRecorder.startRecording(screenRecorder.androidRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
                     break;
@@ -80,7 +81,7 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
         if (view.isInstallAppSelected()) {
             view.setAppComboBoxVisibility(true);
 
-            switch (uiSelection.getPlatform()) {
+            switch ((PlatformType) MainController.uiSelection.get(PLATFORM)) {
                 case ANDROID:
                     view.clearAppComboBoxItems();
                     view.setAppComboBoxApks();
@@ -103,6 +104,6 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
 
     @Override
     public void updateSelection() {
-        view.updateSelections(new UiSelection());
+        view.updateSelections();
     }
 }

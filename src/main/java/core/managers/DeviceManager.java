@@ -1,24 +1,26 @@
 package core.managers;
 
-import core.UI.application.UiSelection;
+import static core.UI.controller.MainController.uiSelection;
 
 class DeviceManager {
 
-    private UiSelection uiSelection = new UiSelection();
-
     String getDeviceID() {
-        if (uiSelection.getDevice().isEmpty()) {
+        String device = (String) uiSelection.get("Device");
+
+        if (device.isEmpty()) {
             return JenkinsManager.getInstance().getJenkinsDeviceId();
         } else {
-            return uiSelection.getDevice();
+            return device;
         }
     }
 
     String getSecondDeviceID() {
-        if (uiSelection.getSecondDevice().isEmpty()) {
+        String device = (String) uiSelection.get("Second Device");
+
+        if (device.isEmpty()) {
             return JenkinsManager.getInstance().getJenkinsDeviceId();
         } else {
-            return uiSelection.getSecondDevice();
+            return device;
         }
     }
 }

@@ -1,6 +1,5 @@
 package core.UI.controller;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.tab.advancedTab.AdvancedController;
 import core.UI.controller.tab.homeTab.HomeController;
 import core.utils.Log;
@@ -16,11 +15,19 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import static core.UI.controller.MainController.UiSelections.DEVICE;
+import static core.UI.controller.MainController.UiSelections.PLATFORM;
 
 public class MainController implements Initializable {
 
-    private UiSelection uiSelection;
+    public enum UiSelections {
+        PLATFORM, DEVICE, SECOND_DEVICE, NO_RESET, APP
+    }
+    public static Map<UiSelections, Object> uiSelection;
 
     @FXML
     private BorderPane root;
@@ -31,7 +38,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Log.info("Launching Automation Interface ...");
-        uiSelection = new UiSelection();
+        uiSelection = new HashMap<>();
     }
 
     @FXML
@@ -61,17 +68,18 @@ public class MainController implements Initializable {
     }
 
     private void validateSelections() {
-        if (uiSelection.getPlatform() == null) {
+        if (uiSelection.get(PLATFORM) == null) {
             new AlertBoxController(Alert.AlertType.ERROR, "No Platform selected", "Please set a Platform").showAlert();
             return;
         }
 
-        if (uiSelection.getDevice().trim().isEmpty()) {
+        if (((String) uiSelection.get(DEVICE)).trim().isEmpty()) {
             new AlertBoxController(Alert.AlertType.ERROR, "No Device selected", "Please set a Device").showAlert();
             return;
         }
 
-        if (uiSelection.getDevice().equals(uiSelection.getSecondDevice())) {
+        //Might return null pointer exception
+        if (uiSelection.get(DEVICE).equals(uiSelection.get(DEVICE))) {
             new AlertBoxController(Alert.AlertType.ERROR, "Duplicate Devices", "Duplicate Devices Selected, please set a different Device").showAlert();
         }
     }

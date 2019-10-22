@@ -1,6 +1,5 @@
 package core.UI.controller.tab.advancedTab;
 
-import core.UI.application.UiSelection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -8,6 +7,9 @@ import org.testng.xml.XmlSuite.ParallelMode;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static core.UI.controller.MainController.UiSelections.APP;
+import static core.UI.controller.MainController.uiSelection;
 
 public class AdvancedController implements AdvancedContract.View, Initializable {
 
@@ -77,7 +79,7 @@ public class AdvancedController implements AdvancedContract.View, Initializable 
     }
 
     @Override
-    public void updateSelections(UiSelection uiSelection) {
-        uiSelection.setApp(appComboBox.getValue());
+    public void updateSelections() {
+        uiSelection.put(APP, appComboBox.getValue());
     }
 }
