@@ -2,12 +2,12 @@ package core.utils;
 
 import com.google.common.collect.ImmutableMap;
 import core.constants.KeyboardEvents;
-import core.constants.SwipeDirection.Direction;
 import core.database.AppsDataSource;
 import core.database.AppsDataSource.AndroidSystemApp;
 import core.database.AppsDataSource.IOSSystemApp;
 import core.managers.DisplayManager;
 import core.managers.drivers.DriverManager;
+import core.utils.SwipeDirectionHandler.Direction;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.ScreenOrientation;
@@ -125,12 +125,12 @@ public class ActionHelper {
         swipeHelper.swipe(startX, startY, endX, endY);
     }
 
-    public void swipeElementToDirection(WebElement webElement, Direction direction) {
-        swipeHelper.swipeElementToDirection(webElement, direction);
+    public void swipeElementToDirection(WebElement webElement, Direction direction, SwipeDirectionHandler.Position elementSwipePosition) {
+        swipeHelper.swipeElementToDirection(webElement, direction, elementSwipePosition);
     }
 
-    public void swipeElementToCustomDirection(WebElement webElement, final int endX, final int endY) {
-        swipeHelper.swipeElementToCustomDirection(webElement, endX, endY);
+    public void swipeElementToCustomDirection(WebElement webElement, SwipeDirectionHandler.Position elementSwipePosition, final int endX, final int endY) {
+        swipeHelper.swipeElementToCustomDirection(webElement, elementSwipePosition, endX, endY);
     }
 
     /**
