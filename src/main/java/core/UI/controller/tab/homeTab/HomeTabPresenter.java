@@ -6,11 +6,11 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
-public class HomePresenter implements HomeContract.Presenter {
+public class HomeTabPresenter implements HomeTabContract.Presenter {
 
-    private HomeContract.View view;
+    private HomeTabContract.View view;
 
-    HomePresenter(HomeContract.View view) {
+    HomeTabPresenter(HomeTabContract.View view) {
         this.view = view;
     }
 
@@ -36,11 +36,6 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void onPlatformSelection() {
         view.setPlatformListener();
-    }
-
-    @Override
-    public void updateSelections() {
-        view.updateSelections();
     }
 
     @Override

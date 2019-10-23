@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <Accordion fx:id="accordion" stylesheets="@../style/tab2.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.advancedTab.AdvancedController">
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.UI.controller.tab.advancedTab.AdvancedTabController">
     <panes>
         <TitledPane fx:id="testConfig" text="Test Configurations">
             <GridPane hgap="5.0" vgap="10.0">

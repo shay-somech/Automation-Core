@@ -117,20 +117,20 @@ public class ActionHelper {
         return swipeHelper.swipeDownUntilElementFound(webElement);
     }
 
-    public void swipe(int startX, int startY, int endX, int endY) {
-        swipeHelper.swipe(startX, startY, endX, endY);
-    }
-
     public void swipe(Direction direction) {
         swipeHelper.swipe(direction);
     }
 
-    public void swipeElementToDirection(WebElement webElement, Direction direction, SwipeDirectionHandler.Position swipePosition) {
-        swipeHelper.swipeElementToDirection(webElement, direction, swipePosition);
+    public void swipe(int startX, int startY, int endX, int endY) {
+        swipeHelper.swipe(startX, startY, endX, endY);
     }
 
-    public void swipeElementToCustomDirection(WebElement webElement, SwipeDirectionHandler.Position swipePosition, final int endX, final int endY) {
-        swipeHelper.swipeElementToCustomDirection(webElement, swipePosition, endX, endY);
+    public void swipeElementToDirection(WebElement webElement, Direction direction, SwipeDirectionHandler.Position elementSwipePosition) {
+        swipeHelper.swipeElementToDirection(webElement, direction, elementSwipePosition);
+    }
+
+    public void swipeElementToCustomDirection(WebElement webElement, SwipeDirectionHandler.Position elementSwipePosition, final int endX, final int endY) {
+        swipeHelper.swipeElementToCustomDirection(webElement, elementSwipePosition, endX, endY);
     }
 
     /**
@@ -198,7 +198,7 @@ public class ActionHelper {
         driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", events.toString()));
     }
 
-    public void launchAndroidSettings() {
+    public void luanchAndroidSettings() {
         androidHelper.launchAndroidSettings();
     }
 

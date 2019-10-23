@@ -1,7 +1,7 @@
 package core.UI.controller.tab.advancedTab;
 
-import core.UI.application.UiSelection;
 import core.UI.controller.AlertBoxController;
+import core.UI.controller.main.MainView;
 import core.constants.PlatformType;
 import core.utils.Log;
 import core.utils.ScreenRecorderHelper;
@@ -11,13 +11,14 @@ import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
 
-import static core.UI.controller.main.MainView.uiSelections;
+import static core.UI.controller.main.MainView.UiSelections.PLATFORM;
 
-class AdvancedPresenter implements AdvancedContract.Presenter {
 
-    private AdvancedContract.View view;
+class AdvancedTabPresenter implements AdvancedTabContract.Presenter {
 
-    AdvancedPresenter(AdvancedContract.View view) {
+    private AdvancedTabContract.View view;
+
+    AdvancedTabPresenter(AdvancedTabContract.View view) {
         this.view = view;
     }
 
@@ -64,7 +65,7 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
             Log.info("Starting Screen Recording");
             ScreenRecorderHelper screenRecorder = new ScreenRecorderHelper();
 
-            switch ((PlatformType) uiSelections.get("Platform")) {
+            switch ((PlatformType) MainView.uiSelection.get(PLATFORM)) {
                 case ANDROID:
                     screenRecorder.startRecording(screenRecorder.androidRecordingOptions().withTimeLimit(Duration.ofSeconds(120)));
                     break;
@@ -81,7 +82,7 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
         if (view.isInstallAppSelected()) {
             view.setAppComboBoxVisibility(true);
 
-            switch ((PlatformType) uiSelections.get("Platform")) {
+            switch ((PlatformType) MainView.uiSelection.get(PLATFORM)) {
                 case ANDROID:
                     view.clearAppComboBoxItems();
                     view.setAppComboBoxApks();
@@ -94,7 +95,9 @@ class AdvancedPresenter implements AdvancedContract.Presenter {
 
                 default:
                     new AlertBoxController(Alert.AlertType.ERROR, "App Error", "Please select Platform before selecting App to install").showAlert();
+
             }
+
         } else {
             view.setAppComboBoxVisibility(false);
         }

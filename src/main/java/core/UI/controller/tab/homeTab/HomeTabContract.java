@@ -4,7 +4,7 @@ import core.constants.PlatformType;
 import javafx.scene.input.KeyEvent;
 
 
-public interface HomeContract {
+public interface HomeTabContract {
 
     interface View {
 
@@ -22,7 +22,6 @@ public interface HomeContract {
 
         void updateNoResetCheckbox();
 
-        void updateSelections();
     }
 
     interface Presenter {
@@ -30,8 +29,6 @@ public interface HomeContract {
         void selectedProperty(Object oldValue, PlatformType newValue);
 
         void onPlatformSelection();
-
-        void updateSelections();
 
         void handleKeyBoardShortcuts(KeyEvent event);
     }

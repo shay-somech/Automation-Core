@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static core.UI.controller.main.MainView.uiSelection;
+
 public class IOSHelper {
 
     public static ArrayList<String> getIOSDevices() {
@@ -47,7 +49,7 @@ public class IOSHelper {
     public static String getIOSAppInstallationPath() {
         String ipaAbsolutePath = null;
 
-        String app = (String) MainView.uiSelections.get("App");
+        String app = (String) uiSelection.get(MainView.UiSelections.APP);
         if (app.isEmpty()) {
             for (File apk : getAvailableIPAs("/src/main/resources/")) {
                 ipaAbsolutePath = apk.getAbsolutePath();

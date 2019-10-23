@@ -1,74 +1,112 @@
 package core.UI.controller.tab.homeTab;
 
-import core.UI.application.UiSelection;
 import core.constants.PlatformType;
+import core.utils.AndroidHelper;
 import core.utils.IOSHelper;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeTabController implements Initializable {
+import static core.UI.controller.main.MainView.UiSelections.*;
+import static core.UI.controller.main.MainView.uiSelection;
 
-    private UiSelection uiSelection;
 
+public class HomeTabController implements HomeTabContract.View, Initializable {
+
+    @FXML
+    private VBox vBox;
     @FXML
     public CheckBox noReset;
     @FXML
-    private ComboBox<PlatformType> platformComboBox, secondPlatformComboBox;
+    public ComboBox<PlatformType> platformComboBox;
     @FXML
-    private ComboBox<String> deviceComboBox, deviceComboBox2;
+    public ComboBox<String> deviceComboBox;
+    @FXML
+    public Button runButton;
+
+    private HomeTabPresenter homePresenter;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        uiSelection = UiSelection.getInstance();
-        setDevicesComboBoxes();
+        homePresenter = new HomeTabPresenter(this);
+        homePresenter.onPlatformSelection();
+
+        vBox.addEventHandler(KeyEvent.KEY_PRESSED, event -> homePresenter.handleKeyBoardShortcuts(event));
     }
 
-    private void setDevicesComboBoxes() {
-        onDeviceComboBoxSelection(platformComboBox, deviceComboBox);
-        onDeviceComboBoxSelection(secondPlatformComboBox, deviceComboBox2);
+    @Override
+    public void setComboBoxWithAndroidDetails() {
+        AndroidHelper androidHelper = new AndroidHelper();
+        deviceComboBox.getItems().addAll(androidHelper.getAndroidDeviceWithDetails());
     }
 
-    private void onDeviceComboBoxSelection(ComboBox<PlatformType> platformCB, ComboBox<String> deviceCB) {
-        platformCB.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue != null) {
-                deviceCB.getItems().clear();
-            }
+    @Override
+    public void setComboBoxWithIOSDetails() {
+        deviceComboBox.getItems().addAll(IOSHelper.getIOSDevicesWithDetails());
+    }
 
-            if (newValue != null) {
-                switch (newValue) {
-                    case ANDROID:
-//                        deviceCB.getItems().addAll(AndroidHelper.getAndroidDeviceWithDetails());
-                        break;
+    @Override
+    public void setPlatformListener() {
+        platformComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                homePresenter.selectedProperty(oldValue, newValue));
+    }
 
-                    case IOS:
-                        deviceCB.getItems().addAll(IOSHelper.getIOSDevicesWithDetails());
-                        break;
-                }
-            }
+    @Override
+    public void clearDeviceComboBoxItems() {
+        deviceComboBox.getItems().clear();
+    }
+
+    @Override
+    public void updateAndroidDeviceComboBox() {
+        platformComboBox.setValue(PlatformType.ANDROID);
+        ObservableList<String> devices = deviceComboBox.getItems();
+
+        if (devices.size() > 0) {
+            deviceComboBox.setValue(devices.get(0));
+        }
+    }
+
+    @Override
+    public void updateIOSDeviceComboBox() {
+        platformComboBox.setValue(PlatformType.IOS);
+        ObservableList<String> devices = deviceComboBox.getItems();
+
+        if (devices.size() > 0) {
+            deviceComboBox.setValue(devices.get(0));
+        }
+    }
+
+    @Override
+    public void updateNoResetCheckbox() {
+        if (noReset.isSelected()) {
+            noReset.setSelected(false);
+        } else {
+            noReset.setSelected(true);
+        }
+    }
+
+    // TODO: 22/10/2019 Bug! - Button needs to be pressed twice in order to be closed
+    public void onRunButtonClicked(ActionEvent event) {
+        String deviceWithDetails = deviceComboBox.getValue();
+        String deviceId = deviceWithDetails.substring(deviceWithDetails.indexOf("||") + 3);
+
+        uiSelection.put(PLATFORM, platformComboBox.getValue());
+        uiSelection.put(DEVICE, deviceId);
+        uiSelection.put(NO_RESET, noReset.isSelected());
+
+        runButton.setOnAction(closeEvent -> {
+            Stage stage = (Stage) vBox.getScene().getWindow();
+            stage.close();
         });
-    }
-
-    public void setSelections() {
-        uiSelection.setPlatform(platformComboBox.getValue());
-        uiSelection.setSecondPlatform(secondPlatformComboBox.getValue());
-
-        if (deviceComboBox.getValue() != null) {
-            uiSelection.setDevice(deviceComboBox.getValue().substring(deviceComboBox.getValue().indexOf("||") + 3));
-        }
-
-        if (deviceComboBox2.getValue() != null) {
-            uiSelection.setSecondDevice(deviceComboBox2.getValue().substring(deviceComboBox2.getValue().indexOf("||") + 3));
-        }
-
-        uiSelection.setNoReset(noReset.isSelected());
-    }
-
-    public boolean checkForDuplicateDevicesSelection() {
-        return deviceComboBox.getValue().equals(deviceComboBox2.getValue());
     }
 }

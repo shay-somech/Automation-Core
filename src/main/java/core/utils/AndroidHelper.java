@@ -1,6 +1,5 @@
 package core.utils;
 
-import core.UI.controller.main.MainView;
 import core.utils.Log.TextColor;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
@@ -9,6 +8,8 @@ import io.appium.java_client.android.connection.ConnectionState;
 import java.io.File;
 import java.util.ArrayList;
 
+import static core.UI.controller.main.MainView.UiSelections.APP;
+import static core.UI.controller.main.MainView.uiSelection;
 import static core.utils.ADBHelper.*;
 
 public class AndroidHelper {
@@ -57,7 +58,7 @@ public class AndroidHelper {
     public String getAndroidAppInstallationPath() {
         String apkAbsolutePath = null;
 
-        String app = (String) MainView.uiSelections.get("App");
+        String app = (String) uiSelection.get(APP);
         if (app.isEmpty()) {
             for (File apk : getAvailableAPKs("/src/main/resources/")) {
                 apkAbsolutePath = apk.getAbsolutePath();

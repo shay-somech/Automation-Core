@@ -19,12 +19,16 @@ public class MainView implements MainContract.View, Initializable {
     public Button runButton;
     private MainPresenter presenter;
 
-    public final static Map<String, Object> uiSelections = new HashMap<>();
+    public enum UiSelections {
+        PLATFORM, DEVICE, SECOND_DEVICE, NO_RESET, APP
+    }
+
+    public static Map<UiSelections, Object> uiSelection = new HashMap<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         presenter = new MainPresenter(this);
-        presenter.onRunButtonClicked();
+//        presenter.onRunButtonClicked();
     }
 
     @Override

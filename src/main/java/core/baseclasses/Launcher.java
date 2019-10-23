@@ -1,12 +1,14 @@
 package core.baseclasses;
 
 import core.UI.application.Main;
-import core.UI.controller.main.MainView;
 import core.constants.PlatformType;
 import core.managers.JenkinsManager;
 import core.managers.drivers.DriverManager;
 import core.managers.drivers.DriverServiceBuilder;
 import core.utils.Log;
+
+import static core.UI.controller.main.MainView.UiSelections.PLATFORM;
+import static core.UI.controller.main.MainView.uiSelection;
 
 public class Launcher {
 
@@ -18,7 +20,7 @@ public class Launcher {
 
     private void createDriverForManualSession() {
         Log.info("Starting Automation Manually");
-        serviceBuilder.createDriver((PlatformType) MainView.uiSelections.get("Platform"));
+        serviceBuilder.createDriver((PlatformType) uiSelection.get(PLATFORM));
     }
 
     private void createDriverForJenkinsSession() {
